@@ -104,6 +104,10 @@ describe("renderMlb / formatMlbGameResult", () => {
     // The last-five form is intentionally not rendered: the Recent Games list
     // already shows the W/L/D sequence, so a separate 🔥 Form line is redundant.
     expect(output).not.toContain("🔥 Form:");
+    // Standing and next game sit on their own separated row (a blank line
+    // precedes them) so they read clearly instead of wrapping into the
+    // conference/season paragraph.
+    expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: American League · 2/);
   });
 
   it("omits rich-stat lines when the adapter does not provide them", () => {
@@ -147,6 +151,47 @@ describe("renderMlb / formatMlbGameResult", () => {
     const winIdx = output.indexOf("✅");
     const lossIdx = output.indexOf("❌");
     expect(winIdx).toBeLessThan(lossIdx);
+  });
+});
+
+describe("renderMlb — player spotlight", () => {
+  const SPOTLIGHT = {
+    name: "Vladimir Guerrero Jr.",
+    season: { avg: 0.259, homeRuns: 8, rbi: 54, hits: 126, atBats: 487, games: 130, ops: 0.682 },
+    lastGame: { hits: 1, homeRuns: 0, rbi: 0, avg: 0.259, opponent: "Athletics", date: "2026-09-07" },
+  };
+
+  it("renders the season stats and last game when spotlight is present", () => {
+    const output = render("mlb", { ...BASE_MLB_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).toContain("Player Spotlight: Vladimir Guerrero Jr.");
+    expect(output).toContain(".259 AVG · 8 HR · 54 RBI");
+    expect(output).toContain("**📅 Last Game:**");
+    expect(output).toContain("1 H · 0 HR · 0 RBI · .259 AVG vs Athletics (Sep 7, 2026)");
+  });
+
+  it("omits the Last Game block when lastGame is null", () => {
+    const output = render("mlb", { ...BASE_MLB_DATA, recentGames: [], spotlight: { ...SPOTLIGHT, lastGame: null } });
+    expect(output).toContain(".259 AVG · 8 HR · 54 RBI");
+    expect(output).not.toContain("Last Game");
+  });
+
+  it("omits the spotlight section entirely when data.spotlight is absent", () => {
+    const output = render("mlb", { ...BASE_MLB_DATA, recentGames: [] });
+    expect(output).not.toContain("Player Spotlight");
+  });
+
+  it("renders the headshot next to the heading when the adapter supplies one", () => {
+    const output = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      spotlight: { ...SPOTLIGHT, headshotUrl: "https://img.mlbstatic.com/people/665489/headshot" },
+    });
+    expect(output).toContain('<img src="https://img.mlbstatic.com/people/665489/headshot" alt="Vladimir Guerrero Jr. headshot" height="72" align="right" />');
+  });
+
+  it("omits the headshot image when headshotUrl is absent", () => {
+    const output = render("mlb", { ...BASE_MLB_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).not.toContain("headshot");
   });
 });
 
@@ -224,6 +269,102 @@ describe("renderNba / formatGameResult", () => {
 
   it("renders fallback when no recent games", () => {
     expect(render("nba", { ...BASE_NBA_DATA, recentGames: [] })).toContain("No recent games found");
+  });
+});
+
+describe("renderNba — player spotlight", () => {
+  const SPOTLIGHT = {
+    name: "Luka Doncic",
+    season: { points: 33.5, rebounds: 7.7, assists: 8.3 },
+    lastGame: { points: 26, rebounds: 4, assists: 7, minutes: 34, opponent: "Minnesota Timberwolves", date: "2026-09-04T19:00:00Z" },
+  };
+
+  it("renders the season averages and last game when spotlight is present", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).toContain("Player Spotlight: Luka Doncic");
+    expect(output).toContain("33.5 PPG · 7.7 RPG · 8.3 APG");
+    expect(output).toContain("**📅 Last Game:**");
+    expect(output).toContain("26 PTS · 4 REB · 7 AST · 34 MIN vs Minnesota Timberwolves (Sep 4, 2026)");
+  });
+
+  it("renders a late-night game's date on the actual game day, not the UTC day", () => {
+    // ESPN reports the game as a UTC instant. A game tipped at 9:30pm ET on
+    // Apr 2 is timestamped 2026-04-03T01:30Z — rendering it in UTC would show
+    // Apr 3 (a day late). The renderer must use the league timezone so it shows
+    // the actual calendar day the game was played.
+    const lateNightGame = {
+      ...SPOTLIGHT,
+      lastGame: {
+        points: 12, rebounds: 4, assists: 7, minutes: 26,
+        opponent: "Oklahoma City Thunder",
+        date: "2026-04-03T01:30:00Z",
+      },
+    };
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: lateNightGame });
+    expect(output).toContain("vs Oklahoma City Thunder (Apr 2, 2026)");
+    // Guard against a regression back to UTC rendering (which would show Apr 3).
+    expect(output).not.toContain("(Apr 3, 2026)");
+  });
+
+  it("omits the Last Game block when lastGame is null", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: { ...SPOTLIGHT, lastGame: null } });
+    expect(output).toContain("33.5 PPG · 7.7 RPG · 8.3 APG");
+    expect(output).not.toContain("Last Game");
+  });
+
+  it("omits the spotlight section entirely when data.spotlight is absent", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [] });
+    expect(output).not.toContain("Player Spotlight");
+  });
+
+  it("renders a condensed one-line form in compact mode, dropping the Last Game block", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: SPOTLIGHT }, { compact: true });
+    expect(output).toContain("👑 Luka Doncic · 33.5 PPG · 7.7 RPG · 8.3 APG");
+    expect(output).not.toContain("Last Game");
+    expect(output).not.toContain("Player Spotlight:");
+  });
+
+  it("renders the headshot next to the heading when the adapter supplies one", () => {
+    const output = render("nba", {
+      ...BASE_NBA_DATA,
+      recentGames: [],
+      spotlight: { ...SPOTLIGHT, headshotUrl: "https://a.espncdn.com/i/headshots/nba/players/full/3945274.png" },
+    });
+    expect(output).toContain('<img src="https://a.espncdn.com/i/headshots/nba/players/full/3945274.png" alt="Luka Doncic headshot" height="72" align="right" />');
+  });
+
+  it("omits the headshot image when headshotUrl is absent", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).not.toContain("headshot");
+  });
+
+  it("sizes the headshot by height, not width, so every sport scales alike", () => {
+    // The leagues serve headshots at different aspect ratios (ESPN 600x436
+    // landscape, MLB 213x320 portrait, NHL 336x336 square). Constraining the
+    // width makes the rendered heights differ (72x52, 72x108, 72x72); a fixed
+    // height is what keeps the boards visually consistent, so pin it.
+    const output = render("nba", {
+      ...BASE_NBA_DATA,
+      recentGames: [],
+      spotlight: { ...SPOTLIGHT, headshotUrl: "https://example.test/hs.png" },
+    });
+    const tag = output.match(/<img[^>]*headshot[^>]*>/)[0];
+    expect(tag).toContain('height="72"');
+    expect(tag).not.toContain('width="72"');
+  });
+
+  it("never renders a headshot in compact mode", () => {
+    // Compact mode collapses the spotlight to a single stat line, so the
+    // headshot must not be emitted even when one is available. (The renderer
+    // emits no image; compactMarkdown() in index.js strips the team/league
+    // images from the final output separately.)
+    const output = render(
+      "nba",
+      { ...BASE_NBA_DATA, recentGames: [], spotlight: { ...SPOTLIGHT, headshotUrl: "https://a.espncdn.com/i/headshots/nba/players/full/3945274.png" } },
+      { compact: true }
+    );
+    expect(output).not.toContain("headshot");
+    expect(output).toContain("👑 Luka Doncic · 33.5 PPG · 7.7 RPG · 8.3 APG");
   });
 });
 
@@ -321,6 +462,68 @@ describe("renderMls", () => {
   it("includes the season status line", () => {
     const output = render("mls", { ...BASE_MLS_DATA, recentGames: [] });
     expect(output).toMatch(/🟢 Season in progress|🔴 Off-season/);
+  });
+});
+
+describe("soccer renderer — player spotlight", () => {
+  const SPOTLIGHT = {
+    name: "Bukayo Saka",
+    position: "RW",
+    season: { appearances: 34, goals: 14, assists: 11, saves: 0, cleanSheets: 0 },
+    lastGame: { date: "2026-09-06T15:30:00.000Z", opponent: "CHE", goals: 1, assists: 1 },
+  };
+
+  it("renders appearances, goals, and assists from the game log", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).toContain("Player Spotlight: Bukayo Saka");
+    expect(output).toContain("34 APP · 14 G · 11 A");
+  });
+
+  it("renders the last game with opponent and date", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).toContain("1 G · 1 A vs CHE");
+    expect(output).toContain("Sep 6, 2026");
+  });
+
+  it("renders the same block for other soccer leagues", () => {
+    const output = render("epl", { ...BASE_MLS_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).toContain("Player Spotlight: Bukayo Saka");
+  });
+
+  it("handles a spotlight with no last game", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [], spotlight: { ...SPOTLIGHT, lastGame: null } });
+    expect(output).toContain("Player Spotlight: Bukayo Saka");
+    expect(output).not.toContain("**📅 Last Game:**");
+  });
+
+  it("defaults missing season stats to zero", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [], spotlight: { name: "Unknown", season: {}, lastGame: null } });
+    expect(output).toContain("0 APP · 0 G · 0 A");
+  });
+
+  it("renders the headshot next to the heading when the adapter supplies one", () => {
+    const output = render("mls", {
+      ...BASE_MLS_DATA,
+      recentGames: [],
+      spotlight: { ...SPOTLIGHT, headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/233049.png" },
+    });
+    expect(output).toContain('<img src="https://a.espncdn.com/i/headshots/soccer/players/full/233049.png" alt="Bukayo Saka headshot" height="72" align="right" />');
+  });
+
+  it("omits the headshot image when headshotUrl is absent", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [], spotlight: SPOTLIGHT });
+    expect(output).not.toContain("headshot");
+  });
+
+  it("collapses to one line in compact mode and drops last-game detail", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [], spotlight: SPOTLIGHT }, { compact: true });
+    expect(output).toContain("Bukayo Saka · 34 APP · 14 G · 11 A");
+    expect(output).not.toContain("**📅 Last Game:**");
+  });
+
+  it("omits the spotlight section when data.spotlight is absent", () => {
+    const output = render("mls", { ...BASE_MLS_DATA, recentGames: [] });
+    expect(output).not.toContain("Player Spotlight");
   });
 });
 
@@ -1006,5 +1209,302 @@ describe("renderNba — G League variant", () => {
         home_team_score: 121, visitor_team_score: 134 }],
     }));
     expect(out).toContain("[Playoffs]");
+  });
+});
+
+describe("renderAtp", () => {
+  const BASE_ATP_DATA = {
+    team: { id: "296", abbreviation: "DJO", full_name: "Novak Djokovic", conference: "ATP", division: "" },
+    emoji: "🇷🇸",
+    logoUrl: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png",
+    standing: { position: 5, label: "ATP" },
+    rankPoints: 3770,
+    previousRank: 5,
+    trend: "-",
+    lastMatch: {
+      opponent: "Mariano Navone",
+      won: false,
+      date: "2026-08-30T15:05:00Z",
+      sets: [[7, 5, 4, 6, 6], [6, 7, 6, 2, 1]],
+    },
+  };
+
+  it("renders the player heading with the Player entity label", () => {
+    const output = render("atp", BASE_ATP_DATA);
+    expect(output).toContain("My Favourite ATP Tennis Player");
+    expect(output).toContain("Novak Djokovic (DJO)");
+  });
+
+  it("groups ranking, points, and movement onto one meta line", () => {
+    const output = render("atp", BASE_ATP_DATA);
+    expect(output).toContain("🏆 World No. 5");
+    expect(output).toContain("📍 3,770 ranking points");
+    expect(output).toContain("📈 Movement");
+    // All three share a single line (joined by ·), not three separate lines.
+    expect(output).toMatch(/🏆 World No\. 5 · 📍 3,770 ranking points · 📈 Movement/);
+  });
+
+  it("renders the last match on its own labeled fenced block", () => {
+    const output = render("atp", BASE_ATP_DATA);
+    expect(output).toContain("**📅 Last Match:**");
+    expect(output).toContain("❌ L vs Mariano Navone");
+    expect(output).toContain("7-6, 5-7, 4-6, 6-2, 6-1");
+    // The match sits in its own fenced code block, like team boards' Recent Games.
+    expect(output).toMatch(/\*\*📅 Last Match:\*\*\n```\n❌ L vs Mariano Navone .*```/s);
+  });
+
+  it("renders a win with the W icon", () => {
+    const output = render("atp", { ...BASE_ATP_DATA, lastMatch: { ...BASE_ATP_DATA.lastMatch, won: true } });
+    expect(output).toContain("✅ W vs");
+  });
+
+  it("omits the last-match block when there is no match", () => {
+    const output = render("atp", { ...BASE_ATP_DATA, lastMatch: null });
+    expect(output).not.toContain("Last Match");
+  });
+
+  it("omits ranking meta when no standing is present", () => {
+    const output = render("atp", { ...BASE_ATP_DATA, standing: null, rankPoints: undefined, previousRank: undefined });
+    expect(output).not.toContain("🏆");
+    expect(output).not.toContain("ranking points");
+    expect(output).not.toContain("Movement");
+  });
+});
+
+describe("renderWta", () => {
+  const BASE_WTA_DATA = {
+    team: { id: "3038", abbreviation: "SAB", full_name: "Aryna Sabalenka", conference: "WTA", division: "" },
+    emoji: "🇧🇾",
+    logoUrl: "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png",
+    standing: { position: 1, label: "WTA" },
+    rankPoints: 8575,
+    previousRank: 1,
+    trend: "-",
+    lastMatch: {
+      opponent: "Elena Rybakina",
+      won: true,
+      date: "2026-08-30T15:05:00Z",
+      sets: [[6, 4, 6], [3, 6, 2]],
+    },
+  };
+
+  it("renders the player heading with the Player entity label", () => {
+    const output = render("wta", BASE_WTA_DATA);
+    expect(output).toContain("My Favourite WTA Tennis Player");
+    expect(output).toContain("Aryna Sabalenka (SAB)");
+  });
+
+  it("groups ranking, points, and movement onto one meta line", () => {
+    const output = render("wta", BASE_WTA_DATA);
+    expect(output).toContain("🏆 World No. 1");
+    expect(output).toContain("📍 8,575 ranking points");
+    expect(output).toContain("📈 Movement");
+    expect(output).toMatch(/🏆 World No\. 1 · 📍 8,575 ranking points · 📈 Movement/);
+  });
+
+  it("renders the last match on its own labeled fenced block", () => {
+    const output = render("wta", BASE_WTA_DATA);
+    expect(output).toContain("**📅 Last Match:**");
+    expect(output).toContain("✅ W vs Elena Rybakina");
+    expect(output).toContain("6-3, 4-6, 6-2");
+    expect(output).toMatch(/\*\*📅 Last Match:\*\*\n```\n✅ W vs Elena Rybakina .*```/s);
+  });
+
+  it("omits the last-match block when there is no match", () => {
+    const output = render("wta", { ...BASE_WTA_DATA, lastMatch: null });
+    expect(output).not.toContain("Last Match");
+  });
+
+  it("omits ranking meta when no standing is present", () => {
+    const output = render("wta", { ...BASE_WTA_DATA, standing: null, rankPoints: undefined, previousRank: undefined });
+    expect(output).not.toContain("🏆");
+    expect(output).not.toContain("ranking points");
+    expect(output).not.toContain("Movement");
+  });
+});
+
+describe("renderNfl", () => {
+  const BASE_NFL_DATA = {
+    team: { abbreviation: "KC", full_name: "Kansas City Chiefs", conference: "AFC", division: "AFC West" },
+    record: { wins: 9, losses: 3, season: 2026 },
+    recentGames: [],
+    emoji: "👑",
+    logoUrl: "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
+    standing: { position: 2, label: "AFC" },
+    nextGame: { date: "2026-09-15T00:00:00Z", opponent: "DEN", isHome: false },
+  };
+
+  it("renders the standing and next game on their own row", () => {
+    const output = render("nfl", BASE_NFL_DATA);
+    expect(output).toContain("🏅 Standing: AFC · 2");
+    expect(output).toContain("📅 Next: @ DEN");
+    // Separated from the conference/season paragraph by a blank line.
+    expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: AFC · 2/);
+  });
+
+  it("renders a home next game with 'vs'", () => {
+    const output = render("nfl", { ...BASE_NFL_DATA, nextGame: { date: "2026-09-15T00:00:00Z", opponent: "LAC", isHome: true } });
+    expect(output).toContain("📅 Next: vs LAC");
+  });
+
+  it("omits the standing row when no standing is present", () => {
+    const output = render("nfl", { ...BASE_NFL_DATA, standing: null, nextGame: null });
+    expect(output).not.toContain("🏅 Standing:");
+    expect(output).not.toContain("📅 Next:");
+  });
+
+  it("renders the record with win percentage", () => {
+    const output = render("nfl", BASE_NFL_DATA);
+    expect(output).toContain("📊 2026 Season: 9W - 3L (75.0%)");
+  });
+});
+
+describe("renderNfl — player spotlight", () => {
+  const BASE = {
+    team: { abbreviation: "KC", full_name: "Kansas City Chiefs", conference: "AFC", division: "AFC West" },
+    record: { wins: 9, losses: 3, season: 2026 },
+    recentGames: [],
+    emoji: "👑",
+    logoUrl: "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
+  };
+
+  const QB = {
+    name: "Patrick Mahomes",
+    position: "QB",
+    season: { passingYards: 4183, passingTouchdowns: 31, rushingYards: 320, rushingTouchdowns: 2, receptions: 0, receivingYards: 0, receivingTouchdowns: 0 },
+    lastGame: { date: "2026-01-04T18:00:00Z", opponent: "DEN", passingYards: 280, passingTouchdowns: 2 },
+  };
+
+  const RB = {
+    name: "Isiah Pacheco",
+    position: "RB",
+    season: { rushingYards: 1030, rushingTouchdowns: 8, receptions: 40, receivingYards: 300 },
+    lastGame: { date: "2026-01-04T18:00:00Z", opponent: "DEN", rushingYards: 88 },
+  };
+
+  const WR = {
+    name: "Travis Kelce",
+    position: "TE",
+    season: { receptions: 93, receivingYards: 1120, receivingTouchdowns: 9 },
+    lastGame: { date: "2026-01-04T18:00:00Z", opponent: "DEN", receptions: 7, receivingYards: 95 },
+  };
+
+  it("renders passing stats for a quarterback", () => {
+    const output = render("nfl", { ...BASE, spotlight: QB });
+    expect(output).toContain("Player Spotlight: Patrick Mahomes");
+    expect(output).toContain("4183 PASS YDS · 31 PASS TD · 320 RUSH YDS");
+    expect(output).toContain("280 PASS YDS · 2 PASS TD vs DEN");
+  });
+
+  it("renders rushing stats for a running back", () => {
+    const output = render("nfl", { ...BASE, spotlight: RB });
+    expect(output).toContain("1030 RUSH YDS · 8 RUSH TD · 40 REC");
+    expect(output).toContain("88 RUSH YDS vs DEN");
+  });
+
+  it("renders receiving stats for a receiver", () => {
+    const output = render("nfl", { ...BASE, spotlight: WR });
+    expect(output).toContain("93 REC · 1120 REC YDS · 9 REC TD");
+    expect(output).toContain("7 REC · 95 REC YDS vs DEN");
+  });
+
+  it("handles a spotlight with no last game", () => {
+    const output = render("nfl", { ...BASE, spotlight: { ...QB, lastGame: null } });
+    expect(output).toContain("Player Spotlight: Patrick Mahomes");
+    expect(output).not.toContain("**📅 Last Game:**");
+  });
+
+  it("defaults missing season stats to zero", () => {
+    const output = render("nfl", { ...BASE, spotlight: { name: "Rookie", position: "QB", season: {}, lastGame: null } });
+    expect(output).toContain("0 PASS YDS · 0 PASS TD · 0 RUSH YDS");
+  });
+
+  it("renders the compact form per position group", () => {
+    expect(render("nfl", { ...BASE, spotlight: QB }, { compact: true }))
+      .toContain("👑 Patrick Mahomes · 4183 PASS YDS · 31 PASS TD");
+    expect(render("nfl", { ...BASE, spotlight: RB }, { compact: true }))
+      .toContain("👑 Isiah Pacheco · 1030 RUSH YDS · 8 RUSH TD");
+    expect(render("nfl", { ...BASE, spotlight: WR }, { compact: true }))
+      .toContain("👑 Travis Kelce · 93 REC · 1120 REC YDS");
+  });
+
+  it("omits the spotlight section when data.spotlight is absent", () => {
+    expect(render("nfl", BASE)).not.toContain("Player Spotlight");
+  });
+
+  it("renders the headshot next to the heading when the adapter supplies one", () => {
+    const output = render("nfl", { ...BASE, spotlight: { ...QB, headshotUrl: "https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png" } });
+    expect(output).toContain('<img src="https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png" alt="Patrick Mahomes headshot" height="72" align="right" />');
+  });
+
+  it("omits the headshot image when headshotUrl is absent", () => {
+    expect(render("nfl", { ...BASE, spotlight: QB })).not.toContain("headshot");
+  });
+});
+
+describe("renderNhl — player spotlight", () => {
+  const BASE = {
+    team: { abbreviation: "NYR", full_name: "New York Rangers", conference: "Eastern", division: "Metropolitan" },
+    record: { wins: 52, losses: 24, season: 2025 },
+    recentGames: [],
+    emoji: "🦢",
+    logoUrl: "https://assets.nhle.com/logos/nhl/svg/NYR_dark.svg",
+  };
+
+  const SKATER = {
+    name: "Artemi Panarin",
+    position: "LW",
+    season: { gamesPlayed: 82, goals: 49, assists: 71, points: 120, isGoalie: false },
+    lastGame: { date: "2026-04-10T23:00:00Z", opponent: "BOS", goals: 2, assists: 1, points: 3 },
+  };
+
+  const GOALIE = {
+    name: "Igor Shesterkin",
+    position: "G",
+    season: { gamesPlayed: 55, wins: 36, goalsAgainstAverage: 2.35, savePercentage: 0.919, isGoalie: true },
+    lastGame: { date: "2026-04-10T23:00:00Z", opponent: "BOS", saves: 32, shotsAgainst: 34 },
+  };
+
+  it("renders goals, assists, and points for a skater", () => {
+    const output = render("nhl", { ...BASE, spotlight: SKATER });
+    expect(output).toContain("Player Spotlight: Artemi Panarin");
+    expect(output).toContain("49 G · 71 A · 120 PTS");
+    expect(output).toContain("2 G · 1 A · 3 P vs BOS");
+  });
+
+  it("renders wins, GAA, and save percentage for a goalie", () => {
+    const output = render("nhl", { ...BASE, spotlight: GOALIE });
+    expect(output).toContain("36 W · 2.35 GAA · .919 SV%");
+    expect(output).toContain("32 SV · 34 SA vs BOS");
+  });
+
+  it("strips the leading zero from the save percentage", () => {
+    const output = render("nhl", { ...BASE, spotlight: GOALIE });
+    expect(output).toContain(".919 SV%");
+    expect(output).not.toContain("0.919 SV%");
+  });
+
+  it("handles a spotlight with no last game", () => {
+    const output = render("nhl", { ...BASE, spotlight: { ...SKATER, lastGame: null } });
+    expect(output).toContain("Player Spotlight: Artemi Panarin");
+    expect(output).not.toContain("**📅 Last Game:**");
+  });
+
+  it("defaults missing season stats to zero", () => {
+    expect(render("nhl", { ...BASE, spotlight: { name: "Rookie", position: "C", season: {}, lastGame: null } }))
+      .toContain("0 G · 0 A · 0 PTS");
+    expect(render("nhl", { ...BASE, spotlight: { name: "Rookie G", position: "G", season: { isGoalie: true }, lastGame: null } }))
+      .toContain("0 W · 0.00 GAA · .000 SV%");
+  });
+
+  it("renders the compact form for skaters and goalies", () => {
+    expect(render("nhl", { ...BASE, spotlight: SKATER }, { compact: true }))
+      .toContain("🦢 Artemi Panarin · 49 G · 71 A · 120 PTS");
+    expect(render("nhl", { ...BASE, spotlight: GOALIE }, { compact: true }))
+      .toContain("🦢 Igor Shesterkin · 36 W · 2.35 GAA · .919 SV%");
+  });
+
+  it("omits the spotlight section when data.spotlight is absent", () => {
+    expect(render("nhl", BASE)).not.toContain("Player Spotlight");
   });
 });

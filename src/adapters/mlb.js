@@ -1,4 +1,5 @@
 const { get: httpGet } = require("../http");
+const { dateOffset } = require("../demo");
 const BaseFreeApiAdapter = require("./base-free-api");
 
 const MLB_BASE = "https://statsapi.mlb.com/api/v1";
@@ -42,12 +43,15 @@ const DEMO_TEAMS = {
   BOS: { id: 111, abbreviation: "BOS", name: "Red Sox", full_name: "Boston Red Sox", league: "American League", division: "AL East" },
   CHC: { id: 112, abbreviation: "CHC", name: "Cubs", full_name: "Chicago Cubs", league: "National League", division: "NL Central" },
   HOU: { id: 117, abbreviation: "HOU", name: "Astros", full_name: "Houston Astros", league: "American League", division: "AL West" },
+  TOR: { id: 141, abbreviation: "TOR", name: "Blue Jays", full_name: "Toronto Blue Jays", league: "American League", division: "AL East" },
 };
 
 class MlbAdapter extends BaseFreeApiAdapter {
   TEAM_EMOJI = TEAM_EMOJI;
   TEAM_IDS = TEAM_IDS;
   DEMO_TEAMS = DEMO_TEAMS;
+  // Selects the opponent pool used to pad sample boards in the base class.
+  DEMO_POOL_KEY = "baseball";
 
   getSeasonYear() {
     return new Date().getFullYear();
@@ -76,6 +80,128 @@ class MlbAdapter extends BaseFreeApiAdapter {
       console.error(`Failed to fetch MLB standings: ${error.message}`);
       return { wins: 0, losses: 0, season: this.getSeasonYear(), position: null };
     }
+  }
+
+  async fetchTeamRoster(teamAbbr) {
+    const teamId = TEAM_IDS[teamAbbr.toUpperCase()];
+    if (!teamId) return [];
+    try {
+      const { data } = await httpGet(`${MLB_BASE}/teams/${teamId}/roster`, {
+        params: { rosterType: "active" },
+      });
+      return (data.roster || []).map((entry) => ({
+        id: String(entry.person.id),
+        fullName: entry.person.fullName,
+      }));
+    } catch (error) {
+      console.error(`Failed to fetch MLB roster: ${error.message}`);
+      return [];
+    }
+  }
+
+  findPlayerOnRoster(roster, playerName) {
+    const target = playerName.trim().toLowerCase();
+    return roster.find((player) => player.fullName.toLowerCase() === target) || null;
+  }
+
+  async fetchPlayerSeasonStats(athleteId, season) {
+    try {
+      const { data } = await httpGet(`${MLB_BASE}/people/${athleteId}/stats`, {
+        params: { stats: "season", season, group: "hitting" },
+      });
+      const stat = data.stats?.[0]?.splits?.[0]?.stat;
+      if (!stat) return null;
+      return {
+        avg: parseFloat(stat.avg) || 0,
+        homeRuns: stat.homeRuns || 0,
+        rbi: stat.rbi || 0,
+        hits: stat.hits || 0,
+        atBats: stat.atBats || 0,
+        games: stat.gamesPlayed || 0,
+        ops: stat.ops ? parseFloat(stat.ops) : 0,
+      };
+    } catch (error) {
+      console.error(`Failed to fetch MLB player season stats: ${error.message}`);
+      return null;
+    }
+  }
+
+  async fetchPlayerLastGame(athleteId, season) {
+    try {
+      const { data } = await httpGet(`${MLB_BASE}/people/${athleteId}/stats`, {
+        params: { stats: "gameLog", season, group: "hitting" },
+      });
+      const games = data.stats?.[0]?.splits || [];
+      // The game log is returned in chronological order (oldest first), so the
+      // most recent game is the last entry.
+      const g = games[games.length - 1];
+      if (!g) return null;
+      return {
+        date: g.date || null,
+        opponent: g.opponent?.name || g.opponent?.abbreviation || null,
+        hits: g.stat?.hits || 0,
+        homeRuns: g.stat?.homeRuns || 0,
+        rbi: g.stat?.rbi || 0,
+        avg: parseFloat(g.stat?.avg) || 0,
+      };
+    } catch (error) {
+      console.error(`Failed to fetch MLB player last game: ${error.message}`);
+      return null;
+    }
+  }
+
+  async fetchPlayerSpotlight(teamAbbr, playerName) {
+    const roster = await this.fetchTeamRoster(teamAbbr);
+    const player = this.findPlayerOnRoster(roster, playerName);
+    if (!player) {
+      const names = roster.slice(0, 8).map((entry) => entry.fullName);
+      const suffix = roster.length > 8 ? ", ..." : "";
+      throw new Error(`Unknown player "${playerName}" on ${teamAbbr.toUpperCase()}. Try one of: ${names.join(", ")}${suffix}`);
+    }
+    const season = this.getSeasonYear();
+    const [stats, lastGame] = await Promise.all([
+      this.fetchPlayerSeasonStats(player.id, season),
+      this.fetchPlayerLastGame(player.id, season),
+    ]);
+    return {
+      name: player.fullName,
+      season: stats || { avg: 0, homeRuns: 0, rbi: 0, hits: 0, atBats: 0, games: 0, ops: 0 },
+      lastGame,
+      headshotUrl: this.getPlayerHeadshotUrl(player.id),
+    };
+  }
+
+  getDemoData(teamAbbr, playerName) {
+    const team = this.DEMO_TEAMS[teamAbbr.toUpperCase()];
+    if (!team) return null;
+
+    const demo = super.getDemoData(teamAbbr);
+    if (!demo) return null;
+
+    if (teamAbbr.toUpperCase() === "TOR" && playerName && playerName.trim().toLowerCase() === "vladimir guerrero jr.") {
+      // Match the team board's most recent game so the spotlight and the recent
+      // results never show two different dates for the same matchup.
+      const last = demo.recentGames?.[0];
+      demo.spotlight = {
+        name: "Vladimir Guerrero Jr.",
+        season: { avg: 0.259, homeRuns: 8, rbi: 54, hits: 126, atBats: 487, games: 130, ops: 0.682 },
+        // MLB Stats API person id, so the demo board shows the real headshot
+        // and matches what a live run would render.
+        headshotUrl: this.getPlayerHeadshotUrl("665489"),
+        lastGame: {
+          date: last ? last.date : dateOffset(0),
+          opponent: last ? last.oppAbbr : "ATH",
+          hits: 1,
+          homeRuns: 0,
+          rbi: 0,
+          avg: 0.259,
+        },
+      };
+    } else if (playerName) {
+      console.log(`[DEMO] No demo spotlight for player "${playerName}" (demo data only covers Vladimir Guerrero Jr. on TOR)`);
+    }
+
+    return demo;
   }
 
   async fetchData(teamAbbr) {
@@ -179,6 +305,15 @@ class MlbAdapter extends BaseFreeApiAdapter {
     const upper = abbr.toUpperCase();
     const slug = ESPN_LOGO_ABBR[upper] || upper.toLowerCase();
     return `https://a.espncdn.com/i/teamlogos/mlb/500/${slug}.png`;
+  }
+
+  // MLB serves player photos from its own CDN rather than ESPN's headshot
+  // path (which is unreliable for baseball). The transformation is fixed, so
+  // only the MLB Stats API person id is needed. Returns null without an id so
+  // the renderer can omit the image instead of emitting a broken one.
+  getPlayerHeadshotUrl(playerId) {
+    if (!playerId) return null;
+    return `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/${playerId}/headshot/67/current`;
   }
 
   parseGameResponse(data) {

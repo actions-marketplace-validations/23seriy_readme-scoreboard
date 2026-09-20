@@ -817,7 +817,7 @@
       "key": "f1",
       "name": "Formula 1",
       "category": "Racing",
-      "entity": "player",
+      "entity": "team",
       "endpoint": "racing/f1",
       "apiSource": "ESPN public API",
       "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/racing/f1/teams",
@@ -874,6 +874,96 @@
       ]
     },
     {
+      "key": "wta",
+      "name": "WTA Tennis",
+      "category": "Tennis",
+      "entity": "player",
+      "endpoint": "tennis/wta",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/teams",
+      "renderer": "wta",
+      "emoji": "🎾",
+      "logo": {
+        "light": "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png",
+        "dark": "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png"
+      },
+      "seasonWindow": {
+        "start": [
+          1,
+          1
+        ],
+        "end": [
+          12,
+          31
+        ],
+        "nextLabel": "January"
+      },
+      "fallback": [
+        "2026-01-01",
+        "2026-12-31"
+      ]
+    },
+    {
+      "key": "nascar",
+      "name": "NASCAR Cup Series",
+      "category": "Racing",
+      "entity": "player",
+      "endpoint": "racing/nascar-premier",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/racing/nascar-premier/teams",
+      "renderer": "nascar",
+      "emoji": "🏁",
+      "logo": {
+        "light": "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-NASCAR.png",
+        "dark": "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-NASCAR.png"
+      },
+      "seasonWindow": {
+        "start": [
+          2,
+          1
+        ],
+        "end": [
+          11,
+          30
+        ],
+        "nextLabel": "February"
+      },
+      "fallback": [
+        "2026-02-04",
+        "2026-11-08"
+      ]
+    },
+    {
+      "key": "indycar",
+      "name": "IndyCar Series",
+      "category": "Racing",
+      "entity": "player",
+      "endpoint": "racing/irl",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/racing/irl/teams",
+      "renderer": "indycar",
+      "emoji": "🏎️",
+      "logo": {
+        "light": "https://a.espncdn.com/combiner/i?img=/i/espn/teamlogos/500/indycar_series.png",
+        "dark": "https://a.espncdn.com/combiner/i?img=/i/espn/teamlogos/500/indycar_series.png"
+      },
+      "seasonWindow": {
+        "start": [
+          3,
+          1
+        ],
+        "end": [
+          9,
+          30
+        ],
+        "nextLabel": "March"
+      },
+      "fallback": [
+        "2026-03-01",
+        "2026-09-06"
+      ]
+    },
+    {
       "key": "argentina",
       "name": "Argentine Primera",
       "category": "Soccer",
@@ -901,6 +991,246 @@
       "fallback": [
         "2026-02-01",
         "2026-12-31"
+      ]
+    },
+    {
+      "key": "aleague",
+      "name": "A-League Men",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/aus.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/aus.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/1308.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/1308.png"
+      },
+      "seasonWindow": {
+        "start": [
+          7,
+          1
+        ],
+        "end": [
+          6,
+          30
+        ],
+        "nextLabel": "July"
+      },
+      "fallback": [
+        "2026-07-01",
+        "2027-07-01"
+      ]
+    },
+    {
+      "key": "isl",
+      "name": "Indian Super League",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/ind.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/ind.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/2334.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2334.png"
+      },
+      "seasonWindow": {
+        "start": [
+          9,
+          15
+        ],
+        "end": [
+          7,
+          1
+        ],
+        "nextLabel": "September"
+      },
+      "fallback": [
+        "2026-09-15",
+        "2027-07-01"
+      ]
+    },
+    {
+      "key": "csl",
+      "name": "Chinese Super League",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/chn.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/chn.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/2350.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2350.png"
+      },
+      "seasonWindow": {
+        "start": [
+          1,
+          1
+        ],
+        "end": [
+          12,
+          31
+        ],
+        "nextLabel": "January"
+      },
+      "fallback": [
+        "2026-01-01",
+        "2026-12-31"
+      ]
+    },
+    {
+      "key": "greek",
+      "name": "Greek Super League",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/gre.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/gre.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/175.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/175.png"
+      },
+      "seasonWindow": {
+        "start": [
+          8,
+          22
+        ],
+        "end": [
+          5,
+          24
+        ],
+        "nextLabel": "August"
+      },
+      "fallback": [
+        "2026-08-22",
+        "2027-05-24"
+      ]
+    },
+    {
+      "key": "austria",
+      "name": "Austrian Bundesliga",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/aut.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/aut.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/207.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/207.png"
+      },
+      "seasonWindow": {
+        "start": [
+          8,
+          1
+        ],
+        "end": [
+          5,
+          24
+        ],
+        "nextLabel": "August"
+      },
+      "fallback": [
+        "2026-08-01",
+        "2027-05-24"
+      ]
+    },
+    {
+      "key": "denmark",
+      "name": "Danish Superliga",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/den.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/den.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/181.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/181.png"
+      },
+      "seasonWindow": {
+        "start": [
+          7,
+          18
+        ],
+        "end": [
+          5,
+          24
+        ],
+        "nextLabel": "July"
+      },
+      "fallback": [
+        "2026-07-18",
+        "2027-05-24"
+      ]
+    },
+    {
+      "key": "norway",
+      "name": "Norwegian Eliteserien",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/nor.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/nor.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/20.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/20.png"
+      },
+      "seasonWindow": {
+        "start": [
+          3,
+          28
+        ],
+        "end": [
+          12,
+          1
+        ],
+        "nextLabel": "late March"
+      },
+      "fallback": [
+        "2026-03-28",
+        "2026-12-01"
+      ]
+    },
+    {
+      "key": "sweden",
+      "name": "Swedish Allsvenskan",
+      "category": "Soccer",
+      "entity": "team",
+      "endpoint": "soccer/swe.1",
+      "apiSource": "ESPN public API",
+      "teamEndpoint": "https://site.api.espn.com/apis/site/v2/sports/soccer/swe.1/teams",
+      "renderer": "soccer",
+      "emoji": "⚽",
+      "logo": {
+        "light": "https://a.espncdn.com/i/leaguelogos/soccer/500/26.png",
+        "dark": "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/26.png"
+      },
+      "seasonWindow": {
+        "start": [
+          3,
+          28
+        ],
+        "end": [
+          11,
+          9
+        ],
+        "nextLabel": "late March"
+      },
+      "fallback": [
+        "2026-03-28",
+        "2026-11-09"
       ]
     }
   ]

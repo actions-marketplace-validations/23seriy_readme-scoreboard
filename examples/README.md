@@ -66,6 +66,24 @@ A tennis board tracking an individual player (entity: player) — world ranking 
 
 [View rendered output →](atp-sin.md)
 
+### WTA — SAB (player)
+
+A women's tennis board tracking an individual player (entity: player) — world ranking and last match.
+
+[View rendered output →](wta-sab.md)
+
+### NASCAR — HAM (player)
+
+A NASCAR Cup Series driver's championship position and points (entity: player).
+
+[View rendered output →](nascar-ham.md)
+
+### INDYCAR — PAL (player)
+
+An IndyCar Series driver's championship position and points (entity: player).
+
+[View rendered output →](indycar-pal.md)
+
 ## Custom title
 
 The `title:` input replaces the default `My Favourite <League> Team` heading.
@@ -89,4 +107,77 @@ The `compact: true` input produces a smaller block without team logos or recent-
 The `badge: true` input renders compact shields-style badges instead of a full board.
 
 [View rendered output →](badge.md)
+
+## Player spotlight
+
+The `player:` input adds a Player Spotlight block for one athlete on the board's roster,
+with their season headline stats and most recent game.
+Supported for NBA, MLB, NFL, NHL, and every soccer league.
+The name must match the roster's exact spelling, including accents.
+
+### NBA — Luka Doncic
+
+`player: Luka Doncic` on `team: LAL`.
+
+[View rendered output →](nba-lal-luka-doncic.md)
+
+### WNBA — Napheesa Collier
+
+`player: Napheesa Collier` on `team: MIN`.
+
+[View rendered output →](wnba-min-napheesa-collier.md)
+
+### NCAAB — Dwayne Aristode
+
+`player: Dwayne Aristode` on `team: ARIZ`.
+
+[View rendered output →](ncaab-ariz-dwayne-aristode.md)
+
+### NCAAW — KK Arnold
+
+`player: KK Arnold` on `team: UCONN`.
+
+[View rendered output →](ncaaw-uconn-kk-arnold.md)
+
+### MLB — Vladimir Guerrero Jr.
+
+`player: Vladimir Guerrero Jr.` on `team: TOR`.
+
+[View rendered output →](mlb-tor-vladimir-guerrero-jr.md)
+
+### NFL — Patrick Mahomes
+
+`player: Patrick Mahomes` on `team: KC`.
+
+[View rendered output →](nfl-kc-patrick-mahomes.md)
+
+### NHL — Artemi Panarin
+
+`player: Artemi Panarin` on `team: NYR`.
+
+[View rendered output →](nhl-nyr-artemi-panarin.md)
+
+### EPL — Bukayo Saka
+
+`player: Bukayo Saka` on `team: ARS`.
+
+[View rendered output →](epl-ars-bukayo-saka.md)
+
+### LALIGA — Kylian Mbappe
+
+`player: Kylian Mbappe` on `team: RMA`.
+
+[View rendered output →](laliga-rma-kylian-mbappe.md)
+
+### MLS — Miguel Almiron
+
+`player: Miguel Almiron` on `team: ATL`.
+
+[View rendered output →](mls-atl-miguel-almiron.md)
+
+### UCL — Vinicius Junior
+
+`player: Vinicius Junior` on `team: RMA`.
+
+[View rendered output →](ucl-rma-vinicius-junior.md)
 

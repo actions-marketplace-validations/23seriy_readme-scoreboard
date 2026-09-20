@@ -1,5 +1,6 @@
 const { get: httpGet } = require("../http");
 const BaseFreeApiAdapter = require("./base-free-api");
+const { buildGameLog, dateOffset, opponentPool, recordFromGames } = require("../demo");
 
 const ESPN_HOST = "https://site.api.espn.com/apis";
 
@@ -45,33 +46,59 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
     return id ? `https://a.espncdn.com/i/teamlogos/soccer/500/${id}.png` : null;
   }
 
+  // ESPN's soccer headshots share the athlete-id path used by the other
+  // leagues. Returns null without an id so the renderer can omit the image
+  // rather than emit a broken one.
+  getPlayerHeadshotUrl(playerId) {
+    return playerId
+      ? `https://a.espncdn.com/i/headshots/soccer/players/full/${playerId}.png`
+      : null;
+  }
+
   /**
    * The base demo data has no soccer-specific fields (draws, per-team
-   * scores), so build a soccer-shaped sample instead.
+   * scores), so build a soccer-shaped sample instead. Deterministic: the
+   * record is counted from the same game log that is displayed.
    */
-  getDemoData(teamAbbr) {
-    const team = this.DEMO_TEAMS[teamAbbr.toUpperCase()];
+  getDemoData(teamAbbr, playerName) {
+    const abbr = teamAbbr.toUpperCase();
+    const team = this.DEMO_TEAMS[abbr];
     if (!team) return null;
 
-    const day = 24 * 60 * 60 * 1000;
-    const sample = [
-      { daysAgo: 3, teamScore: 3, oppScore: 1, oppAbbr: "OPP", isHome: true },
-      { daysAgo: 7, teamScore: 2, oppScore: 2, oppAbbr: "RIV", isHome: false },
-      { daysAgo: 11, teamScore: 0, oppScore: 1, oppAbbr: "UTD", isHome: false },
-    ];
+    const ownTeams = Object.keys(this.DEMO_TEAMS).filter((key) => key !== abbr);
+    // League tables are tiny (one entry per gallery example), so pad with a
+    // per-competition pool. Without this, a 30-game log repeats opponents and
+    // the "next" fixture would duplicate a game already shown.
+    const extras = opponentPool([this.LEAGUE_SLUG, "soccer"], []);
+    const pool = [...new Set([...extras, ...ownTeams])].filter((key) => key !== abbr);
+    const log = buildGameLog({
+      seed: `${this.LEAGUE_SLUG}-${abbr}`,
+      opponents: pool,
+      wins: 18,
+      losses: 6,
+      draws: 6,
+      scoreRange: { team: [0, 4], opponent: [0, 3] },
+    });
+    log.reverse();
+    const record = recordFromGames(log, this.getSeasonYear());
+    const recentGames = log.slice(0, 5);
+
+    // Keep the upcoming fixture distinct from anything just played.
+    const playedRecently = new Set(recentGames.map((g) => g.oppAbbr));
+    const nextOpponent = pool.find((opp) => !playedRecently.has(opp)) || pool[0];
 
     return {
       team,
-      record: { wins: 18, losses: 6, draws: 6, season: this.getSeasonYear() },
+      record,
       standing: { position: 2, label: this.LEAGUE_NAME },
-      form: ["W", "D", "W", "L", "W"],
+      form: recentGames.map((g) => (g.drew ? "D" : g.won ? "W" : "L")),
       nextGame: {
-        date: new Date(Date.now() + 3 * day).toISOString(),
-        opponent: "OPP",
+        date: dateOffset(7),
+        opponent: nextOpponent,
         isHome: true,
       },
-      recentGames: sample.map((g) => ({
-        date: new Date(Date.now() - g.daysAgo * day).toISOString(),
+      recentGames: recentGames.map((g) => ({
+        date: g.date,
         gameType: "R",
         home_team: {
           id: g.isHome ? team.id : 0,
@@ -88,9 +115,10 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
         teamScore: g.teamScore,
         oppScore: g.oppScore,
         oppAbbr: g.oppAbbr,
-        won: g.teamScore > g.oppScore,
-        drew: g.teamScore === g.oppScore,
+        won: g.won,
+        drew: g.drew,
       })),
+      spotlight: playerName ? this.getDemoSpotlight(abbr, playerName, recentGames) : null,
     };
   }
 
@@ -266,6 +294,175 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
   parseGameResponse() { return []; }
   parseTeamResponse() { return null; }
   getGamesUrl() { return ""; }
+
+  // ------------------------------------------------------------------
+  // Player spotlight
+  //
+  // ESPN exposes no season-stats endpoint for soccer athletes (it 404s), but
+  // the game log does carry per-match stat columns. Season totals are
+  // therefore summed from the log. Every soccer league shares this endpoint
+  // shape, so a single implementation covers all of them.
+  // ------------------------------------------------------------------
+
+  findPlayerOnRoster(roster, playerName) {
+    const target = playerName.trim().toLowerCase();
+    return roster.find((player) => (player.fullName || "").toLowerCase() === target) || null;
+  }
+
+  async fetchTeamRoster(teamAbbr) {
+    try {
+      const team = await this.fetchTeam(teamAbbr);
+      if (!team) return [];
+      const { data } = await httpGet(`${this.baseUrl}/teams/${team.id}/roster`);
+      const athletes = (data.athletes || []).flatMap((group) => group.items || group);
+      return athletes
+        .filter((athlete) => athlete && athlete.id)
+        .map((athlete) => ({
+          id: String(athlete.id),
+          fullName: athlete.fullName || athlete.displayName || "",
+          position: athlete.position?.abbreviation || athlete.position?.name || "",
+        }))
+        .filter((athlete) => athlete.fullName);
+    } catch (error) {
+      console.error(`Failed to fetch ${this.LEAGUE_NAME} roster: ${error.message}`);
+      return [];
+    }
+  }
+
+  // Sum a game log into season totals. The log's `names` array labels each
+  // numeric column in every event's `stats` array.
+  summarizeGameLog(gameLog) {
+    const names = gameLog.names || [];
+    const events = (gameLog.seasonTypes || [])
+      .flatMap((seasonType) => seasonType.categories || [])
+      .flatMap((category) => category.events || []);
+    const indexOf = (name) => names.indexOf(name);
+    const idx = {
+      goals: indexOf("totalGoals"),
+      assists: indexOf("goalAssists"),
+      saves: indexOf("saves"),
+      cleanSheets: indexOf("cleanSheet"),
+      yellowCards: indexOf("yellowCards"),
+      redCards: indexOf("redCards"),
+    };
+    const total = (column) => {
+      if (column === -1) return 0;
+      return events.reduce((sum, event) => {
+        const value = Number(event.stats?.[column]);
+        return sum + (Number.isFinite(value) ? value : 0);
+      }, 0);
+    };
+    return {
+      appearances: events.length,
+      goals: total(idx.goals),
+      assists: total(idx.assists),
+      saves: total(idx.saves),
+      cleanSheets: total(idx.cleanSheets),
+      yellowCards: total(idx.yellowCards),
+      redCards: total(idx.redCards),
+    };
+  }
+
+  async fetchPlayerSeasonStats(athleteId) {
+    try {
+      const { data } = await httpGet(
+        `https://site.web.api.espn.com/apis/common/v3/sports/soccer/${this.LEAGUE_SLUG}/athletes/${athleteId}/gamelog`
+      );
+      return this.summarizeGameLog(data);
+    } catch (error) {
+      console.error(`Failed to fetch ${this.LEAGUE_NAME} player season stats: ${error.message}`);
+      return null;
+    }
+  }
+
+  async fetchPlayerLastGame(athleteId) {
+    try {
+      const { data } = await httpGet(
+        `https://site.web.api.espn.com/apis/common/v3/sports/soccer/${this.LEAGUE_SLUG}/athletes/${athleteId}/gamelog`
+      );
+      const names = data.names || [];
+      const categories = (data.seasonTypes || []).flatMap((seasonType) => seasonType.categories || []);
+      const latest = categories.flatMap((category) => category.events || [])[0];
+      if (!latest) return null;
+      const events = data.events || {};
+      const meta = events[latest.eventId] || {};
+      const at = (name) => {
+        const index = names.indexOf(name);
+        if (index === -1) return null;
+        const value = Number(latest.stats?.[index]);
+        return Number.isFinite(value) ? value : null;
+      };
+      return {
+        date: meta.gameDate || null,
+        opponent: meta.opponent?.abbreviation || meta.opponent?.displayName || null,
+        goals: at("totalGoals"),
+        assists: at("goalAssists"),
+        saves: at("saves"),
+      };
+    } catch (error) {
+      console.error(`Failed to fetch ${this.LEAGUE_NAME} player last game: ${error.message}`);
+      return null;
+    }
+  }
+
+  async fetchPlayerSpotlight(teamAbbr, playerName) {
+    const roster = await this.fetchTeamRoster(teamAbbr);
+    const player = this.findPlayerOnRoster(roster, playerName);
+    if (!player) {
+      const names = roster.slice(0, 8).map((entry) => entry.fullName);
+      const suffix = roster.length > 8 ? ", ..." : "";
+      throw new Error(`Unknown player "${playerName}" on ${teamAbbr}. Try one of: ${names.join(", ")}${suffix}`);
+    }
+    const [season, lastGame] = await Promise.all([
+      this.fetchPlayerSeasonStats(player.id),
+      this.fetchPlayerLastGame(player.id),
+    ]);
+    // Fail loudly rather than render a line of zeroes: an empty game log means
+    // ESPN has no stats for this athlete, and silently printing "0 APP · 0 G"
+    // would look like a bug in the board rather than missing upstream data.
+    if (!season || season.appearances === 0) {
+      throw new Error(
+        `No season stats available for "${player.fullName}" on ${teamAbbr} (${this.LEAGUE_NAME}). ` +
+        `ESPN has no game log for this athlete yet — this is common in the off-season or early in a season.`
+      );
+    }
+    return { name: player.fullName, position: player.position, season, lastGame, headshotUrl: this.getPlayerHeadshotUrl(player.id) };
+  }
+
+  // Deterministic demo spotlight: derived from the player's name so repeated
+  // runs and the generated examples stay byte-identical. `recentGames` is the
+  // team board's own list, so the spotlight's last game can't contradict it.
+  getDemoSpotlight(teamAbbr, playerName, recentGames = []) {
+    const team = this.DEMO_TEAMS[teamAbbr.toUpperCase()];
+    if (!team || !playerName) return null;
+    const seed = playerName.split("").reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+    const last = recentGames[0];
+    return {
+      name: playerName,
+      position: "MF",
+      season: {
+        appearances: 20 + (seed % 15),
+        goals: seed % 18,
+        assists: seed % 12,
+        saves: 0,
+        cleanSheets: 0,
+        yellowCards: seed % 6,
+        redCards: 0,
+      },
+      // Soccer demo data invents a player name rather than using a real
+      // athlete, so there is no id to build a headshot from. The field is
+      // deliberately absent: the renderer treats it as optional and omits the
+      // image, which is better than pointing at a broken URL. Live runs always
+      // populate it from the roster's athlete id.
+      lastGame: {
+        date: last ? last.date : dateOffset(0),
+        opponent: last ? last.oppAbbr : "RIV",
+        goals: seed % 2,
+        assists: seed % 2,
+        saves: 0,
+      },
+    };
+  }
 }
 
 module.exports = BaseSoccerAdapter;

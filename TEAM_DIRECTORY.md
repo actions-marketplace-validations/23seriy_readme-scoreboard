@@ -8,36 +8,36 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ATL | `ATL` | 1 |
-| BKN | `BKN` | 17 |
+| Atlanta Hawks | `ATL` | 1 |
+| Brooklyn Nets | `BKN` | 17 |
 | Boston Celtics | `BOS` | 2 |
-| CHA | `CHA` | 30 |
+| Charlotte Hornets | `CHA` | 30 |
 | Chicago Bulls | `CHI` | 4 |
-| CLE | `CLE` | 5 |
-| DAL | `DAL` | 6 |
-| DEN | `DEN` | 7 |
-| DET | `DET` | 8 |
-| Golden State Warriors | `GSW` | 9 |
-| HOU | `HOU` | 10 |
-| IND | `IND` | 11 |
-| LAC | `LAC` | 12 |
+| Cleveland Cavaliers | `CLE` | 5 |
+| Dallas Mavericks | `DAL` | 6 |
+| Denver Nuggets | `DEN` | 7 |
+| Detroit Pistons | `DET` | 8 |
+| Golden State Warriors | `GS` | 9 |
+| Houston Rockets | `HOU` | 10 |
+| Indiana Pacers | `IND` | 11 |
+| LA Clippers | `LAC` | 12 |
 | Los Angeles Lakers | `LAL` | 13 |
-| MEM | `MEM` | 29 |
-| MIA | `MIA` | 14 |
-| MIL | `MIL` | 15 |
-| MIN | `MIN` | 16 |
-| NOP | `NOP` | 3 |
-| New York Knicks | `NYK` | 18 |
-| OKC | `OKC` | 25 |
-| ORL | `ORL` | 19 |
-| PHI | `PHI` | 20 |
-| PHX | `PHX` | 21 |
-| POR | `POR` | 22 |
-| SAC | `SAC` | 23 |
-| SAS | `SAS` | 24 |
-| TOR | `TOR` | 28 |
-| UTA | `UTA` | 26 |
-| WAS | `WAS` | 27 |
+| Memphis Grizzlies | `MEM` | 29 |
+| Miami Heat | `MIA` | 14 |
+| Milwaukee Bucks | `MIL` | 15 |
+| Minnesota Timberwolves | `MIN` | 16 |
+| New Orleans Pelicans | `NO` | 3 |
+| New York Knicks | `NY` | 18 |
+| Oklahoma City Thunder | `OKC` | 25 |
+| Orlando Magic | `ORL` | 19 |
+| Philadelphia 76ers | `PHI` | 20 |
+| Phoenix Suns | `PHX` | 21 |
+| Portland Trail Blazers | `POR` | 22 |
+| San Antonio Spurs | `SA` | 24 |
+| Sacramento Kings | `SAC` | 23 |
+| Toronto Raptors | `TOR` | 28 |
+| Utah Jazz | `UTAH` | 26 |
+| Washington Wizards | `WSH` | 27 |
 
 ## MLB
 
@@ -82,38 +82,40 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ARI | `ARI` | 1 |
-| ATL | `ATL` | 2 |
-| BAL | `BAL` | 3 |
-| Buffalo Bills | `BUF` | 4 |
-| CAR | `CAR` | 5 |
-| CHI | `CHI` | 6 |
-| CIN | `CIN` | 7 |
-| CLE | `CLE` | 8 |
-| Dallas Cowboys | `DAL` | 9 |
-| DEN | `DEN` | 10 |
-| DET | `DET` | 11 |
-| GB | `GB` | 12 |
-| HOU | `HOU` | 13 |
-| IND | `IND` | 14 |
-| JAX | `JAX` | 15 |
-| Kansas City Chiefs | `KC` | 16 |
-| LAC | `LAC` | 17 |
-| LAR | `LAR` | 18 |
-| LV | `LV` | 19 |
-| MIA | `MIA` | 20 |
-| MIN | `MIN` | 21 |
-| NE | `NE` | 22 |
-| NO | `NO` | 23 |
-| NYG | `NYG` | 24 |
-| NYJ | `NYJ` | 25 |
-| Philadelphia Eagles | `PHI` | 26 |
-| PIT | `PIT` | 27 |
-| SEA | `SEA` | 29 |
-| San Francisco 49ers | `SF` | 28 |
-| TB | `TB` | 30 |
+| Arizona Cardinals | `ARI` | 22 |
+| Atlanta Falcons | `ATL` | 1 |
+| Baltimore Ravens | `BAL` | 33 |
+| Buffalo Bills | `BUF` | 2 |
+| Carolina Panthers | `CAR` | 29 |
+| Chicago Bears | `CHI` | 3 |
+| Cincinnati Bengals | `CIN` | 4 |
+| Cleveland Browns | `CLE` | 5 |
+| Dallas Cowboys | `DAL` | 6 |
+| Denver Broncos | `DEN` | 7 |
+| Detroit Lions | `DET` | 8 |
+| Green Bay Packers | `GB` | 9 |
+| Houston Texans | `HOU` | 34 |
+| Indianapolis Colts | `IND` | 11 |
+| Jacksonville Jaguars | `JAX` | 30 |
+| Kansas City Chiefs | `KC` | 12 |
+| Los Angeles Chargers | `LAC` | 24 |
+| Los Angeles Rams | `LAR` | 14 |
+| Las Vegas Raiders | `LV` | 13 |
+| Miami Dolphins | `MIA` | 15 |
+| Minnesota Vikings | `MIN` | 16 |
+| New England Patriots | `NE` | 17 |
+| New Orleans Saints | `NO` | 18 |
+| New York Giants | `NYG` | 19 |
+| New York Jets | `NYJ` | 20 |
+| Philadelphia Eagles | `PHI` | 21 |
+| Pittsburgh Steelers | `PIT` | 23 |
+| Seattle Seahawks | `SEA` | 26 |
+| San Francisco 49ers | `SF` | 25 |
+| Tampa Bay Buccaneers | `TB` | 27 |
+| Tennessee Titans | `TEN` | 10 |
 | TEN | `TEN` | 31 |
 | WAS | `WAS` | 32 |
+| Washington Commanders | `WSH` | 28 |
 
 ## NHL
 
@@ -161,35 +163,35 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Team | Abbreviation | ID |
 |------|--------------|----|
 | Atlanta United FC | `ATL` | 18418 |
-| ATX | `ATX` | 20906 |
-| CHI | `CHI` | 182 |
-| CIN | `CIN` | 18267 |
-| CLB | `CLB` | 183 |
-| CLT | `CLT` | 21300 |
-| COL | `COL` | 184 |
-| DAL | `DAL` | 185 |
-| DC | `DC` | 193 |
-| HOU | `HOU` | 6077 |
-| LA | `LA` | 187 |
+| Austin FC | `ATX` | 20906 |
+| Chicago Fire FC | `CHI` | 182 |
+| FC Cincinnati | `CIN` | 18267 |
+| Columbus Crew | `CLB` | 183 |
+| Charlotte FC | `CLT` | 21300 |
+| Colorado Rapids | `COL` | 184 |
+| FC Dallas | `DAL` | 185 |
+| D.C. United | `DC` | 193 |
+| Houston Dynamo FC | `HOU` | 6077 |
+| LA Galaxy | `LA` | 187 |
 | Los Angeles FC | `LAFC` | 18966 |
 | Inter Miami CF | `MIA` | 20232 |
-| MIN | `MIN` | 17362 |
-| MTL | `MTL` | 9720 |
-| NE | `NE` | 189 |
-| NSH | `NSH` | 18986 |
-| NYC | `NYC` | 17606 |
-| ORL | `ORL` | 12011 |
-| PHI | `PHI` | 10739 |
-| POR | `POR` | 9723 |
-| RBNY | `RBNY` | 190 |
-| RSL | `RSL` | 4771 |
-| SD | `SD` | 22529 |
-| SEA | `SEA` | 9726 |
-| SJ | `SJ` | 191 |
-| SKC | `SKC` | 186 |
-| STL | `STL` | 21812 |
-| TOR | `TOR` | 7318 |
-| VAN | `VAN` | 9727 |
+| Minnesota United FC | `MIN` | 17362 |
+| CF Montréal | `MTL` | 9720 |
+| New England Revolution | `NE` | 189 |
+| Nashville SC | `NSH` | 18986 |
+| New York City FC | `NYC` | 17606 |
+| Orlando City SC | `ORL` | 12011 |
+| Philadelphia Union | `PHI` | 10739 |
+| Portland Timbers | `POR` | 9723 |
+| Red Bull New York | `RBNY` | 190 |
+| Real Salt Lake | `RSL` | 4771 |
+| San Diego FC | `SD` | 22529 |
+| Seattle Sounders FC | `SEA` | 9726 |
+| San Jose Earthquakes | `SJ` | 191 |
+| Sporting Kansas City | `SKC` | 186 |
+| St. Louis CITY SC | `STL` | 21812 |
+| Toronto FC | `TOR` | 7318 |
+| Vancouver Whitecaps | `VAN` | 9727 |
 
 ## Premier League
 
@@ -198,23 +200,26 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Team | Abbreviation | ID |
 |------|--------------|----|
 | Arsenal | `ARS` | 359 |
-| AVL | `AVL` | 362 |
-| BHA | `BHA` | 331 |
-| BOU | `BOU` | 349 |
-| BRE | `BRE` | 337 |
+| Aston Villa | `AVL` | 362 |
+| Brighton & Hove Albion | `BHA` | 331 |
+| AFC Bournemouth | `BOU` | 349 |
+| Brentford | `BRE` | 337 |
 | BUR | `BUR` | 379 |
-| CHE | `CHE` | 363 |
-| CRY | `CRY` | 384 |
-| EVE | `EVE` | 368 |
-| FUL | `FUL` | 370 |
-| LEE | `LEE` | 357 |
+| Chelsea | `CHE` | 363 |
+| Coventry City | `COV` | 388 |
+| Crystal Palace | `CRY` | 384 |
+| Everton | `EVE` | 368 |
+| Fulham | `FUL` | 370 |
+| Hull City | `HUL` | 306 |
+| Ipswich Town | `IPS` | 373 |
+| Leeds United | `LEE` | 357 |
 | Liverpool | `LIV` | 364 |
-| MAN | `MAN` | 360 |
+| Manchester United | `MAN` | 360 |
 | Manchester City | `MNC` | 382 |
-| NEW | `NEW` | 361 |
-| NFO | `NFO` | 393 |
-| SUN | `SUN` | 366 |
-| TOT | `TOT` | 367 |
+| Newcastle United | `NEW` | 361 |
+| Nottingham Forest | `NFO` | 393 |
+| Sunderland | `SUN` | 366 |
+| Tottenham Hotspur | `TOT` | 367 |
 | WHU | `WHU` | 371 |
 | WOL | `WOL` | 380 |
 
@@ -224,26 +229,29 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ALA | `ALA` | 96 |
-| ATH | `ATH` | 93 |
+| Alavés | `ALA` | 96 |
+| Athletic Club | `ATH` | 93 |
 | Atlético Madrid | `ATM` | 1068 |
 | Barcelona | `BAR` | 83 |
-| BET | `BET` | 244 |
-| CEL | `CEL` | 85 |
-| ELC | `ELC` | 3751 |
-| ESP | `ESP` | 88 |
-| GET | `GET` | 2922 |
+| Real Betis | `BET` | 244 |
+| Celta Vigo | `CEL` | 85 |
+| Deportivo | `DEP` | 90 |
+| Elche | `ELC` | 3751 |
+| Espanyol | `ESP` | 88 |
+| Getafe | `GET` | 2922 |
 | GIR | `GIR` | 9812 |
-| LEV | `LEV` | 1538 |
+| Levante | `LEV` | 1538 |
+| Málaga | `MCF` | 99 |
 | MLL | `MLL` | 84 |
-| OSA | `OSA` | 97 |
+| Osasuna | `OSA` | 97 |
 | OVI | `OVI` | 92 |
-| RAY | `RAY` | 101 |
+| Racing Santander | `RAC` | 87 |
+| Rayo Vallecano | `RAY` | 101 |
 | Real Madrid | `RMA` | 86 |
-| RSO | `RSO` | 89 |
-| SEV | `SEV` | 243 |
-| VAL | `VAL` | 94 |
-| VIL | `VIL` | 102 |
+| Real Sociedad | `RSO` | 89 |
+| Sevilla | `SEV` | 243 |
+| Valencia | `VAL` | 94 |
+| Villarreal | `VIL` | 102 |
 
 ## Bundesliga
 
@@ -252,22 +260,25 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Team | Abbreviation | ID |
 |------|--------------|----|
 | Bayer Leverkusen | `B04` | 131 |
-| BMG | `BMG` | 268 |
+| Borussia Mönchengladbach | `BMG` | 268 |
 | Borussia Dortmund | `DOR` | 124 |
-| FCA | `FCA` | 3841 |
-| FCU | `FCU` | 598 |
+| SV Elversberg | `ELV` | 10388 |
+| FC Augsburg | `FCA` | 3841 |
+| 1. FC Union Berlin | `FCU` | 598 |
 | HDH | `HDH` | 6418 |
-| HSV | `HSV` | 127 |
-| KOE | `KOE` | 122 |
-| M05 | `M05` | 2950 |
+| Hamburg SV | `HSV` | 127 |
+| FC Cologne | `KOE` | 122 |
+| Mainz | `M05` | 2950 |
 | Bayern Munich | `MUN` | 132 |
-| RBL | `RBL` | 11420 |
-| SCF | `SCF` | 126 |
-| SGE | `SGE` | 125 |
+| RB Leipzig | `RBL` | 11420 |
+| Schalke 04 | `S04` | 133 |
+| SC Freiburg | `SCF` | 126 |
+| SC Paderborn 07 | `SCP` | 3307 |
+| Eintracht Frankfurt | `SGE` | 125 |
 | STP | `STP` | 270 |
-| SVW | `SVW` | 137 |
-| TSG | `TSG` | 7911 |
-| VFB | `VFB` | 134 |
+| Werder Bremen | `SVW` | 137 |
+| TSG Hoffenheim | `TSG` | 7911 |
+| VfB Stuttgart | `VFB` | 134 |
 | WOB | `WOB` | 138 |
 
 ## Serie A
@@ -276,25 +287,28 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ATA | `ATA` | 105 |
-| BOL | `BOL` | 107 |
-| CAG | `CAG` | 2925 |
-| COMO | `COMO` | 2572 |
+| Atalanta | `ATA` | 105 |
+| Bologna | `BOL` | 107 |
+| Cagliari | `CAG` | 2925 |
+| Como | `COMO` | 2572 |
 | CRE | `CRE` | 4050 |
-| FIO | `FIO` | 109 |
-| GEN | `GEN` | 3263 |
+| Fiorentina | `FIO` | 109 |
+| Frosinone | `FRO` | 4057 |
+| Genoa | `GEN` | 3263 |
 | Internazionale | `INT` | 110 |
 | Juventus | `JUV` | 111 |
-| LAZ | `LAZ` | 112 |
-| LEC | `LEC` | 113 |
+| Lazio | `LAZ` | 112 |
+| Lecce | `LEC` | 113 |
 | AC Milan | `MIL` | 103 |
-| NAP | `NAP` | 114 |
-| PAR | `PAR` | 115 |
+| Monza | `MON` | 4007 |
+| Napoli | `NAP` | 114 |
+| Parma | `PAR` | 115 |
 | PIS | `PIS` | 3956 |
-| ROMA | `ROMA` | 104 |
-| SAS | `SAS` | 3997 |
-| TOR | `TOR` | 239 |
-| UDI | `UDI` | 118 |
+| AS Roma | `ROMA` | 104 |
+| Sassuolo | `SAS` | 3997 |
+| Torino | `TOR` | 239 |
+| Udinese | `UDI` | 118 |
+| Venezia | `VEN` | 17530 |
 | VER | `VER` | 119 |
 
 ## Ligue 1
@@ -303,24 +317,26 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ANG | `ANG` | 7868 |
-| AUX | `AUX` | 172 |
-| BRE | `BRE` | 6997 |
-| HAC | `HAC` | 3236 |
-| LILL | `LILL` | 166 |
-| LOR | `LOR` | 273 |
-| LYON | `LYON` | 167 |
+| Angers | `ANG` | 7868 |
+| AJ Auxerre | `AUX` | 172 |
+| Brest | `BRE` | 6997 |
+| Le Havre AC | `HAC` | 3236 |
+| Lille | `LILL` | 166 |
+| Lorient | `LOR` | 273 |
+| Lyon | `LYON` | 167 |
 | METZ | `METZ` | 177 |
+| Le Mans | `MNS` | 2697 |
 | AS Monaco | `MON` | 174 |
 | NAN | `NAN` | 165 |
-| NICE | `NICE` | 2502 |
+| Nice | `NICE` | 2502 |
 | Marseille | `OLM` | 176 |
-| PAR | `PAR` | 6851 |
+| Paris FC | `PAR` | 6851 |
 | Paris Saint-Germain | `PSG` | 160 |
-| RCL | `RCL` | 175 |
-| REN | `REN` | 169 |
-| STR | `STR` | 180 |
-| TOU | `TOU` | 179 |
+| Lens | `RCL` | 175 |
+| Stade Rennais | `REN` | 169 |
+| Strasbourg | `STR` | 180 |
+| Toulouse | `TOU` | 179 |
+| Troyes | `TRY` | 170 |
 
 ## Primeira Liga
 
@@ -328,24 +344,26 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ALV | `ALV` | 21613 |
+| Académico de Viseu | `ACV` | 21607 |
+| Alverca | `ALV` | 21613 |
 | AVS | `AVS` | 22064 |
-| CDN | `CDN` | 3472 |
-| CDSC | `CDSC` | 12215 |
+| C.D. Nacional | `CDN` | 3472 |
+| Santa Clara | `CDSC` | 12215 |
 | CDT | `CDT` | 12706 |
-| CPAC | `CPAC` | 21581 |
-| EPF | `EPF` | 12216 |
-| EST | `EST` | 21610 |
-| FCA | `FCA` | 15784 |
-| FCF | `FCF` | 12698 |
+| Casa Pia | `CPAC` | 21581 |
+| Estoril | `EPF` | 12216 |
+| Estrela | `EST` | 21610 |
+| Arouca | `FCA` | 15784 |
+| FC Famalicao | `FCF` | 12698 |
 | FC Porto | `FCP` | 437 |
-| GVFC | `GVFC` | 3699 |
-| MFC | `MFC` | 3696 |
-| RAFC | `RAFC` | 3822 |
-| SCB | `SCB` | 2994 |
+| Gil Vicente | `GVFC` | 3699 |
+| Maritimo | `MAR` | 552 |
+| Moreirense | `MFC` | 3696 |
+| Rio Ave | `RAFC` | 3822 |
+| Braga | `SCB` | 2994 |
 | Sporting CP | `SCP` | 2250 |
 | Benfica | `SLB` | 1929 |
-| VSC | `VSC` | 5309 |
+| Vitória de Guimaraes | `VSC` | 5309 |
 
 ## Eredivisie
 
@@ -353,24 +371,27 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
+| ADO Den Haag | `ADO` | 2726 |
 | Ajax Amsterdam | `AJA` | 139 |
-| AZ | `AZ` | 140 |
-| EXC | `EXC` | 2566 |
+| AZ Alkmaar | `AZ` | 140 |
+| SC Cambuur | `CAM` | 3736 |
+| Excelsior | `EXC` | 2566 |
 | Feyenoord Rotterdam | `FEY` | 142 |
-| FOR | `FOR` | 143 |
-| GAE | `GAE` | 3706 |
-| GRO | `GRO` | 145 |
-| HEE | `HEE` | 146 |
+| Fortuna Sittard | `FOR` | 143 |
+| Go Ahead Eagles | `GAE` | 3706 |
+| FC Groningen | `GRO` | 145 |
+| Heerenveen | `HEE` | 146 |
 | HER | `HER` | 3708 |
 | NAC | `NAC` | 141 |
-| NEC | `NEC` | 147 |
-| PEC | `PEC` | 2565 |
+| NEC Nijmegen | `NEC` | 147 |
+| PEC Zwolle | `PEC` | 2565 |
 | PSV Eindhoven | `PSV` | 148 |
-| SPA | `SPA` | 151 |
-| TEL | `TEL` | 3735 |
-| TWE | `TWE` | 152 |
-| UTR | `UTR` | 153 |
+| Sparta Rotterdam | `SPA` | 151 |
+| Telstar | `TEL` | 3735 |
+| FC Twente | `TWE` | 152 |
+| FC Utrecht | `UTR` | 153 |
 | VOL | `VOL` | 2727 |
+| Willem II | `WIL` | 156 |
 
 ## WNBA
 
@@ -378,21 +399,21 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ATL | `ATL` | 20 |
-| CHI | `CHI` | 19 |
-| CON | `CON` | 18 |
-| DAL | `DAL` | 3 |
-| GS | `GS` | 129689 |
-| IND | `IND` | 5 |
-| LA | `LA` | 6 |
+| Atlanta Dream | `ATL` | 20 |
+| Chicago Sky | `CHI` | 19 |
+| Connecticut Sun | `CON` | 18 |
+| Dallas Wings | `DAL` | 3 |
+| Golden State Valkyries | `GS` | 129689 |
+| Indiana Fever | `IND` | 5 |
+| Los Angeles Sparks | `LA` | 6 |
 | Las Vegas Aces | `LV` | 17 |
 | Minnesota Lynx | `MIN` | 8 |
 | New York Liberty | `NY` | 9 |
-| PHX | `PHX` | 11 |
-| POR | `POR` | 132052 |
-| SEA | `SEA` | 14 |
-| TOR | `TOR` | 131935 |
-| WSH | `WSH` | 16 |
+| Phoenix Mercury | `PHX` | 11 |
+| Portland Fire | `POR` | 132052 |
+| Seattle Storm | `SEA` | 14 |
+| Toronto Tempo | `TOR` | 131935 |
+| Washington Mystics | `WSH` | 16 |
 
 ## Liga MX
 
@@ -401,23 +422,24 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Team | Abbreviation | ID |
 |------|--------------|----|
 | América | `AME` | 227 |
-| ASL | `ASL` | 15720 |
-| ATS | `ATS` | 216 |
+| Atlético de San Luis | `ASL` | 15720 |
+| Atlante | `ATL` | 226 |
+| Atlas | `ATS` | 216 |
 | Cruz Azul | `CAZ` | 218 |
 | Guadalajara | `GDL` | 219 |
-| JUA | `JUA` | 17851 |
-| LEO | `LEO` | 228 |
+| FC Juarez | `JUA` | 17851 |
+| León | `LEO` | 228 |
 | MAZ | `MAZ` | 20702 |
-| MTY | `MTY` | 220 |
-| NCX | `NCX` | 229 |
-| PAC | `PAC` | 234 |
-| PUE | `PUE` | 231 |
-| QRO | `QRO` | 222 |
-| SAN | `SAN` | 225 |
-| TIJ | `TIJ` | 10125 |
-| TOL | `TOL` | 223 |
-| UANL | `UANL` | 232 |
-| UNAM | `UNAM` | 233 |
+| Monterrey | `MTY` | 220 |
+| Necaxa | `NCX` | 229 |
+| Pachuca | `PAC` | 234 |
+| Puebla | `PUE` | 231 |
+| Querétaro | `QRO` | 222 |
+| Santos | `SAN` | 225 |
+| Tijuana | `TIJ` | 10125 |
+| Toluca | `TOL` | 223 |
+| Tigres UANL | `UANL` | 232 |
+| Pumas UNAM | `UNAM` | 233 |
 
 ## Brasileirão
 
@@ -425,26 +447,26 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| BAH | `BAH` | 9967 |
-| BOT | `BOT` | 6086 |
-| BRA | `BRA` | 6079 |
-| CAM | `CAM` | 7632 |
-| CAP | `CAP` | 3458 |
-| CFC | `CFC` | 3456 |
-| CHA | `CHA` | 9318 |
+| Bahia | `BAH` | 9967 |
+| Botafogo | `BOT` | 6086 |
+| Red Bull Bragantino | `BRA` | 6079 |
+| Atlético-MG | `CAM` | 7632 |
+| Athletico-PR | `CAP` | 3458 |
+| Coritiba | `CFC` | 3456 |
+| Chapecoense | `CHA` | 9318 |
 | Corinthians | `COR` | 874 |
-| CRU | `CRU` | 2022 |
+| Cruzeiro | `CRU` | 2022 |
 | Flamengo | `FLA` | 819 |
-| FLU | `FLU` | 3445 |
-| GRE | `GRE` | 6273 |
-| INT | `INT` | 1936 |
-| MIR | `MIR` | 9169 |
+| Fluminense | `FLU` | 3445 |
+| Grêmio | `GRE` | 6273 |
+| Internacional | `INT` | 1936 |
+| Mirassol | `MIR` | 9169 |
 | Palmeiras | `PAL` | 2029 |
-| REMO | `REMO` | 4936 |
-| SAN | `SAN` | 2674 |
-| SAO | `SAO` | 2026 |
-| VAS | `VAS` | 3454 |
-| VIT | `VIT` | 3457 |
+| Remo | `REMO` | 4936 |
+| Santos | `SAN` | 2674 |
+| São Paulo | `SAO` | 2026 |
+| Vasco da Gama | `VAS` | 3454 |
+| Vitória | `VIT` | 3457 |
 
 ## NWSL
 
@@ -452,22 +474,22 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| BAY | `BAY` | 22187 |
-| BOS | `BOS` | 131562 |
-| CHI | `CHI` | 15360 |
-| DEN | `DEN` | 131563 |
+| Bay FC | `BAY` | 22187 |
+| Boston Legacy FC | `BOS` | 131562 |
+| Chicago Stars FC | `CHI` | 15360 |
+| Denver Summit FC | `DEN` | 131563 |
 | Gotham FC | `GFC` | 15364 |
-| HOU | `HOU` | 17346 |
+| Houston Dash | `HOU` | 17346 |
 | Kansas City Current | `KC` | 20907 |
-| LA | `LA` | 21422 |
-| LOU | `LOU` | 20905 |
-| NC | `NC` | 15366 |
-| ORL | `ORL` | 18206 |
+| Angel City FC | `LA` | 21422 |
+| Racing Louisville FC | `LOU` | 20905 |
+| North Carolina Courage | `NC` | 15366 |
+| Orlando Pride | `ORL` | 18206 |
 | Portland Thorns FC | `POR` | 15362 |
-| SD | `SD` | 21423 |
-| SEA | `SEA` | 15363 |
-| UTA | `UTA` | 19141 |
-| WAS | `WAS` | 15365 |
+| San Diego Wave FC | `SD` | 21423 |
+| Seattle Reign FC | `SEA` | 15363 |
+| Utah Royals | `UTA` | 19141 |
+| Washington Spirit | `WAS` | 15365 |
 
 ## Saudi Pro League
 
@@ -475,24 +497,24 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ABH | `ABH` | 21833 |
+| Abha | `ABH` | 21833 |
 | Al Ahli | `AHL` | 8346 |
-| ALF | `ALF` | 21446 |
-| DIR | `DIR` | 131746 |
-| ETT | `ETT` | 8363 |
-| FAT | `FAT` | 13033 |
-| FAY | `FAY` | 21827 |
-| HAZ | `HAZ` | 21964 |
+| Al Faisaly | `ALF` | 21446 |
+| Al Diriyah | `DIR` | 131746 |
+| Al Ettifaq | `ETT` | 8363 |
+| Al Fateh | `FAT` | 13033 |
+| Al Fayha | `FAY` | 21827 |
+| Al Hazem | `HAZ` | 21964 |
 | Al Hilal | `HIL` | 929 |
-| ITT | `ITT` | 2276 |
-| KHA | `KHA` | 21829 |
-| KHO | `KHO` | 22028 |
-| NEOM | `NEOM` | 130899 |
+| Al Ittihad | `ITT` | 2276 |
+| Al Khaleej | `KHA` | 21829 |
+| Al Kholood | `KHO` | 22028 |
+| Neom SC | `NEOM` | 130899 |
 | Al Nassr | `NSR` | 817 |
-| QAD | `QAD` | 22022 |
-| RIY | `RIY` | 21965 |
-| SHA | `SHA` | 793 |
-| TAA | `TAA` | 18459 |
+| Al Qadsiah | `QAD` | 22022 |
+| Al Riyadh | `RIY` | 21965 |
+| Al Shabab | `SHA` | 793 |
+| Al Taawoun | `TAA` | 18459 |
 
 ## J1 League
 
@@ -500,26 +522,26 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| AVF | `AVF` | 7107 |
-| CER | `CER` | 7109 |
-| GAM | `GAM` | 7102 |
-| JEF | `JEF` | 7111 |
-| KAN | `KAN` | 7115 |
+| Avispa Fukuoka | `AVF` | 7107 |
+| Cerezo Osaka | `CER` | 7109 |
+| Gamba Osaka | `GAM` | 7102 |
+| JEF United Ichihara-Chiba | `JEF` | 7111 |
+| Kashima Antlers | `KAN` | 7115 |
 | Kawasaki Frontale | `KAW` | 7112 |
-| KRE | `KRE` | 7476 |
-| KYO | `KYO` | 21361 |
-| MITO | `MITO` | 131701 |
-| NAG | `NAG` | 7108 |
-| OKA | `OKA` | 22522 |
-| SAN | `SAN` | 7114 |
-| SHI | `SHI` | 7104 |
-| TOK | `TOK` | 3384 |
-| TYKV | `TYKV` | 3393 |
+| Kashiwa Reysol | `KRE` | 7476 |
+| Kyoto Sanga | `KYO` | 21361 |
+| Mito Hollyhock | `MITO` | 131701 |
+| Nagoya Grampus | `NAG` | 7108 |
+| Fagiano Okayama | `OKA` | 22522 |
+| Sanfrecce Hiroshima | `SAN` | 7114 |
+| Shimizu S-Pulse | `SHI` | 7104 |
+| FC Tokyo | `TOK` | 3384 |
+| Tokyo Verdy 1969 | `TYKV` | 3393 |
 | Urawa Red Diamonds | `URA` | 3385 |
 | Vissel Kobe | `VIS` | 7477 |
-| VVN | `VVN` | 19001 |
-| YOK | `YOK` | 7116 |
-| ZEL | `ZEL` | 22167 |
+| V-Varen Nagasaki | `VVN` | 19001 |
+| Yokohama F. Marinos | `YOK` | 7116 |
+| Machida Zelvia | `ZEL` | 22167 |
 
 ## Scottish Premiership
 
@@ -615,7 +637,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Team | Abbreviation | ID |
 |------|--------------|----|
 | Anderlecht | `AND` | 441 |
-| Ararat-Armenia | `ARA` | 20024 |
+| ARARAT-ARMENIA | `Ararat` | 20024 |
 | AZ Alkmaar | `AZ` | 140 |
 | Bayer Leverkusen | `B04` | 131 |
 | Besiktas | `BES` | 1895 |
@@ -629,15 +651,15 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Jagiellonia Bialystok | `JAG` | 11505 |
 | Juventus | `JUV` | 111 |
 | Lech Poznan | `LECH` | 2990 |
-| Levski Sofia | `LEVS` | 490 |
-| Lillestrom | `LIL` | 987 |
+| Levski Sofia | `LEV` | 490 |
 | Liverpool | `LIV` | 364 |
+| Lillestrom | `LSK` | 987 |
 | Lyon | `LYON` | 167 |
 | AC Milan | `MIL` | 103 |
 | Manchester United | `MUN` | 360 |
 | NEC Nijmegen | `NEC` | 147 |
 | NK Celje | `NKC` | 3362 |
-| OFI Crete | `OFI` | 1010 |
+| OFI CRETE | `OFI Crete` | 1010 |
 | Marseille | `OLM` | 176 |
 | Olympiacos | `OLY` | 435 |
 | Omonia Nicosia | `OMON` | 617 |
@@ -1485,7 +1507,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Ave Maria University Gyrenes | `AVE M` | 3178 |
 | Averett Cougars | `AVER` | 2047 |
 | Avila University Eagles | `AVILA` | 2048 |
-| Phoenix Firestorm | `AZCHR` | 108358 |
+| Arizona Christian Firestorm | `AZCH` | 108358 |
 | Baker University Baker | `BAK` | 488 |
 | Ball State Cardinals | `BALL` | 2050 |
 | Barton Bulldogs | `BART` | 122666 |
@@ -1502,8 +1524,6 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Benedictine College Ravens | `BENC` | 16111 |
 | Bentley Falcons | `BENT` | 2060 |
 | Berry Vikings | `BERR` | 2757 |
-| Bethany (Ks) | `BETHA` | 492 |
-| Bethel University Tennessee Wildcats | `BETHTN` | 2064 |
 | Bowling Green Falcons | `BGSU` | 189 |
 | Black Hills State Yellow Jackets | `BHSU` | 2069 |
 | Bluffton Beavers | `BLF` | 2074 |
@@ -1522,11 +1542,13 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Bemidji State Beavers | `BST` | 132 |
 | Buffalo State Bengals | `BSU` | 2085 |
 | Butler Bulldogs | `BTLR` | 2086 |
+| Bethel (TN) Wildcats | `BTTN` | 2064 |
 | Bucknell Bison | `BUCK` | 2083 |
 | Buffalo Bulls | `BUF` | 2084 |
 | Bethel (MN) Royals | `BUMN` | 2802 |
 | Buena Vista Beavers | `BVU` | 63 |
 | Baldwin Wallace Yellow Jackets | `BW` | 188 |
+| Bethany (KS) Swedes | `BYKS` | 492 |
 | BYU Cougars | `BYU` | 252 |
 | California Golden Bears | `CAL` | 25 |
 | Calvin Knights | `CALU` | 129738 |
@@ -1537,6 +1559,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Central Arkansas Bears | `CARK` | 2110 |
 | Catawba Indians | `CAT` | 2107 |
 | Catholic Cardinals | `CATH` | 2108 |
+| Campbellsville Tigers | `CBVU` | 2098 |
 | Curry Colonels | `CC` | 40 |
 | Concordia (MN) Cobbers | `CCMN` | 2152 |
 | Centre Colonels | `CCO` | 2121 |
@@ -1549,6 +1572,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Chapman Panthers | `CHAP` | 411 |
 | Chicago Maroons | `CHI` | 80 |
 | Charleston Southern Buccaneers | `CHSO` | 2127 |
+| Chicago State Cougars | `CHST` | 2130 |
 | Cincinnati Bearcats | `CIN` | 2132 |
 | The Citadel Bulldogs | `CIT` | 2643 |
 | Clark Atlanta Panthers | `CKGA` | 2805 |
@@ -1559,7 +1583,6 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Cal Lutheran Kingsmen | `CLU` | 2094 |
 | Cumberlands Indians | `CMBS` | 511 |
 | Colorado School of Mines Orediggers | `CMIN` | 2146 |
-| Campbellsville University Tigers | `CMPBVIL` | 2098 |
 | Claremont Mudd Scripps Stags | `CMS` | 17 |
 | Central Michigan Chippewas | `CMU` | 2117 |
 | Carson Newman Eagles | `CN` | 2105 |
@@ -1649,10 +1672,10 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Fort Hays Tigers | `FHSU` | 2231 |
 | Florida International Panthers | `FIU` | 2229 |
 | Florida Gators | `FLA` | 57 |
-| Florida Memorial University Lions | `FLAMEMRL` | 125762 |
 | Fort Lewis Skyhawks | `FLWC` | 2237 |
 | Franklin & Marshall Diplomats | `FMC` | 2234 |
 | Fairmont State Falcons | `FMSU` | 2986 |
+| Florida Memorial Lions | `FMU` | 125762 |
 | Fordham Rams | `FOR` | 2230 |
 | Franklin Pierce Ravens | `FP` | 112334 |
 | Fresno State Bulldogs | `FRES` | 278 |
@@ -2169,6 +2192,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Willamette Bearcats | `WLMT` | 2930 |
 | Walsh Cavaliers | `WLSH` | 2682 |
 | West Liberty Hilltoppers | `WLU` | 2699 |
+| William Woods Owls | `WLWD` | 129741 |
 | Williamson Mechanics | `WMSN` | 3130 |
 | Western Michigan Broncos | `WMU` | 2711 |
 | Western New England Golden Bears | `WNE` | 2702 |
@@ -2218,7 +2242,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Assumption Greyhounds | `ASP` | 2038 |
 | Arizona State Sun Devils | `ASU` | 9 |
 | Augsburg Auggies | `AUGS` | 124 |
-| Augustana University (SD) Vikings | `AUSD` | 2043 |
+| Augustana (SD) Vikings | `AUSD` | 2043 |
 | Boston College Eagles | `BC` | 103 |
 | Bentley Falcons | `BENT` | 2060 |
 | Bethel College Minnesota Falcons | `BET` | 2802 |
@@ -2298,7 +2322,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | SUNY Geneseo SUNY-GENESEO | `SNYG` | 2783 |
 | St. Michael'S College Purple Knights | `ST.` | 127963 |
 | Saint Michael's Purple Knights | `STM` | 260 |
-| St. Thomas-Minnesota Tommies | `STMN` | 2900 |
+| St. Thomas Tommies | `STMN` | 2900 |
 | Stonehill Skyhawks | `STO` | 284 |
 | Toronto Metropolitan | `TMU` | 111400 |
 | Trine Thunder | `TRNE` | 2651 |
@@ -2329,36 +2353,17 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| ASTM | `ASTM` | 123986 |
-| AUDI | `AUDI` | 132212 |
-| CAD | `CAD` | 132211 |
+| Aston Martin | `ASTM` | 123986 |
+| Audi | `AUDI` | 132212 |
+| Cadillac | `CAD` | 132211 |
 | McLaren | `DH` | 106892 |
 | Red Bull | `GL` | 106921 |
-| JH | `JH` | 111427 |
-| JK | `JK` | 106842 |
+| Haas | `JH` | 111427 |
+| Ferrari | `JK` | 106842 |
 | Mercedes | `LP` | 106893 |
-| RB | `RB` | 123988 |
-| RM | `RM` | 106967 |
-| SCS | `SCS` | 106922 |
-
-## ATP Tennis
-
-**Tennis**
-
-| Team | Abbreviation | ID |
-|------|--------------|----|
-| Carlos Alcaraz | `ALC` | 3782 |
-| Flavio Cobolli | `COB` | 7602 |
-| Alex de Minaur | `DEM` | 2651 |
-| Novak Djokovic | `DJO` | 296 |
-| Felix Auger-Aliassime | `FAA` | 3209 |
-| Arthur Fils | `FIL` | 10052 |
-| Taylor Fritz | `FRI` | 2946 |
-| Daniil Medvedev | `MED` | 2383 |
-| Ben Shelton | `SHE` | 9250 |
-| Jannik Sinner | `SIN` | 3623 |
-| Frances Tiafoe | `TIA` | 2708 |
-| Alexander Zverev | `ZVE` | 2375 |
+| Racing Bulls | `RB` | 123988 |
+| Williams | `RM` | 106967 |
+| Alpine | `SCS` | 106922 |
 
 ## Argentine Primera
 
@@ -2387,8 +2392,8 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Platense | `PLA` | 7764 |
 | Racing Club | `RAC` | 15 |
 | Deportivo Riestra | `RIE` | 17702 |
-| Independiente Rivadavia | `RIV` | 9744 |
 | River Plate | `RIV` | 16 |
+| Independiente Rivadavia | `RIV` | 9744 |
 | Rosario Central | `ROS` | 17 |
 | Sarmiento (Junín) | `SARM` | 10158 |
 | San Lorenzo | `SLO` | 18 |
@@ -2396,4 +2401,172 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Tigre | `TIG` | 7767 |
 | Unión (Santa Fe) | `USF` | 20 |
 | Vélez Sarsfield | `VEL` | 21 |
+
+## A-League Men
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| Adelaide United | `ADE` | 5321 |
+| Auckland FC | `AFC` | 22344 |
+| Brisbane Roar | `BRR` | 5326 |
+| Central Coast Mariners | `CCM` | 5325 |
+| Macarthur FC | `MAC` | 19340 |
+| Melbourne City FC | `MCY` | 11143 |
+| Melbourne Victory | `MVC` | 5328 |
+| Newcastle Jets | `NEW` | 5323 |
+| Perth Glory | `PER` | 5322 |
+| Sydney FC | `SYD` | 5327 |
+| Wellington Phoenix FC | `WEL` | 8352 |
+| Western Sydney Wanderers | `WSW` | 13696 |
+
+## Indian Super League
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| Bengaluru FC | `BFC` | 18851 |
+| Chennaiyin FC | `CFC` | 18000 |
+| SC East Bengal | `EBEN` | 8897 |
+| FC Goa | `GOA` | 18003 |
+| Inter Kashi | `ITKA` | 22069 |
+| Jamshedpur FC | `JFC` | 18850 |
+| Kerala Blasters FC | `KER` | 17997 |
+| Mohun Bagan Super Giant | `MBSG` | 20774 |
+| Mumbai City FC | `MCFC` | 18002 |
+| Mohammedan SC | `MOH` | 20842 |
+| NorthEast United FC | `NEU` | 18004 |
+| Odisha FC | `OFC` | 17998 |
+| Punjab FC | `PFC` | 18894 |
+| Sporting Club Delhi | `SCD` | 131703 |
+
+## Chinese Super League
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| Beijing Guoan | `BG` | 2052 |
+| Chengdu Rongcheng | `CHE` | 21355 |
+| Chongqing Tonglianglong | `CHO` | 131704 |
+| Dalian Yingbo | `DYI` | 22537 |
+| Henan | `HEN` | 8240 |
+| Liaoning Tieren | `LIA` | 131705 |
+| Qingdao Hainiu | `QIN` | 21910 |
+| Qingdao West Coast | `QWC` | 22198 |
+| Shanghai Shenhua | `SHE` | 977 |
+| Shandong Taishan | `SHT` | 7521 |
+| Shenzhen Xinpengcheng | `SHX` | 22199 |
+| Shanghai Port | `SIPG` | 15515 |
+| Tianjin Jinmen Tiger | `TIG` | 8239 |
+| Wuhan Three Towns | `WTT` | 21506 |
+| Yunnan Yukun | `YUN` | 22536 |
+| Zhejiang Professional FC | `ZHE` | 18203 |
+
+## Greek Super League
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| AEK Athens | `AEK` | 887 |
+| Aris | `ARI` | 11553 |
+| Asteras Tripoli | `AST` | 8354 |
+| Atromitos | `ATRO` | 6790 |
+| Iraklis | `IRAK` | 2575 |
+| Kalamata | `KAL` | 132429 |
+| Kifisia | `KIF` | 21969 |
+| Levadiakos | `LEV` | 5276 |
+| OFI CRETE | `OFI Crete` | 1010 |
+| Olympiacos | `OLY` | 435 |
+| Panetolikos | `PAN` | 11431 |
+| Panathinaikos | `PAO` | 443 |
+| PAOK | `PAOK` | 605 |
+| Volos NFC | `VOL` | 20043 |
+
+## Austrian Bundesliga
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| Austria Lustenau | `ALU` | 21540 |
+| Grazer AK | `GRA` | 21846 |
+| TSV Hartberg | `HAR` | 6907 |
+| LASK Linz | `LAS` | 4411 |
+| SC Rheindorf Altach | `SCR` | 4405 |
+| SV Josko Ried | `SJR` | 3759 |
+| RB Salzburg | `SLZ` | 2790 |
+| SK Sturm Graz | `STG` | 3746 |
+| Austria Vienna | `VIE` | 1382 |
+| Rapid Vienna | `VIE` | 519 |
+| Wolfsberger | `WOL` | 13294 |
+| WSG Swarovski Tirol | `WST` | 18794 |
+
+## Danish Superliga
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| AC Horsens | `ACH` | 3585 |
+| AGF | `AGF` | 7853 |
+| Brøndby IF | `BRO` | 575 |
+| FC Nordsjælland | `FCN` | 3101 |
+| F.C. København | `KBH` | 909 |
+| Lyngby Boldklub | `LBK` | 7860 |
+| FC Midtjylland | `MID` | 572 |
+| Odense Boldklub | `OBK` | 11550 |
+| Randers FC | `RAN` | 3132 |
+| Silkeborg IF | `SIF` | 607 |
+| Sønderjyske Fodbold | `SON` | 8118 |
+| Viborg FF | `VIB` | 3153 |
+
+## Norwegian Eliteserien
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| Aalesund | `AAL` | 3278 |
+| Bodo/Glimt | `BODO` | 2980 |
+| Fredrikstad | `FRE` | 3039 |
+| Hamarkameratene | `HAM` | 21380 |
+| IK Start | `IKS` | 6750 |
+| KFUM Oslo | `KFUM` | 22165 |
+| Kristiansund BK | `KRI` | 6672 |
+| Lillestrom | `LSK` | 987 |
+| Molde | `MOL` | 2715 |
+| Rosenborg | `ROS` | 438 |
+| Sandefjord | `SAN` | 3279 |
+| Sarpsborg FK | `SAR` | 5002 |
+| SK Brann | `SKBR` | 620 |
+| Tromso | `TRO` | 5270 |
+| Vålerenga | `VAL` | 2791 |
+| Viking FK | `VIK` | 510 |
+
+## Swedish Allsvenskan
+
+**Soccer**
+
+| Team | Abbreviation | ID |
+|------|--------------|----|
+| AIK | `AIK` | 994 |
+| BK Häcken | `BKH` | 7834 |
+| IF Brommapojkarna | `BRO` | 8221 |
+| Degerfors IF | `DEG` | 20856 |
+| Djurgården | `DJU` | 2339 |
+| IF Elfsborg | `ELF` | 529 |
+| GAIS | `GAIS` | 8222 |
+| IFK Göteborg | `GOT` | 2556 |
+| Hammarby IF | `HAM` | 2495 |
+| Halmstads BK | `HBK` | 3017 |
+| Kalmar FF | `KFF` | 3052 |
+| Malmö FF | `MAL` | 2720 |
+| Mjällby AIF | `MJA` | 20301 |
+| Örgryte IS | `ÖRG` | 131552 |
+| IK Sirius | `SIR` | 8547 |
+| Västerås SK | `VAS` | 22163 |
 

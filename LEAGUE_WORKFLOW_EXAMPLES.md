@@ -34,7 +34,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: nfl
-    team: ARI
+    team: ATL
     marker: readme-scoreboard-nfl
 ```
 
@@ -226,7 +226,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: scottish
-    team: ABE
+    team: CEL
     marker: readme-scoreboard-scottish
 ```
 
@@ -250,7 +250,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: ucl
-    team: AEK
+    team: RMA
     marker: readme-scoreboard-ucl
 ```
 
@@ -262,7 +262,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: uel
-    team: MIL
+    team: MUN
     marker: readme-scoreboard-uel
 ```
 
@@ -286,7 +286,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: ncaab
-    team: ACU
+    team: ARIZ
     marker: readme-scoreboard-ncaab
 ```
 
@@ -298,7 +298,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: ncaaw
-    team: ACU
+    team: CONN
     marker: readme-scoreboard-ncaaw
 ```
 
@@ -310,7 +310,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: ncaaf
-    team: ACU
+    team: ALA
     marker: readme-scoreboard-ncaaf
 ```
 
@@ -322,7 +322,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: ncaa_hockey
-    team: ADR
+    team: BC
     marker: readme-scoreboard-ncaa_hockey
 ```
 
@@ -350,6 +350,42 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     marker: readme-scoreboard-atp
 ```
 
+## WTA Tennis
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: wta
+    team: SAB
+    marker: readme-scoreboard-wta
+```
+
+## NASCAR Cup Series
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: nascar
+    team: HAM
+    marker: readme-scoreboard-nascar
+```
+
+## IndyCar Series
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: indycar
+    team: PAL
+    marker: readme-scoreboard-indycar
+```
+
 ## Argentine Primera
 
 ```yaml
@@ -360,5 +396,101 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     sport: argentina
     team: ALDO
     marker: readme-scoreboard-argentina
+```
+
+## A-League Men
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: aleague
+    team: ADE
+    marker: readme-scoreboard-aleague
+```
+
+## Indian Super League
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: isl
+    team: BFC
+    marker: readme-scoreboard-isl
+```
+
+## Chinese Super League
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: csl
+    team: BG
+    marker: readme-scoreboard-csl
+```
+
+## Greek Super League
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: greek
+    team: AEK
+    marker: readme-scoreboard-greek
+```
+
+## Austrian Bundesliga
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: austria
+    team: ALU
+    marker: readme-scoreboard-austria
+```
+
+## Danish Superliga
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: denmark
+    team: ACH
+    marker: readme-scoreboard-denmark
+```
+
+## Norwegian Eliteserien
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: norway
+    team: AAL
+    marker: readme-scoreboard-norway
+```
+
+## Swedish Allsvenskan
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: sweden
+    team: AIK
+    marker: readme-scoreboard-sweden
 ```
 

@@ -4,15 +4,19 @@
 
 ### 🐴 Buffalo Bills (BUF)
 AFC · AFC East
-🔴 Off-season · Next season starts September 2026
+🟢 Season in progress
 
-📊 2026 Season: 9W - 3L (75.0%)
-   ██████████████████▊░░░░░░
+🏅 Standing: AFC · 2
+📅 Next: vs SF (Jan 10)
+
+📊 2026 Season: 11W - 6L (64.7%)
+   ████████████████▏░░░░░░░░
 
 **📅 Recent Games:**
 ```
-❌ L 13-32 vs KC  (Aug 31, 2026)
-✅ W 26-11 @ SF  (Aug 24, 2026)
-❌ L 13-33 vs DAL (Aug 17, 2026)
-❌ L 13-28 @ PHI (Aug 10, 2026)
+✅ W 30-18 vs LAR (Jan 3, 2026)
+❌ L 22-30 vs PHI (Dec 27, 2025)
+✅ W 29-19 @ KC  (Dec 20, 2025)
+✅ W 25-21 @ DEN (Dec 13, 2025)
+❌ L 29-37 vs DAL (Dec 6, 2025)
 ```

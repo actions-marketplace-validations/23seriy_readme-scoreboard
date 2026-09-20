@@ -1,6 +1,6 @@
 {
   "name": "readme-scoreboard",
-  "version": "1.8.2",
+  "version": "1.14.1",
   "description": "🏆 Live sports stats on your GitHub profile README",
   "author": "solshanetski",
   "license": "MIT",
@@ -13,20 +13,25 @@
     "teams:directory": "node scripts/generate-team-directory.js",
     "teams:directory:markdown": "node scripts/generate-team-directory-markdown.js",
     "teams:directory:validate": "node scripts/validate-team-directory.js",
+    "players:directory": "node scripts/generate-player-directory.js",
+    "players:directory:markdown": "node scripts/generate-player-directory-markdown.js",
+    "players:directory:validate": "node scripts/validate-player-directory.js",
     "leagues:examples": "node scripts/generate-league-examples.js",
+    "leagues:showcase": "node scripts/generate-league-showcase.js",
     "examples:generate": "node scripts/generate-examples.js",
     "smoke:demo": "node scripts/demo-smoke.js",
     "test": "jest",
+    "test:coverage": "jest --coverage --runInBand",
     "lint": "eslint ."
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
-    "axios": "^1.7.0",
+    "axios": "^1.20.0",
     "dotenv": "^17.4.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.9.1",
-    "jest": "^30.4.2"
+    "eslint": "^10.10.0",
+    "jest": "^30.5.1"
   }
 }

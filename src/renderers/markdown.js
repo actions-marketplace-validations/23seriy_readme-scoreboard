@@ -127,11 +127,14 @@ function seasonStatusLine(sport) {
   return `🔴 Off-season · Next season starts ${window.nextLabel || "soon"} ${nextYear}`;
 }
 
-// Optional richer stats rendered after the season line. Adapters may supply
-// `standing` and `nextGame`; lines are omitted when absent so existing boards
-// are unchanged for leagues that don't provide them yet. The last-five `form`
-// line is intentionally not rendered here: the Recent Games list already shows
-// the W/L/D sequence, so a separate 🔥 Form line is redundant.
+// Optional richer stats rendered as their own row after the season line.
+// Adapters may supply `standing` and `nextGame`; lines are omitted when absent
+// so existing boards are unchanged for leagues that don't provide them yet. A
+// leading blank line separates them from the conference/season paragraph so
+// they render as a distinct, clearly visible row instead of wrapping awkwardly
+// into the season status. The last-five `form` line is intentionally not
+// rendered here: the Recent Games list already shows the W/L/D sequence, so a
+// separate 🔥 Form line is redundant.
 function extraTeamLines(data) {
   const lines = [];
   const { standing, nextGame } = data || {};
@@ -148,7 +151,39 @@ function extraTeamLines(data) {
     lines.push(`📅 Next: ${place} ${nextGame.opponent} (${when})`);
   }
 
-  return lines;
+  return lines.length ? ["", ...lines] : lines;
+}
+
+/**
+ * Player spotlight heading, optionally with the athlete's headshot.
+ *
+ * The headshot is rendered as its own right-floated image, matching how the
+ * team logo sits beside the team heading. It is entirely optional: adapters
+ * that can't supply an athlete id omit `headshotUrl`, and the heading falls
+ * back to the plain bold text so nothing changes for those leagues.
+ */
+function pushSpotlightHeading(lines, emoji, spotlight) {
+  lines.push(`**${emoji} Player Spotlight: ${spotlight.name}**`);
+  pushSpotlightHeadshot(lines, spotlight);
+}
+
+// The image is emitted on its own line directly after the heading. It is
+// deliberately not emitted in compact mode (compactMarkdown strips every
+// `<img>` line anyway), so compact boards stay text-only.
+//
+// Sized by HEIGHT, not width. Each league serves its headshots at a different
+// aspect ratio — ESPN's are 600x436 landscape, MLB's are 213x320 portrait and
+// the NHL's are 336x336 square — so constraining the width alone makes the
+// rendered heights differ wildly (72x52, 72x108, 72x72). Constraining the
+// height instead gives every sport the same vertical footprint, which is what
+// makes the boards look consistent beside each other. The width is then free
+// to follow the natural aspect ratio, and `align="right"` floats the image so
+// the differing widths don't disturb the text.
+function pushSpotlightHeadshot(lines, spotlight) {
+  if (!spotlight.headshotUrl) return;
+  lines.push(
+    `<img src="${spotlight.headshotUrl}" alt="${spotlight.name} headshot" height="72" align="right" />`
+  );
 }
 
 function generateBarChart(percent, size) {
@@ -182,10 +217,9 @@ function formatGameResult(game, teamId) {
   return `${result === "W" ? "✅" : "❌"} ${result} ${String(teamScore).padStart(3)}-${String(oppScore).padEnd(3)} ${prefix} ${opponent.abbreviation.padEnd(3)} (${dateStr})${tag}`;
 }
 
-function renderNba(data, sport = "nba", title) {
-  const { team, recentGames, record, emoji, logoUrl } = data;
+function renderNba(data, sport = "nba", title, compact = false) {
+  const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
-
   lines.push(...headingLines(sport, title));
   lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
   lines.push("");
@@ -231,7 +265,121 @@ function renderNba(data, sport = "nba", title) {
     lines.push("📅 No recent games found");
   }
 
+  if (spotlight) {
+    lines.push("");
+    if (compact) {
+      const { points, rebounds, assists } = spotlight.season;
+      lines.push(`${emoji} ${spotlight.name} · ${points.toFixed(1)} PPG · ${rebounds.toFixed(1)} RPG · ${assists.toFixed(1)} APG`);
+    } else {
+      pushSpotlightHeading(lines, emoji, spotlight);
+      const { points, rebounds, assists } = spotlight.season;
+      lines.push(`${points.toFixed(1)} PPG · ${rebounds.toFixed(1)} RPG · ${assists.toFixed(1)} APG`);
+      if (spotlight.lastGame) {
+        const { points: gp, rebounds: gr, assists: ga, minutes: gm, date: gdate, opponent: gopp } = spotlight.lastGame;
+        let detail = `${gp} PTS · ${gr} REB · ${ga} AST · ${gm} MIN`;
+        if (gopp) {
+          // Render the date in the game's timezone so a late-night game doesn't
+          // shift a day. NBA games are given as UTC instants; interpreting them
+          // in US Eastern time shows the actual calendar day the game was played.
+          const when = gdate
+            ? new Date(gdate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
+            : "";
+          detail += ` vs ${gopp}${when ? ` (${when})` : ""}`;
+        }
+        lines.push("");
+        lines.push("**📅 Last Game:**");
+        lines.push("```");
+        lines.push(detail);
+        lines.push("```");
+      }
+    }
+  }
+
   return lines.join("\n");
+}
+
+// Football spotlight: the headline stats depend on the player's position group
+// (passing for a QB, rushing for a back, receiving for a receiver).
+function renderNflSpotlight(lines, spotlight, emoji, compact) {
+  const { season = {}, lastGame, position } = spotlight;
+  const stat = (value) => (value == null ? 0 : value);
+  if (compact) {
+    if (position === "QB") {
+      lines.push(`${emoji} ${spotlight.name} · ${stat(season.passingYards)} PASS YDS · ${stat(season.passingTouchdowns)} PASS TD`);
+    } else if (position === "RB") {
+      lines.push(`${emoji} ${spotlight.name} · ${stat(season.rushingYards)} RUSH YDS · ${stat(season.rushingTouchdowns)} RUSH TD`);
+    } else {
+      lines.push(`${emoji} ${spotlight.name} · ${stat(season.receptions)} REC · ${stat(season.receivingYards)} REC YDS`);
+    }
+    return;
+  }
+  lines.push(`**${emoji} Player Spotlight: ${spotlight.name}**`);
+  pushSpotlightHeadshot(lines, spotlight);
+  if (position === "QB") {
+    lines.push(`${stat(season.passingYards)} PASS YDS · ${stat(season.passingTouchdowns)} PASS TD · ${stat(season.rushingYards)} RUSH YDS`);
+  } else if (position === "RB") {
+    lines.push(`${stat(season.rushingYards)} RUSH YDS · ${stat(season.rushingTouchdowns)} RUSH TD · ${stat(season.receptions)} REC`);
+  } else {
+    lines.push(`${stat(season.receptions)} REC · ${stat(season.receivingYards)} REC YDS · ${stat(season.receivingTouchdowns)} REC TD`);
+  }
+  if (lastGame) {
+    const parts = [];
+    if (lastGame.passingYards != null) parts.push(`${lastGame.passingYards} PASS YDS`);
+    if (lastGame.passingTouchdowns != null) parts.push(`${lastGame.passingTouchdowns} PASS TD`);
+    if (lastGame.rushingYards != null) parts.push(`${lastGame.rushingYards} RUSH YDS`);
+    if (lastGame.receptions != null) parts.push(`${lastGame.receptions} REC`);
+    if (lastGame.receivingYards != null) parts.push(`${lastGame.receivingYards} REC YDS`);
+    let detail = parts.length > 0 ? parts.join(" · ") : "No stats recorded";
+    if (lastGame.opponent) {
+      const when = lastGame.date
+        ? new Date(lastGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
+        : "";
+      detail += ` vs ${lastGame.opponent}${when ? ` (${when})` : ""}`;
+    }
+    lines.push("");
+    lines.push("**📅 Last Game:**");
+    lines.push("```");
+    lines.push(detail);
+    lines.push("```");
+  }
+}
+
+// Hockey spotlight: goalies get saves/save percentage, skaters get G/A/P.
+function renderNhlSpotlight(lines, spotlight, emoji, compact) {
+  const { season = {}, lastGame } = spotlight;
+  const stat = (value) => (value == null ? 0 : value);
+  const isGoalie = season.isGoalie;
+  if (isGoalie) {
+    const svPct = season.savePercentage ? season.savePercentage.toFixed(3).replace(/^0/, "") : ".000";
+    const gaa = season.goalsAgainstAverage ? season.goalsAgainstAverage.toFixed(2) : "0.00";
+    if (compact) {
+      lines.push(`${emoji} ${spotlight.name} · ${stat(season.wins)} W · ${gaa} GAA · ${svPct} SV%`);
+    } else {
+      pushSpotlightHeading(lines, emoji, spotlight);
+      lines.push(`${stat(season.wins)} W · ${gaa} GAA · ${svPct} SV%`);
+    }
+  } else if (compact) {
+    lines.push(`${emoji} ${spotlight.name} · ${stat(season.goals)} G · ${stat(season.assists)} A · ${stat(season.points)} PTS`);
+  } else {
+    pushSpotlightHeading(lines, emoji, spotlight);
+    lines.push(`${stat(season.goals)} G · ${stat(season.assists)} A · ${stat(season.points)} PTS`);
+  }
+  if (lastGame && !compact) {
+    let detail = isGoalie
+      ? `${stat(lastGame.saves)} SV · ${stat(lastGame.shotsAgainst)} SA`
+      : `${stat(lastGame.goals)} G · ${stat(lastGame.assists)} A · ${stat(lastGame.points)} P`;
+    if (lastGame.opponent) {
+      const when = lastGame.date
+        ? new Date(lastGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
+        : "";
+      detail += ` vs ${lastGame.opponent}${when ? ` (${when})` : ""}`;
+    }
+    lines.push("");
+    lines.push("**📅 Last Game:**");
+    lines.push("```");
+    lines.push(detail);
+    lines.push("```");
+  }
 }
 
 function formatMlbGameResult(game, teamId) {
@@ -253,7 +401,7 @@ function formatMlbGameResult(game, teamId) {
 }
 
 function renderMlb(data, title) {
-  const { team, recentGames, record, emoji, logoUrl } = data;
+  const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
   lines.push(...headingLines("mlb", title));
@@ -290,24 +438,59 @@ function renderMlb(data, title) {
     lines.push("📅 No recent games found");
   }
 
+  if (spotlight) {
+    lines.push("");
+    const { avg, homeRuns, rbi } = spotlight.season;
+    pushSpotlightHeading(lines, emoji, spotlight);
+    const battingAvg = avg ? avg.toFixed(3).replace(/^0/, "") : ".000";
+    lines.push(`${battingAvg} AVG · ${homeRuns} HR · ${rbi} RBI`);
+    if (spotlight.lastGame) {
+      const { hits, homeRuns: hr, rbi: lastRbi, avg: lastAvg, date: gdate, opponent: gopp } = spotlight.lastGame;
+      const lastAvgStr = lastAvg ? lastAvg.toFixed(3).replace(/^0/, "") : ".000";
+      let detail = `${hits} H · ${hr} HR · ${lastRbi} RBI · ${lastAvgStr} AVG`;
+      if (gopp) {
+        // Render the date in Eastern time so a late-night game doesn't shift a
+        // day. MLB game dates are calendar dates in the MLB Stats API, while
+        // demo data uses full ISO timestamps, so both shapes are handled.
+        const when = gdate ? formatCalendarDate(gdate) : "";
+        detail += ` vs ${gopp}${when ? ` (${when})` : ""}`;
+      }
+      lines.push("");
+      lines.push("**📅 Last Game:**");
+      lines.push("```");
+      lines.push(detail);
+      lines.push("```");
+    }
+  }
+
   return lines.join("\n");
+}
+
+// Render a game date as "Jan 3, 2026". The live feeds return calendar dates
+// ("2026-09-15") while demo data carries full ISO timestamps, so a bare date is
+// anchored to midday to stop a UTC parse shifting it to the previous day.
+function formatCalendarDate(value) {
+  if (!value) return "";
+  const raw = String(value);
+  const anchor = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T12:00:00` : raw;
+  return new Date(anchor).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 function formatNflGameResult(game) {
   const prefix = game.isHome ? "vs" : "@";
   const result = game.won ? "W" : "L";
-  const dateStr = new Date(game.date + "T12:00:00").toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
+  const dateStr = formatCalendarDate(game.date);
 
   const tag = game.gameType === 3 ? " [Playoffs]" : "";
   return `${game.won ? "✅" : "❌"} ${result} ${String(game.teamScore).padStart(2)}-${String(game.oppScore).padEnd(2)} ${prefix} ${game.oppAbbr.padEnd(3)} (${dateStr})${tag}`;
 }
 
-function renderNfl(data, sport = "nfl", title) {
-  const { team, recentGames, record, emoji, logoUrl } = data;
+function renderNfl(data, sport = "nfl", title, compact = false) {
+  const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
   lines.push(...headingLines(sport, title));
@@ -315,7 +498,9 @@ function renderNfl(data, sport = "nfl", title) {
   lines.push("");
 
   lines.push(`### ${emoji} ${team.full_name} (${team.abbreviation})`);
-  lines.push(`${team.conference} · ${team.division}`);
+  // College conferences have no divisions, so the separator is omitted rather
+  // than left dangling.
+  lines.push(team.division ? `${team.conference} · ${team.division}` : team.conference);
   lines.push(seasonStatusLine(sport));
   lines.push(...extraTeamLines(data));
   lines.push("");
@@ -344,11 +529,16 @@ function renderNfl(data, sport = "nfl", title) {
     lines.push("📅 No recent games found");
   }
 
+  if (spotlight) {
+    lines.push("");
+    renderNflSpotlight(lines, spotlight, emoji, compact);
+  }
+
   return lines.join("\n");
 }
 
-function renderNhl(data, sport = "nhl", title) {
-  const { team, recentGames, record, emoji, logoUrl } = data;
+function renderNhl(data, sport = "nhl", title, compact = false) {
+  const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
   lines.push(...headingLines(sport, title));
@@ -387,6 +577,11 @@ function renderNhl(data, sport = "nhl", title) {
     lines.push("📅 No recent games found");
   }
 
+  if (spotlight) {
+    lines.push("");
+    renderNhlSpotlight(lines, spotlight, emoji, compact);
+  }
+
   return lines.join("\n");
 }
 
@@ -402,8 +597,8 @@ function formatMlsGameResult(game) {
   return `${icon} ${result} ${String(game.teamScore)}-${String(game.oppScore)} ${prefix} ${(game.oppAbbr || "???").padEnd(5)} (${dateStr})`;
 }
 
-function renderSoccer(data, sport = "mls", fallbackLabel = "MLS", title) {
-  const { team, recentGames, record, emoji, logoUrl } = data;
+function renderSoccer(data, sport = "mls", fallbackLabel = "MLS", title, compact = false) {
+  const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
   lines.push(...headingLines(sport, title));
@@ -445,7 +640,45 @@ function renderSoccer(data, sport = "mls", fallbackLabel = "MLS", title) {
     lines.push("📅 No recent games found");
   }
 
+  if (spotlight) {
+    lines.push("");
+    renderSoccerSpotlight(lines, spotlight, emoji, compact);
+  }
+
   return lines.join("\n");
+}
+
+// Soccer spotlight: season totals derived from the game log, since ESPN has no
+// season-stats endpoint for soccer athletes.
+function renderSoccerSpotlight(lines, spotlight, emoji, compact) {
+  const { season = {}, lastGame } = spotlight;
+  const stat = (value) => (value == null ? 0 : value);
+  const appearances = stat(season.appearances);
+  const goals = stat(season.goals);
+  const assists = stat(season.assists);
+  if (compact) {
+    lines.push(`${emoji} ${spotlight.name} · ${appearances} APP · ${goals} G · ${assists} A`);
+    return;
+  }
+  pushSpotlightHeading(lines, emoji, spotlight);
+  lines.push(`${appearances} APP · ${goals} G · ${assists} A`);
+  if (lastGame) {
+    const parts = [];
+    if (lastGame.goals != null) parts.push(`${lastGame.goals} G`);
+    if (lastGame.assists != null) parts.push(`${lastGame.assists} A`);
+    let detail = parts.length > 0 ? parts.join(" · ") : "No stats recorded";
+    if (lastGame.opponent) {
+      const when = lastGame.date
+        ? new Date(lastGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
+        : "";
+      detail += ` vs ${lastGame.opponent}${when ? ` (${when})` : ""}`;
+    }
+    lines.push("");
+    lines.push("**📅 Last Game:**");
+    lines.push("```");
+    lines.push(detail);
+    lines.push("```");
+  }
 }
 
 // Formula 1 has no team-level game results on the public API, so the board
@@ -478,116 +711,180 @@ function renderF1(data, title) {
   return lines.join("\n");
 }
 
-// Tennis is an individual sport: a board shows a single ranked player's world
-// ranking, ranking points, movement, and most recent match result.
-function renderAtp(data, title) {
-  const { team, emoji, logoUrl, standing, rankPoints, previousRank, trend, lastMatch } = data;
+// Motorsport series that rank drivers (NASCAR, IndyCar) publish one standings
+// table and no per-race results, so the board mirrors the F1 constructor board:
+// the driver, championship position, and points.
+function renderDriverStanding(sport, label, data, title) {
+  const { team, record, emoji, standing } = data;
   const lines = [];
 
-  lines.push(...headingLines("atp", title));
-  if (logoUrl) {
-    lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
-    lines.push("");
-  }
+  lines.push(...headingLines(sport, title));
   lines.push(`### ${emoji} ${team.full_name} (${team.abbreviation})`);
-  lines.push("ATP · World Ranking");
+  lines.push(`${label} · Driver Championship`);
+  lines.push(seasonStatusLine(sport));
   lines.push("");
 
   if (standing && standing.position) {
-    lines.push(`🏆 World No. ${standing.position}`);
+    lines.push(`🏆 Championship position: ${standing.position}`);
   }
-  if (rankPoints !== undefined) {
-    lines.push(`📍 ${rankPoints.toLocaleString()} ranking points`);
-  }
-  if (previousRank !== undefined && trend) {
-    const arrow = trend === "-" ? "—" : trend === "up" || trend === "+" ? "▲" : "▼";
-    lines.push(`📈 Movement: ${arrow} (was No. ${previousRank})`);
-  }
-  if (lastMatch && lastMatch.opponent) {
-    const icon = lastMatch.won ? "✅" : "❌";
-    const result = lastMatch.won ? "W" : "L";
-    const when = lastMatch.date
-      ? new Date(lastMatch.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
-      : "";
-    // sets is [playerSetWins, opponentSetWins]; display them interleaved as
-    // player-vs-opponent per set, e.g. 6-7, 7-6, 6-3, 6-4.
-    let setsText = "";
-    const [playerSets, oppSets] = lastMatch.sets || [];
-    if (playerSets?.length && oppSets?.length) {
-      setsText = ` ${playerSets.map((s, i) => `${s}-${oppSets[i] ?? "-"}`).join(", ")}`;
-    }
-    lines.push(`${icon} ${result} vs ${lastMatch.opponent} (${when})${setsText}`);
+  if (record.points !== undefined) {
+    lines.push(`📍 Points: ${record.points}`);
   }
   lines.push("");
 
   return lines.join("\n");
 }
 
+// Tennis is an individual sport: a board shows a single ranked player's world
+// ranking, ranking points, movement, and most recent match result. ATP and WTA
+// share this same shape, differing only in league key and tour label.
+function renderTennisPlayer(sport, tourLabel, data, title) {
+  const { team, emoji, logoUrl, standing, rankPoints, previousRank, trend, lastMatch } = data;
+  const lines = [];
+
+  lines.push(...headingLines(sport, title));
+  if (logoUrl) {
+    lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
+    lines.push("");
+  }
+  lines.push(`### ${emoji} ${team.full_name} (${team.abbreviation})`);
+  lines.push(`${tourLabel} · World Ranking`);
+  lines.push("");
+
+  // World ranking, points, and movement form a compact meta line, mirroring the
+  // single status line used by team boards (e.g. MLB's season/standing/next).
+  const meta = [];
+  if (standing && standing.position) meta.push(`🏆 World No. ${standing.position}`);
+  if (rankPoints !== undefined) meta.push(`📍 ${rankPoints.toLocaleString()} ranking points`);
+  if (previousRank !== undefined && trend) {
+    const arrow = trend === "-" ? "—" : trend === "up" || trend === "+" ? "▲" : "▼";
+    meta.push(`📈 Movement: ${arrow} (was No. ${previousRank})`);
+  }
+  if (meta.length) lines.push(meta.join(" · "));
+
+  // The latest match is rendered in its own labeled fenced block, mirroring the
+  // way team boards present their Recent Games list. Using a code block gives it
+  // a visually distinct section (and a blank line before the label) so the
+  // result isn't merged into the ranking meta line by the markdown renderer.
+  // Set scores are interleaved as player-vs-opponent per set, e.g. 6-7, 7-6, 6-3, 6-4.
+  if (lastMatch && lastMatch.opponent) {
+    const icon = lastMatch.won ? "✅" : "❌";
+    const result = lastMatch.won ? "W" : "L";
+    const when = lastMatch.date
+      ? new Date(lastMatch.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+      : "";
+    let setsText = "";
+    const [playerSets, oppSets] = lastMatch.sets || [];
+    if (playerSets?.length && oppSets?.length) {
+      setsText = ` ${playerSets.map((s, i) => `${s}-${oppSets[i] ?? "-"}`).join(", ")}`;
+    }
+    lines.push("");
+    lines.push("**📅 Last Match:**");
+    lines.push("```");
+    lines.push(`${icon} ${result} vs ${lastMatch.opponent} (${when})${setsText}`);
+    lines.push("```");
+  }
+  lines.push("");
+
+  return lines.join("\n");
+}
+
+function renderAtp(data, title) {
+  return renderTennisPlayer("atp", "ATP", data, title);
+}
+
+function renderWta(data, title) {
+  return renderTennisPlayer("wta", "WTA", data, title);
+}
+
 function render(sport, data, options = {}) {
   const title = options.title;
+  const compact = options.compact || false;
   switch (sport) {
     case "nba":
-      return renderNba(data, "nba", title);
+      return renderNba(data, "nba", title, compact);
     case "wnba":
-      return renderNba(data, "wnba", title);
+      return renderNba(data, "wnba", title, compact);
     case "gleague":
-      return renderNba(data, "gleague", title);
+      return renderNba(data, "gleague", title, compact);
     case "ncaab":
-      return renderNba(data, "ncaab", title);
+      return renderNba(data, "ncaab", title, compact);
     case "ncaaw":
-      return renderNba(data, "ncaaw", title);
+      return renderNba(data, "ncaaw", title, compact);
     case "mlb":
       return renderMlb(data, title);
     case "nfl":
-      return renderNfl(data, "nfl", title);
+      return renderNfl(data, "nfl", title, compact);
     case "ncaaf":
-      return renderNfl(data, "ncaaf", title);
+      return renderNfl(data, "ncaaf", title, compact);
     case "nhl":
-      return renderNhl(data, "nhl", title);
+      return renderNhl(data, "nhl", title, compact);
     case "ncaa_hockey":
-      return renderNhl(data, "ncaa_hockey", title);
+      return renderNhl(data, "ncaa_hockey", title, compact);
     case "mls":
-      return renderSoccer(data, "mls", "MLS", title);
+      return renderSoccer(data, "mls", "MLS", title, compact);
     case "epl":
-      return renderSoccer(data, "epl", "Premier League", title);
+      return renderSoccer(data, "epl", "Premier League", title, compact);
     case "laliga":
-      return renderSoccer(data, "laliga", "La Liga", title);
+      return renderSoccer(data, "laliga", "La Liga", title, compact);
     case "bundesliga":
-      return renderSoccer(data, "bundesliga", "Bundesliga", title);
+      return renderSoccer(data, "bundesliga", "Bundesliga", title, compact);
     case "seriea":
-      return renderSoccer(data, "seriea", "Serie A", title);
+      return renderSoccer(data, "seriea", "Serie A", title, compact);
     case "ligue1":
-      return renderSoccer(data, "ligue1", "Ligue 1", title);
+      return renderSoccer(data, "ligue1", "Ligue 1", title, compact);
     case "primeiraliga":
-      return renderSoccer(data, "primeiraliga", "Primeira Liga", title);
+      return renderSoccer(data, "primeiraliga", "Primeira Liga", title, compact);
     case "eredivisie":
-      return renderSoccer(data, "eredivisie", "Eredivisie", title);
+      return renderSoccer(data, "eredivisie", "Eredivisie", title, compact);
     case "ligamx":
-      return renderSoccer(data, "ligamx", "Liga MX", title);
+      return renderSoccer(data, "ligamx", "Liga MX", title, compact);
     case "brasileirao":
-      return renderSoccer(data, "brasileirao", "Série A", title);
+      return renderSoccer(data, "brasileirao", "Série A", title, compact);
     case "nwsl":
-      return renderSoccer(data, "nwsl", "NWSL", title);
+      return renderSoccer(data, "nwsl", "NWSL", title, compact);
     case "saudipro":
-      return renderSoccer(data, "saudipro", "Saudi Pro League", title);
+      return renderSoccer(data, "saudipro", "Saudi Pro League", title, compact);
     case "j1":
-      return renderSoccer(data, "j1", "J1 League", title);
+      return renderSoccer(data, "j1", "J1 League", title, compact);
     case "scottish":
-      return renderSoccer(data, "scottish", "Scottish Premiership", title);
+      return renderSoccer(data, "scottish", "Scottish Premiership", title, compact);
     case "belgian":
-      return renderSoccer(data, "belgian", "Belgian Pro League", title);
+      return renderSoccer(data, "belgian", "Belgian Pro League", title, compact);
     case "ucl":
-      return renderSoccer(data, "ucl", "UEFA Champions League", title);
+      return renderSoccer(data, "ucl", "UEFA Champions League", title, compact);
     case "uel":
-      return renderSoccer(data, "uel", "UEFA Europa League", title);
+      return renderSoccer(data, "uel", "UEFA Europa League", title, compact);
     case "argentina":
-      return renderSoccer(data, "argentina", "Argentine Primera", title);
+      return renderSoccer(data, "argentina", "Argentine Primera", title, compact);
+    case "aleague":
+      return renderSoccer(data, "aleague", "A-League Men", title, compact);
+    case "isl":
+      return renderSoccer(data, "isl", "Indian Super League", title, compact);
+    case "csl":
+      return renderSoccer(data, "csl", "Chinese Super League", title, compact);
+    case "greek":
+      return renderSoccer(data, "greek", "Super League", title, compact);
+    case "austria":
+      return renderSoccer(data, "austria", "Bundesliga", title, compact);
+    case "denmark":
+      return renderSoccer(data, "denmark", "Superliga", title, compact);
+    case "norway":
+      return renderSoccer(data, "norway", "Eliteserien", title, compact);
+    case "sweden":
+      return renderSoccer(data, "sweden", "Allsvenskan", title, compact);
     case "f1":
       return renderF1(data, title);
     case "atp":
       return renderAtp(data, title);
+    case "wta":
+      return renderWta(data, title);
+    case "nascar":
+      return renderDriverStanding("nascar", "NASCAR Cup Series", data, title);
+    case "indycar":
+      return renderDriverStanding("indycar", "IndyCar Series", data, title);
     default:
-      throw new Error(`Unsupported sport: ${sport}. Available: nba, mlb, nfl, nhl, mls, epl, laliga, bundesliga, seriea, ligue1, primeiraliga, eredivisie, wnba, ligamx, brasileirao, nwsl, saudipro, j1, scottish, belgian, ucl, uel, gleague, argentina, f1, atp`);
+      throw new Error(`Unsupported sport: ${sport}. Available: nba, mlb, nfl, nhl, mls, epl, laliga, bundesliga, seriea, ligue1, primeiraliga, eredivisie, wnba, ligamx, brasileirao, nwsl, saudipro, j1, scottish, belgian, ucl, uel, gleague, argentina, aleague, isl, csl, greek, austria, denmark, norway, sweden, f1, atp, wta, nascar, indycar`);
   }
 }
 
