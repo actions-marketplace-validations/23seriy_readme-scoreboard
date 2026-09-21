@@ -10,6 +10,56 @@ that would alter what appears in your README or require editing your workflow.
 
 ## [Unreleased]
 
+### Added
+
+- **The FIFA World Cup, as `worldcup`.** All 48 qualified nations are configured with their ESPN
+  team id and country flag, so a board works for any of them rather than a handful of favourites,
+  and `player:` works here like every other soccer league (ESPN serves a full squad roster and
+  game log). The season window is the tournament itself, June 11 to July 19, so the board flips to
+  off-season the day after the final instead of reporting "season in progress" until December 31
+  — which is what ESPN's own window claims.
+- **A next-edition year for competitions that are not annual.** The status line computed "next
+  season starts `<month>␣<next calendar year>`", which for a quadrennial event named a year with
+  no tournament. Registries can now pin the next start year, and the World Cup names 2030.
+- **`DEMO_OPPONENT_POOL` for the soccer base class**, so a competition whose entrants are not
+  clubs can play its sample fixtures against the right kinds of team. Without it the World Cup
+  demo fielded Argentina against Chelsea and West Ham.
+- **A guard that every league has a runnable demo command**, and negative tests for the three
+  existing demo-consistency checks, which had only ever been called on data that satisfied them —
+  nothing proved they would fire at all.
+
+### Fixed
+
+- **Demo samples could render a win on a 0-0 scoreline.** The generator set the winner's margin
+  with a subtraction floored at zero, so a zero-point winner drew 0-0 — reachable wherever scores
+  start at zero, meaning every soccer and hockey league, though no committed gallery happened to
+  contain one until the World Cup demo did. A result that contradicts its own scoreline is now a
+  consistency failure checked across all 42 leagues, so no adapter can reintroduce it.
+
+## [1.14.2] - 2026-09-20
+
+### Added
+
+- **The supported-sports table now lists each league's `sport:` key.** The action takes that key
+  — `epl`, not the ESPN endpoint `soccer/eng.1` — and the README told readers to find it in this
+  table, but the column did not exist, so the documented lookup was not followable. It is there
+  now, and the intro league list is generated from the same registry as the table: it had been
+  claiming 41 leagues while naming 39.
+- **A `--demo` command for every league.** The local preview section listed 23 of the 41
+  leagues; the racing, tennis, and newer soccer leagues had no copy-ready command.
+
+### Fixed
+
+- **Four league logos were broken and a fifth showed the wrong competition.** The Greek
+  Super League, Austrian Bundesliga, Danish Superliga, and Norwegian Eliteserien logos all
+  returned 404, and the Swedish Allsvenskan pointed at another competition's artwork. Those
+  URLs are embedded in the README table, the league showcase, and the supported-leagues
+  manifest, so the breakage was public. The registry now carries ESPN's real values — and for
+  Denmark and Norway, whose leagues ESPN has no artwork for, the generic soccer icon. The
+  daily API health check now verifies every logo both resolves and matches the logo ESPN
+  reports for that league, which catches the silent case of a valid file showing the wrong
+  competition.
+
 ## [1.14.1] - 2026-09-19
 
 ### Fixed
@@ -555,7 +605,8 @@ Initial release.
 - `marker` input, so multiple scoreboards can live in one README
 - Team abbreviation tables and demo mode (`--demo`)
 
-[Unreleased]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.1...HEAD
+[Unreleased]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.2...HEAD
+[1.14.2]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.1...v1.14.2
 [1.14.1]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.0...v1.14.1
 [1.14.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.13.1...v1.14.0
 [1.13.1]: https://github.com/23seriy/readme-scoreboard/compare/v1.13.0...v1.13.1

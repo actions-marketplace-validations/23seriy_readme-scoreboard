@@ -3,6 +3,8 @@ const {
   formatSeasonCell,
   normalizeSeasonWindow,
   updateSupportedSportsTable,
+  updateLeagueList,
+  SEASON_START_OVERRIDES,
 } = require("../../scripts/update-season-status");
 const fs = require("fs");
 const path = require("path");
@@ -200,6 +202,22 @@ describe("season status updater", () => {
     });
   });
 
+  it("keeps the season start overrides in step with the registry fallbacks", () => {
+    // The override normalizes a season to the first official fixture when ESPN's
+    // window opens with preseason activity. The registry's fallback[0] is the
+    // same date, used when the API is unavailable. They are duplicated by
+    // design, so this guard keeps one from moving without the other.
+    const { LEAGUES } = require("../../src/config/leagues");
+
+    const names = Object.keys(SEASON_START_OVERRIDES);
+    expect(names.length).toBeGreaterThan(0);
+    for (const name of names) {
+      const league = LEAGUES.find((entry) => entry.name === name);
+      expect(league).toBeDefined();
+      expect(SEASON_START_OVERRIDES[name]).toBe(`${league.fallback[0]}T00:00:00Z`);
+    }
+  });
+
   it("updates only the marked supported-sports table", () => {
     const readme = [
       "before",
@@ -211,12 +229,33 @@ describe("season status updater", () => {
       "after",
     ].join("\n");
     const updated = updateSupportedSportsTable(readme, [
-      { name: "NBA", sport: "Basketball", season: "🟢 In progress · ends 2027-06-30", endpoint: "[`basketball/nba`](https://example.com)" },
+      { name: "NBA", sport: "Basketball", key: "nba", season: "🟢 In progress · ends 2027-06-30", endpoint: "[`basketball/nba`](https://example.com)" },
     ]);
 
-    expect(updated).toContain("| Sport | League | Season | Endpoint |");
-    expect(updated).toContain("| 🏀&nbsp;Basketball | NBA | 🟢 In progress · ends 2027-06-30 | [`basketball/nba`](https://example.com) |");
+    expect(updated).toContain("| Sport | League | Key | Season | Endpoint |");
+    expect(updated).toContain("| 🏀&nbsp;Basketball | NBA | `nba` | 🟢 In progress · ends 2027-06-30 | [`basketball/nba`](https://example.com) |");
     expect(updated).toContain("before\n<!-- supported-sports:start -->");
     expect(updated).toContain("<!-- supported-sports:end -->\nafter");
+  });
+
+  it("generates the intro league list from the same rows", () => {
+    const readme = [
+      "before",
+      "<!-- league-list:start -->",
+      "Currently supports **stale**, **outdated** with more sports coming soon",
+      "<!-- league-list:end -->",
+      "after",
+    ].join("\n");
+
+    const one = updateLeagueList(readme, [{ name: "NBA" }]);
+    expect(one).toContain("Currently supports **NBA** with more sports coming soon");
+
+    const two = updateLeagueList(readme, [{ name: "NBA" }, { name: "MLB" }]);
+    expect(two).toContain("Currently supports **NBA** and **MLB** with more sports coming soon");
+
+    const three = updateLeagueList(readme, [{ name: "NBA" }, { name: "MLB" }, { name: "NFL" }]);
+    expect(three).toContain("Currently supports **NBA**, **MLB**, and **NFL** with more sports coming soon");
+    expect(three).toContain("before\n<!-- league-list:start -->");
+    expect(three).toContain("<!-- league-list:end -->\nafter");
   });
 });
