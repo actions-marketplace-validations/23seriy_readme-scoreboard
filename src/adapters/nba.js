@@ -1,4 +1,5 @@
 const { get: httpGet } = require("../http");
+const { utcParts } = require("../clock");
 const {
   DEMO_NOW,
   buildGameLog,
@@ -55,11 +56,11 @@ const ESPN_TEAM_IDS = {
 };
 
 const DEMO_TEAMS = {
-  LAL: { id: 13, abbreviation: "LAL", name: "Lakers", full_name: "Los Angeles Lakers", conference: "West", division: "Pacific" },
-  BOS: { id: 2,  abbreviation: "BOS", name: "Celtics", full_name: "Boston Celtics", conference: "East", division: "Atlantic" },
-  GSW: { id: 9,  abbreviation: "GSW", name: "Warriors", full_name: "Golden State Warriors", conference: "West", division: "Pacific" },
-  NYK: { id: 18, abbreviation: "NYK", name: "Knicks", full_name: "New York Knicks", conference: "East", division: "Atlantic" },
-  CHI: { id: 4,  abbreviation: "CHI", name: "Bulls", full_name: "Chicago Bulls", conference: "East", division: "Central" },
+  LAL: { id: 13, abbreviation: "LAL", name: "Lakers", full_name: "Los Angeles Lakers", conference: "Western", division: "Pacific" },
+  BOS: { id: 2,  abbreviation: "BOS", name: "Celtics", full_name: "Boston Celtics", conference: "Eastern", division: "Atlantic" },
+  GSW: { id: 9,  abbreviation: "GSW", name: "Warriors", full_name: "Golden State Warriors", conference: "Western", division: "Pacific" },
+  NYK: { id: 18, abbreviation: "NYK", name: "Knicks", full_name: "New York Knicks", conference: "Eastern", division: "Atlantic" },
+  CHI: { id: 4,  abbreviation: "CHI", name: "Bulls", full_name: "Chicago Bulls", conference: "Eastern", division: "Central" },
 };
 
 async function fetchTeamInfo(teamAbbr) {
@@ -190,14 +191,14 @@ async function fetchPlayerSpotlight(teamAbbr, playerName) {
   };
 }
 
-async function fetchStandings(teamAbbr) {
+async function fetchStandings(teamAbbr, seasonOverride) {
   try {
     const upper = teamAbbr.toUpperCase();
     const espnAbbr = ESPN_ABBR[upper] || upper;
-    const now = new Date();
+    const { year, month } = utcParts();
     // NBA season ends in June; ESPN season param = end year
     // Oct-Dec: new season (ends next year), Jan-Sep: current season (ends this year)
-    const season = now.getMonth() >= 9 ? now.getFullYear() + 1 : now.getFullYear();
+    const season = seasonOverride ?? (month >= 10 ? year + 1 : year);
     const { data } = await httpGet(
       `${ESPN_BASE_V2}/standings?level=3&season=${season}&seasontype=2`,
       { headers: ESPN_HEADERS }
@@ -227,15 +228,15 @@ async function fetchStandings(teamAbbr) {
     return { wins: 0, losses: 0, season, conference: "", division: "", position: null };
   } catch (error) {
     console.error(`Failed to fetch NBA standings: ${error.message}`);
-    return { wins: 0, losses: 0, season: new Date().getFullYear() - 1, conference: "", division: "" };
+    return { wins: 0, losses: 0, season: utcParts().year - 1, conference: "", division: "" };
   }
 }
 
-async function fetchScheduleEvents(teamAbbr) {
+async function fetchScheduleEvents(teamAbbr, seasonOverride) {
   const upper = teamAbbr.toUpperCase();
   const espnId = ESPN_TEAM_IDS[upper];
-  const now = new Date();
-  const season = now.getMonth() >= 9 ? now.getFullYear() + 1 : now.getFullYear();
+  const { year, month } = utcParts();
+  const season = seasonOverride ?? (month >= 10 ? year + 1 : year);
   const [regData, postData] = await Promise.all([
     httpGet(`${ESPN_BASE}/teams/${espnId}/schedule?season=${season}&seasontype=2`, { headers: ESPN_HEADERS }),
     httpGet(`${ESPN_BASE}/teams/${espnId}/schedule?season=${season}&seasontype=3`, { headers: ESPN_HEADERS }),
@@ -320,7 +321,7 @@ function getDemoData(teamAbbr, playerName) {
   const abbr = teamAbbr.toUpperCase();
   const team = DEMO_TEAMS[abbr] || {
     id: 13, abbreviation: abbr, name: abbr,
-    full_name: `${abbr} Team`, conference: "West", division: "Pacific",
+    full_name: `${abbr} Team`, conference: "Western", division: "Pacific",
   };
   const ownTeams = Object.keys(DEMO_TEAMS).filter((t) => t !== abbr);
   // Pad with a per-sport pool so an 82-game log doesn't repeat the few demo
@@ -367,7 +368,7 @@ function getDemoData(teamAbbr, playerName) {
       headshotUrl: getPlayerHeadshotUrl("3945274"),
       lastGame: {
         points: 12, rebounds: 4, assists: 7, minutes: 26,
-        date: last ? last.date : DEMO_NOW.toISOString(),
+          date: last ? last.date : DEMO_NOW.toISOString().slice(0, 10),
         opponent: last ? last.oppAbbr : "MIN",
       },
     };
@@ -398,17 +399,47 @@ async function fetchData(teamAbbr) {
 
   const upper = teamAbbr.toUpperCase();
   const espnAbbr = (ESPN_ABBR[upper] || upper).toUpperCase();
-  const events = await fetchScheduleEvents(teamAbbr);
-  const recentGames = await fetchRecentGames(teamAbbr, 5, events);
-  const record = { wins: standings.wins, losses: standings.losses, season: standings.season };
+
+  // The next fixture belongs to the season under way, so keep this season's events
+  // for it even when the results below come from the previous season. Deriving both
+  // from one list silently dropped the next game from a board the fallback filled.
+  const currentEvents = await fetchScheduleEvents(teamAbbr);
+  let events = currentEvents;
+  let recentGames = await fetchRecentGames(teamAbbr, 5, events);
+  let results = standings;
+
+  // A season that has produced no completed game yet — the opener is days away,
+  // or the season is over — would render "No recent games found" over a 0-0
+  // record. Fall back to the previous season so the board shows real results,
+  // which is what the soccer base does too.
+  if (recentGames.length === 0) {
+    try {
+      const { year, month } = utcParts();
+      const previousSeason = (month >= 10 ? year + 1 : year) - 1;
+      const [prevStandings, prevEvents] = await Promise.all([
+        fetchStandings(teamAbbr, previousSeason),
+        fetchScheduleEvents(teamAbbr, previousSeason),
+      ]);
+      const prevGames = await fetchRecentGames(teamAbbr, 5, prevEvents);
+      if (prevGames.length > 0) {
+        results = prevStandings;
+        events = prevEvents;
+        recentGames = prevGames;
+      }
+    } catch {
+      // Keep this season's empty result rather than losing the board.
+    }
+  }
+
+  const record = { wins: results.wins, losses: results.losses, season: results.season };
 
   return {
     team,
     recentGames,
     record,
-    standing: standings.position ? { position: standings.position, label: standings.conference } : null,
+    standing: results.position ? { position: results.position, label: results.conference } : null,
     form: parseNbaForm(events, espnAbbr),
-    nextGame: parseNbaNextGame(events, espnAbbr),
+    nextGame: parseNbaNextGame(currentEvents, espnAbbr),
   };
 }
 

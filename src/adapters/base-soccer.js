@@ -1,4 +1,5 @@
 const { get: httpGet } = require("../http");
+const { utcParts } = require("../clock");
 const BaseFreeApiAdapter = require("./base-free-api");
 const { buildGameLog, dateOffset, opponentPool, recordFromGames } = require("../demo");
 
@@ -30,11 +31,12 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
    * Aug–May therefore belong to the previous year once January arrives.
    */
   getSeasonYear() {
-    const now = new Date();
-    const year = now.getFullYear();
+    // UTC, not the host's calendar: a machine east of UTC would otherwise
+    // advance the season a few hours before CI does.
+    const { year, month } = utcParts();
     if (!this.SEASON_SPANS_YEARS) return year;
     // Months Jan–Jun still belong to the season that began last year.
-    return now.getMonth() + 1 <= 6 ? year - 1 : year;
+    return month <= 6 ? year - 1 : year;
   }
 
   getLogoUrl(abbr) {
@@ -157,11 +159,39 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
   }
 
   /**
+   * The label for a standings table, from ESPN's group name.
+   *
+   * ESPN's group name is inconsistent across the 27 soccer leagues:
+   *   - "2026"          a bare year (Brasileirão)
+   *   - "2026-27 "      a year with a trailing space (Austria), which rendered
+   *                     as "Standing (2026): 2026-27  · 9"
+   *   - "2026-27 English Premier League"  a season-qualified competition name
+   *   - "Regular Season", "Group B", "Group C"  a phase or group
+   *
+   * Only the first two are unusable, and they are unusable for the same reason:
+   * they carry no competition name at all, just a season. Those fall back to the
+   * league's own name so the position has a referent.
+   *
+   * A season-qualified name is deliberately LEFT ALONE. Liga MX splits each year
+   * into Apertura and Clausura tournaments, so "2026 Torneo Apertura" needs its
+   * year to disambiguate — an adapter test pins that, and stripping it here
+   * would regress it. The duplication this creates on European leagues
+   * ("Standing (2026): 2026-27 English Premier League") is cosmetic and is
+   * handled per-adapter by its owner rather than centrally.
+   */
+  standingsLabel(groupName) {
+    const raw = String(groupName || "").trim().replace(/\s+/g, " ");
+    // A name that is nothing but a season ("2026", "2026-27", "2026-2027").
+    const seasonOnly = /^\d{4}(\s*[-–/]\s*\d{2,4})?$/;
+    if (!raw || seasonOnly.test(raw)) return this.LEAGUE_NAME;
+    return raw;
+  }
+
+  /**
    * Table position and W/L/D come from standings, which is authoritative —
    * counting fixtures would miss abandoned and rescheduled matches.
    */
-  async fetchConferenceRecord(teamAbbr) {
-    const season = this.getSeasonYear();
+    async fetchConferenceRecord(teamAbbr, season = this.getSeasonYear()) {
     const empty = { conference: "", wins: 0, losses: 0, draws: 0, season };
     try {
       const upper = teamAbbr.toUpperCase();
@@ -172,14 +202,24 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
         const entry = entries[index];
         if (entry) {
           const stats = (entry.stats || []).reduce((acc, s) => { acc[s.name] = s.value; return acc; }, {});
+          // An unplayed season still returns a full table: every team on 0
+          // games and 0 points, ordered ALPHABETICALLY. Reporting `index + 1`
+          // then names a league leader who has not played — the A-League
+          // showcase put Adelaide United top purely because "Adelaide" sorts
+          // first. A position is only meaningful once the table has results,
+          // so a blank table reports none at all.
+          const played = entries.some((e) => {
+            const s = (e.stats || []).reduce((acc, x) => { acc[x.name] = x.value; return acc; }, {});
+            return Number(s.gamesPlayed) > 0;
+          });
           return {
             // Conference for MLS; for single-table leagues ESPN returns
             // the league name here, which the renderer falls back on.
-            conference: group.name || "",
+            conference: this.standingsLabel(group.name),
             wins: stats.wins || 0,
             losses: stats.losses || 0,
             draws: stats.ties || 0,
-            position: index + 1,
+            position: played ? index + 1 : null,
             season,
           };
         }
@@ -231,12 +271,47 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
       if (!team) return null;
 
       const season = this.getSeasonYear();
-      const [standings, schedData] = await Promise.all([
+        let [standings, schedData] = await Promise.all([
         this.fetchConferenceRecord(teamAbbr),
         httpGet(`${this.baseUrl}/teams/${team.id}/schedule?season=${season}`),
       ]);
 
-      team.conference = standings.conference;
+      // The plain schedule endpoint returns a truncated page of COMPLETED matches
+      // — five events for a Premier League season — so it never holds an upcoming
+      // fixture and no soccer board could show a next game. `fixture=true` returns
+      // the future ones instead (33 for Arsenal, out to next May).
+      //
+      // Deliberately fetched AFTER the two calls above, not alongside them, and
+      // deliberately non-fatal. A sequenced test stub hands responses out in
+      // order, so a third parallel request would take the standings payload; and
+      // when a stub runs out of queued responses it returns undefined rather than
+      // rejecting, which `.catch` alone does not cover — hence the explicit
+      // coercion of a successful non-result.
+      const fixtureData = await Promise.resolve()
+        .then(() => httpGet(`${this.baseUrl}/teams/${team.id}/schedule?season=${season}&fixture=true`))
+        .then((res) => res || { data: { events: [] } })
+        .catch(() => ({ data: { events: [] } }));
+
+// A season that has produced no completed match yet — not started, or a
+        // day old — leaves the board saying "No recent games found" with a 0-0
+        // record, which reads as broken rather than as a season that has barely
+        // begun. Fall back to the previous season's results instead of nothing.
+        if (this.parseSchedule(schedData.data.events, team.id).length === 0) {
+          try {
+            const [prevStandings, prevSchedule] = await Promise.all([
+              this.fetchConferenceRecord(teamAbbr, season - 1),
+              httpGet(`${this.baseUrl}/teams/${team.id}/schedule?season=${season - 1}`),
+            ]);
+            if (this.parseSchedule(prevSchedule.data.events, team.id).length > 0) {
+              standings = prevStandings;
+              schedData = prevSchedule;
+            }
+          } catch {
+            // Keep this season's empty result rather than losing the board.
+          }
+        }
+
+        team.conference = standings.conference;
 
       return {
         team,
@@ -247,11 +322,16 @@ class BaseSoccerAdapter extends BaseFreeApiAdapter {
           season: standings.season,
         },
         recentGames: this.parseSchedule(schedData.data.events, team.id),
+        // The season travels with the position so the board can name it, as
+        // the NHL adapter does. Without it a board read "Standing: 5" with no
+        // context on the line above "2026 Record", and the ambiguity is real:
+        // half these leagues run Aug-May and their table can be the previous
+        // season's for weeks after it ends.
         standing: standings.position
-          ? { position: standings.position, label: standings.conference }
+          ? { position: standings.position, label: standings.conference, season: standings.season }
           : null,
         form: this.parseForm(schedData.data.events, team.id),
-        nextGame: this.parseNextGame(schedData.data.events, team.id),
+        nextGame: this.parseNextGame(fixtureData.data.events, team.id),
       };
     } catch (error) {
       console.error(`Failed to fetch ${this.LEAGUE_NAME} data: ${error.message}`);

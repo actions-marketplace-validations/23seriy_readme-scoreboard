@@ -6,26 +6,27 @@
 AFC · AFC West
 🟢 Season in progress
 
-🏅 Standing: AFC · 2
-📅 Next: vs DAL (Jan 10)
+🏅 Standing: AFC · 1
 
-📊 2026 Season: 11W - 6L (64.7%)
-   ████████████████▏░░░░░░░░
+📅 Next: @ DEN (Nov 1)
+
+📊 2026 Season: 5W - 1L (83.3%)
+   ████████████████████▊░░░░
 
 **📅 Recent Games:**
 ```
-✅ W 27-21 vs PHI (Jan 3, 2026)
-❌ L 27-34 @ SF  (Dec 27, 2025)
-✅ W 27-25 @ LAR (Dec 20, 2025)
-✅ W 33-25 vs DEN (Dec 13, 2025)
-❌ L 22-31 @ BUF (Dec 6, 2025)
+❌ L  3-20 @ SEA (Oct 26, 2026)
+✅ W 22-6  vs LAC (Oct 18, 2026)
+✅ W 30-27 @ LV  (Oct 4, 2026)
+✅ W 24-10 @ MIA (Sep 27, 2026)
+✅ W 33-30 vs IND (Sep 21, 2026)
 ```
 
 **👑 Player Spotlight: Patrick Mahomes**
 <img src="https://a.espncdn.com/i/headshots/nfl/players/full/3139477.png" alt="Patrick Mahomes headshot" height="72" align="right" />
-3464 PASS YDS · 29 PASS TD · 414 RUSH YDS
+0 PASS YDS · 0 PASS TD · 0 RUSH YDS
 
 **📅 Last Game:**
 ```
-264 PASS YDS · 1 PASS TD vs PHI (Jan 3, 2026)
+No stats recorded vs SEA (Oct 25, 2026)
 ```

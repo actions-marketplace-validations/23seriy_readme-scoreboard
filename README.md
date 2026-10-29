@@ -16,12 +16,12 @@
 [![API health](https://github.com/23seriy/readme-scoreboard/actions/workflows/api-health.yml/badge.svg)](https://github.com/23seriy/readme-scoreboard/actions/workflows/api-health.yml)
 [![Dependency health](https://github.com/23seriy/readme-scoreboard/actions/workflows/dependency-health.yml/badge.svg)](https://github.com/23seriy/readme-scoreboard/actions/workflows/dependency-health.yml)
 
-The project currently supports **42 leagues**. The [support manifest](supported-leagues.json),
+The project currently supports **43 leagues**. The [support manifest](supported-leagues.json),
 [team directory](TEAM_DIRECTORY.md), and [player directory](PLAYER_DIRECTORY.md) are generated
 from the same registry used by the action.
 
 <!-- league-list:start -->
-Currently supports **NBA**, **MLB**, **NFL**, **NHL**, **MLS**, **Premier League**, **La Liga**, **Bundesliga**, **Serie A**, **Ligue 1**, **Primeira Liga**, **Eredivisie**, **WNBA**, **Liga MX**, **Brasileirão**, **NWSL**, **Saudi Pro League**, **J1 League**, **Scottish Premiership**, **Belgian Pro League**, **UEFA Champions League**, **UEFA Europa League**, **FIFA World Cup**, **NBA G League**, **NCAA Men's Basketball**, **NCAA Women's Basketball**, **College Football**, **NCAA Men's Ice Hockey**, **Formula 1**, **ATP Tennis**, **WTA Tennis**, **NASCAR Cup Series**, **IndyCar Series**, **Argentine Primera**, **A-League Men**, **Indian Super League**, **Chinese Super League**, **Greek Super League**, **Austrian Bundesliga**, **Danish Superliga**, **Norwegian Eliteserien**, and **Swedish Allsvenskan** with more sports coming soon
+Currently supports **NBA**, **MLB**, **NFL**, **NHL**, **MLS**, **Premier League**, **La Liga**, **Bundesliga**, **Serie A**, **Ligue 1**, **Primeira Liga**, **Eredivisie**, **WNBA**, **Liga MX**, **Brasileirão**, **NWSL**, **Saudi Pro League**, **J1 League**, **Scottish Premiership**, **Belgian Pro League**, **UEFA Champions League**, **UEFA Europa League**, **FIFA World Cup**, **NBA G League**, **NCAA Men's Basketball**, **NCAA Women's Basketball**, **College Football**, **NCAA Men's Ice Hockey**, **Formula 1**, **ATP Tennis**, **WTA Tennis**, **NASCAR Cup Series**, **IndyCar Series**, **Argentine Primera**, **A-League Men**, **Indian Super League**, **Chinese Super League**, **Greek Super League**, **Austrian Bundesliga**, **Danish Superliga**, **Norwegian Eliteserien**, **Swedish Allsvenskan**, and **UFC** with more sports coming soon
 <!-- league-list:end -->
 
 ---
@@ -38,7 +38,7 @@ See rendered output from several sports and every input option without running
 anything. Open the [examples gallery](examples/) to preview real boards (NBA,
 MLB, NFL, NHL, Premier League, MLS, UEFA Champions League, College Football,
 Formula 1, ATP Tennis, and WTA Tennis) plus demos of the `title:`, `teams:` (multi-team),
-`compact:`, and `badge:` options. For every one of the 42 supported leagues,
+`compact:`, and `badge:` options. For every one of the 43 supported leagues,
 see the [league showcase](examples/leagues/) — one file per league, built
 from live data and refreshed daily, showing the default board plus the
 `title:`, `compact:`, and `badge:` options. Or browse the league's
@@ -49,13 +49,17 @@ from live data and refreshed daily, showing the default board plus the
 This is what the action writes between your markers — heading, logos and all.
 Live output for the Lakers (heading levels lowered by one so it nests here):
 
-### <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nba.png" alt="NBA" height="28" align="top"></picture> My Favourite NBA Team
+### [<picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nba.png" alt="NBA" height="28" align="top"></picture> My Favourite NBA Team](https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams)
 
-<img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" width="72" align="right" />
+<img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Los Angeles Lakers logo" width="72" align="right" />
 
 #### 👑 Los Angeles Lakers (LAL)
 Western Conference · Pacific Division
-🔴 Off-season · Next season starts October 2026
+🟢 Season in progress
+
+🏅 Standing: Western · 6
+
+📅 Next: vs GS (Oct 22)
 
 📊 2025-2026 Record: 53W - 29L (64.6%)
    ████████████████▏░░░░░░░░
@@ -391,14 +395,14 @@ Soccer season totals are summed from the player's game log, because ESPN publish
 
 #### Leagues without player spotlight
 
-Eight leagues intentionally don't support `player:`, either because the
+Nine leagues intentionally don't support `player:`, either because the
 upstream data isn't there or because the league has no athlete roster to
 feature:
 
 | Leagues | Reason |
 |---------|--------|
 | `ncaaf`, `gleague`, `ncaa_hockey` | ESPN publishes no per-athlete season stats — the stats endpoint 404s, and the game log is empty (for `ncaa_hockey` the gamelog 404s too). |
-| `atp`, `wta`, `nascar`, `indycar` | These already render as a single player board (`entity: player`), so a spotlight inside one is redundant. |
+| `atp`, `wta`, `nascar`, `indycar`, `ufc` | These already render as a single player board (`entity: player`), so a spotlight inside one is redundant. |
 | `f1` | It renders a constructor board from a teams endpoint and has no athlete roster, so there is no player to spotlight. |
 
 The **WNBA** and **NCAA men's and women's basketball** used to be on this list. They aren't any more: ESPN now serves athletes the same `avgPoints`/`avgRebounds`/`avgAssists` splits payload and game log that the NBA uses, so `player:` works there too. If a league's upstream data changes, re-check the endpoints — the exclusions above are verified against the live APIs, not assumed.
@@ -464,10 +468,10 @@ The **Season** column is refreshed daily by [`.github/workflows/update-season-st
 <!-- supported-sports:start -->
 | Sport | League | Key | Season | Endpoint |
 |-------|--------|-----|--------|----------|
-| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nba.png" alt="NBA logo" height="20"></picture> NBA | `nba` | 🔴 Off-season · starts 2026-10-20 | [`basketball/nba`](https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams) |
+| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nba.png" alt="NBA logo" height="20"></picture> NBA | `nba` | 🟢 In progress · ends 2027-06-26 | [`basketball/nba`](https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams) |
 | ⚾&nbsp;Baseball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/mlb.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/mlb.png" alt="MLB logo" height="20"></picture> MLB | `mlb` | 🟢 In progress · ends 2026-11-12 | [MLB Stats API](https://statsapi.mlb.com/api/v1/teams?sportId=1) |
 | 🏈&nbsp;Football | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nfl.png" alt="NFL logo" height="20"></picture> NFL | `nfl` | 🟢 In progress · ends 2027-02-16 | [`football/nfl`](https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams) |
-| 🏒&nbsp;Hockey | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nhl.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nhl.png" alt="NHL logo" height="20"></picture> NHL | `nhl` | 🔴 Off-season · starts 2026-09-29 | [NHL Web API](https://api-web.nhle.com/v1/standings/now) |
+| 🏒&nbsp;Hockey | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nhl.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nhl.png" alt="NHL logo" height="20"></picture> NHL | `nhl` | 🟢 In progress · ends 2027-07-01 | [NHL Web API](https://api-web.nhle.com/v1/standings/now) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/19.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/19.png" alt="MLS logo" height="20"></picture> MLS | `mls` | 🟢 In progress · ends 2026-12-31 | [`soccer/usa.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/23.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/23.png" alt="Premier League logo" height="20"></picture> Premier League | `epl` | 🟢 In progress · ends 2027-06-01 | [`soccer/eng.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/15.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/15.png" alt="La Liga logo" height="20"></picture> La Liga | `laliga` | 🟢 In progress · ends 2027-06-01 | [`soccer/esp.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/teams) |
@@ -476,7 +480,7 @@ The **Season** column is refreshed daily by [`.github/workflows/update-season-st
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/9.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/9.png" alt="Ligue 1 logo" height="20"></picture> Ligue 1 | `ligue1` | 🟢 In progress · ends 2027-06-01 | [`soccer/fra.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/14.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/14.png" alt="Primeira Liga logo" height="20"></picture> Primeira Liga | `primeiraliga` | 🟢 In progress · ends 2027-07-01 | [`soccer/por.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/por.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/11.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/11.png" alt="Eredivisie logo" height="20"></picture> Eredivisie | `eredivisie` | 🟢 In progress · ends 2027-06-01 | [`soccer/ned.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/ned.1/teams) |
-| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/wnba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/wnba.png" alt="WNBA logo" height="20"></picture> WNBA | `wnba` | 🟢 In progress · ends 2026-11-01 | [`basketball/wnba`](https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/teams) |
+| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/wnba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/wnba.png" alt="WNBA logo" height="20"></picture> WNBA | `wnba` | 🟢 In progress · ends 2026-11-05 | [`basketball/wnba`](https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/22.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/22.png" alt="Liga MX logo" height="20"></picture> Liga MX | `ligamx` | 🟢 In progress · ends 2027-06-01 | [`soccer/mex.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/mex.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/85.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/85.png" alt="Brasileirão logo" height="20"></picture> Brasileirão | `brasileirao` | 🟢 In progress · ends 2026-12-31 | [`soccer/bra.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/bra.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2323.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/2323.png" alt="NWSL logo" height="20"></picture> NWSL | `nwsl` | 🟢 In progress · ends 2026-12-31 | [`soccer/usa.nwsl`](https://site.api.espn.com/apis/site/v2/sports/soccer/usa.nwsl/teams) |
@@ -491,7 +495,7 @@ The **Season** column is refreshed daily by [`.github/workflows/update-season-st
 | 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png" alt="NCAA Men's Basketball logo" height="20"></picture> NCAA Men's Basketball | `ncaab` | 🔴 Off-season · starts 2026-11-02 | [`basketball/mens-college-basketball`](https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams) |
 | 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png" alt="NCAA Women's Basketball logo" height="20"></picture> NCAA Women's Basketball | `ncaaw` | 🔴 Off-season · starts 2026-11-02 | [`basketball/womens-college-basketball`](https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/teams) |
 | 🏈&nbsp;Football | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-football-college.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-football-college.png" alt="College Football logo" height="20"></picture> College Football | `ncaaf` | 🟢 In progress · ends 2027-01-28 | [`football/college-football`](https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams) |
-| 🏒&nbsp;Hockey | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png" alt="NCAA Men's Ice Hockey logo" height="20"></picture> NCAA Men's Ice Hockey | `ncaa_hockey` | 🔴 Off-season · starts 2026-10-02 | [`hockey/mens-college-hockey`](https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/teams) |
+| 🏒&nbsp;Hockey | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png" alt="NCAA Men's Ice Hockey logo" height="20"></picture> NCAA Men's Ice Hockey | `ncaa_hockey` | 🟢 In progress · ends 2027-05-01 | [`hockey/mens-college-hockey`](https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/teams) |
 | 🏆&nbsp;Racing | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/f1.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/f1.png" alt="Formula 1 logo" height="20"></picture> Formula 1 | `f1` | 🟢 In progress · ends 2026-12-31 | [`racing/f1`](https://site.api.espn.com/apis/site/v2/sports/racing/f1/teams) |
 | 🎾&nbsp;Tennis | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png"><img src="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png" alt="ATP Tennis logo" height="20"></picture> ATP Tennis | `atp` | 🟢 In progress · ends 2027-01-01 | [`tennis/atp`](https://site.api.espn.com/apis/site/v2/sports/tennis/atp/teams) |
 | 🎾&nbsp;Tennis | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png"><img src="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png" alt="WTA Tennis logo" height="20"></picture> WTA Tennis | `wta` | 🟢 In progress · ends 2027-01-01 | [`tennis/wta`](https://site.api.espn.com/apis/site/v2/sports/tennis/wta/teams) |
@@ -506,6 +510,7 @@ The **Season** column is refreshed daily by [`.github/workflows/update-season-st
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-soccer.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-soccer.png" alt="Danish Superliga logo" height="20"></picture> Danish Superliga | `denmark` | 🟢 In progress · ends 2027-07-01 | [`soccer/den.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/den.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-soccer.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-soccer.png" alt="Norwegian Eliteserien logo" height="20"></picture> Norwegian Eliteserien | `norway` | 🟢 In progress · ends 2026-12-31 | [`soccer/nor.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/nor.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500/16.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/16.png" alt="Swedish Allsvenskan logo" height="20"></picture> Swedish Allsvenskan | `sweden` | 🟢 In progress · ends 2026-12-01 | [`soccer/swe.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/swe.1/teams) |
+| 🏆&nbsp;MMA | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png" alt="UFC logo" height="20"></picture> UFC | `ufc` | 🟢 In progress · ends 2026-12-31 | [MMA scoreboard](https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard) |
 <!-- supported-sports:end -->
 
 ---
@@ -571,6 +576,7 @@ SPORT=belgian TEAM=BRU node src/index.js --demo
 SPORT=ucl TEAM=RMA node src/index.js --demo
 SPORT=uel TEAM=MUN node src/index.js --demo
 SPORT=worldcup TEAM=ARG node src/index.js --demo
+SPORT=ufc TEAM=STR node src/index.js --demo
 SPORT=gleague TEAM=OSC node src/index.js --demo
 SPORT=ncaab TEAM=ARIZ node src/index.js --demo
 SPORT=ncaaw TEAM=UCONN node src/index.js --demo

@@ -1,6 +1,7 @@
 // Season windows: [activeStartMonth, activeEndMonth] (1-indexed, inclusive)
 // "active" means regular season or playoffs are ongoing
 const { LEAGUES: LEAGUE_REGISTRY } = require("../config/leagues");
+const { utcParts } = require("../clock");
 
 const SEASON_WINDOWS = {
   nba: { start: [10, 1], end: [6, 30], nextLabel: "October" },
@@ -70,7 +71,9 @@ const LEAGUE_LOGOS = {
 // The registry is authoritative; these assignments preserve the renderer's
 // existing lookup shape while keeping all league metadata in one place.
 LEAGUE_REGISTRY.forEach((entry) => {
-  SEASON_WINDOWS[entry.key] = entry.seasonWindow;
+  // The dated window (`fallback`) travels with the month/day window because the
+  // status line prefers it — see seasonStatusLine.
+  SEASON_WINDOWS[entry.key] = { ...entry.seasonWindow, fallback: entry.fallback?.[0] };
   LEAGUE_LOGOS[entry.key] = { ...entry.logo, alt: entry.name };
 });
 
@@ -88,8 +91,9 @@ function headingLines(sport, title) {
   const endpoint = league?.endpointOverride?.match(/\((https:\/\/[^)]+)\)/)?.[1]
     || (league?.endpoint ? `https://site.api.espn.com/apis/site/v2/sports/${league.endpoint}/teams` : null);
   // Individual sports (tennis, F1) track players rather than teams, so the
-  // default heading reads "Player" instead of "Team".
-  const entityLabel = league?.entity === "player" ? "Player" : "Team";
+  // default heading reads "Player" instead of "Team". A league may name the
+  // noun outright where neither fits (UFC fields fighters).
+  const entityLabel = league?.entityLabel || (league?.entity === "player" ? "Player" : "Team");
   const label = title || `My Favourite ${logo.alt} ${entityLabel}`;
   const heading = endpoint
     ? `## [${mark}${label}](${endpoint})`
@@ -100,34 +104,61 @@ function headingLines(sport, title) {
 function isSeasonActive(sport) {
   const window = SEASON_WINDOWS[sport];
   if (!window) return true;
-  const now = new Date();
-  const m = now.getMonth() + 1;
-  const d = now.getDate();
-  const [sm, sd] = window.start;
+  // UTC, so the season boundary lands at the same instant on every host.
+  const { month: m, day: d } = utcParts();
+  // Prefer the DATED window's start, exactly as seasonStatusLine does. The
+  // month/day is a rounded guess and disagrees for 15 of 43 leagues, so reading
+  // it here made a season look underway weeks before its first fixture: the
+  // A-League's guess says July 1 while its opener is October 16, so every
+  // A-League and ISL board claimed "🟢 Season in progress" through the whole
+  // off-season. Only the month/day remains for the wrap-around end comparison,
+  // because no dated end is stored.
+  const dated = /^\d{4}-\d{2}-\d{2}$/.test(String(window.fallback || ""))
+    ? String(window.fallback)
+    : null;
+  const startMonth = dated ? Number(dated.slice(5, 7)) : window.start[0];
+  const startDay = dated ? Number(dated.slice(8, 10)) : window.start[1];
   const [em, ed] = window.end;
-  const after = m > sm || (m === sm && d >= sd);
+  const after = m > startMonth || (m === startMonth && d >= startDay);
   const before = m < em || (m === em && d <= ed);
   // Handle wrap-around seasons (NFL: Sep–Feb crosses year boundary)
-  if (sm > em) return after || before;
+  if (startMonth > em) return after || before;
   return after && before;
 }
 
 function seasonStatusLine(sport) {
   if (isSeasonActive(sport)) return "🟢 Season in progress";
   const window = SEASON_WINDOWS[sport] || {};
-  const now = new Date();
-  const year = now.getFullYear();
+  const { year: utcYear } = utcParts();
+  const today = new Date().toISOString().slice(0, 10);
   const [sm, sd] = window.start || [];
-  // If this year's start date has already passed, the next one is next year.
-  // Compare the full date: on Aug 8 a season starting Aug 10 is still this year.
-  const m = now.getMonth() + 1;
-  const d = now.getDate();
-  const startPassed = sm && (m > sm || (m === sm && d > sd));
-  // Non-annual events (the quadrennial World Cup) name their next edition
-  // explicitly; the annual arithmetic below would otherwise claim the next
-  // calendar year.
-  const nextYear = window.nextStartYear ?? (startPassed ? year + 1 : year);
-  return `🔴 Off-season · Next season starts ${window.nextLabel || "soon"} ${nextYear}`;
+  const pad = (n) => String(n).padStart(2, "0");
+  // Prefer the DATED window. The registry keeps both a month/day (`start`) and a
+  // real `fallback` date, and they disagree for most leagues because the
+  // month/day is a rounded guess: the NBA's said October 1 while its own dated
+  // window — and its opener — is October 20. Only the dated one is trustworthy,
+  // so the day comes from it whenever it exists.
+  const dated = /^\d{4}-\d{2}-\d{2}$/.test(String(window.fallback || ""))
+    ? String(window.fallback)
+    : null;
+  let nextStart = null;
+  if (dated && window.nextStartYear) {
+    nextStart = `${window.nextStartYear}-${dated.slice(5)}`;
+  } else if (dated) {
+    // Already behind us this year? The next edition starts on the same day next
+    // year, which is the arithmetic the month-only version kept getting wrong.
+    nextStart = dated > today ? dated : `${Number(dated.slice(0, 4)) + 1}-${dated.slice(5)}`;
+  } else if (sm && sd) {
+    const { month: m, day: d } = utcParts();
+    const startPassed = m > sm || (m === sm && d > sd);
+    const nextYear = window.nextStartYear ?? (startPassed ? utcYear + 1 : utcYear);
+    nextStart = `${nextYear}-${pad(sm)}-${pad(sd)}`;
+  }
+  const year = nextStart ? nextStart.slice(0, 4) : (utcYear + 1);
+  const when = nextStart
+    ? formatDate(nextStart, { month: "long", day: "numeric" })
+    : window.nextLabel || "soon";
+  return `🔴 Off-season · Next season starts ${when}${nextStart ? `, ${year}` : ` ${year}`}`;
 }
 
 // Optional richer stats rendered as their own row after the season line.
@@ -143,12 +174,35 @@ function extraTeamLines(data) {
   const { standing, nextGame } = data || {};
 
   if (standing && standing.position) {
-    lines.push(`🏅 Standing: ${standing.label ? `${standing.label} · ` : ""}${standing.position}`);
+    // Some standings come from the last COMPLETED season — the NHL reports no
+    // in-season standing off-season, so its board would otherwise present a
+    // final table as a live position. Naming the season keeps that honest, and
+    // is omitted for leagues whose standing is current.
+    const scope = standing.season ? ` (${standing.season})` : "";
+    lines.push(`🏅 Standing${scope}: ${standing.label ? `${standing.label} · ` : ""}${standing.position}`);
   }
 
   if (nextGame && nextGame.opponent) {
+    // Each row needs a blank line before it, not just a line break. GitHub
+    // renders a single "\n" as a soft break, so standing and next game were
+    // joined into one wrapped paragraph on the profile even though they are
+    // separate array entries here. A blank line between them is what makes
+    // them two rows.
+    if (lines.length) lines.push("");
+    // Format in the SPORT's timezone, not the viewer's. A fixture is an
+    // instant, and an evening kick-off in the Americas lands on the next UTC
+    // day: Palmeiras v Bahia is 2026-10-09T00:30Z, which is the evening of
+    // October 8 in Brazil. Without an explicit zone this printed "Oct 9" on a
+    // UTC machine and "Oct 8" on a Brazilian one, so the same board showed two
+    // different dates depending on who generated it. Soccer dates are
+    // generated in UTC elsewhere in this file, so a soccer board stays
+    // internally consistent.
     const when = nextGame.date
-      ? new Date(nextGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+      ? formatDate(nextGame.date, {
+          month: "short",
+          day: "numeric",
+          timeZone: nextGame.timeZone || "UTC",
+        })
       : "next";
     const place = nextGame.isHome !== false ? "vs" : "@";
     lines.push(`📅 Next: ${place} ${nextGame.opponent} (${when})`);
@@ -189,6 +243,64 @@ function pushSpotlightHeadshot(lines, spotlight) {
   );
 }
 
+// The timezone each sport's games are PLAYED in, used to render a game date.
+//
+// A game is an instant, and these leagues play in the evening: ESPN reports the
+// Lakers' 2026-05-11 game as `2026-05-12T02:30Z`, because 7:30pm in Los Angeles
+// is already the next day in UTC. Formatting that instant in the viewer's zone
+// therefore printed May 12 on a UTC machine and May 11 in New York — the same
+// board showing two different dates. That is how this surfaced: regenerating
+// the example boards on CI (UTC) produced eight files that differed from the
+// same command run locally (EDT), so the "boards are current" gate went red on
+// a timezone difference rather than on a code change.
+//
+// The zone is the one the league's own schedule is published in, so the board
+// agrees with the fixture list a fan would read.
+const SPORT_TIMEZONES = {
+  nba: "America/New_York",
+  wnba: "America/New_York",
+  ncaab: "America/New_York",
+  ncaaw: "America/New_York",
+  ncaaf: "America/New_York",
+  ncaa_hockey: "America/New_York",
+  nfl: "America/New_York",
+  mlb: "America/New_York",
+  nhl: "America/New_York",
+  mls: "America/New_York",
+  gleague: "America/New_York",
+  // European, Mexican and South American leagues also kick off in the evening
+  // locally, so the same boundary applies to their dates.
+  epl: "Europe/London",
+  ucl: "Europe/London",
+  uel: "Europe/London",
+  scottish: "Europe/London",
+  laliga: "Europe/Madrid",
+  seriea: "Europe/Rome",
+  bundesliga: "Europe/Berlin",
+  ligue1: "Europe/Paris",
+  eredivisie: "Europe/Amsterdam",
+  primeiraliga: "Europe/Lisbon",
+  belgian: "Europe/Brussels",
+  austria: "Europe/Vienna",
+  greek: "Europe/Athens",
+  denmark: "Europe/Copenhagen",
+  norway: "Europe/Oslo",
+  sweden: "Europe/Stockholm",
+  brasileirao: "America/Sao_Paulo",
+  argentina: "America/Argentina/Buenos_Aires",
+  ligamx: "America/Mexico_City",
+};
+
+// Render a game, fixture or result date in the zone that sport plays in, falling
+// back to UTC for any league without an entry (lacrosse-style events, UFC cards,
+// motorsport sessions and tennis matches are quoted in UTC by convention).
+function formatSportDate(sport, value, options = {}) {
+  return formatDate(value, {
+    ...options,
+    timeZone: SPORT_TIMEZONES[sport] || "UTC",
+  });
+}
+
 function generateBarChart(percent, size) {
   const syms = "░▏▎▍▌▋▊▉█";
   const frac = Math.floor((size * 8 * percent) / 100);
@@ -202,7 +314,7 @@ function generateBarChart(percent, size) {
     .padEnd(size, syms.substring(0, 1));
 }
 
-function formatGameResult(game, teamId) {
+function formatGameResult(game, teamId, sport) {
   const isHome = game.home_team.id === teamId;
   const teamScore = isHome ? game.home_team_score : game.visitor_team_score;
   const oppScore = isHome ? game.visitor_team_score : game.home_team_score;
@@ -210,7 +322,7 @@ function formatGameResult(game, teamId) {
   const won = teamScore > oppScore;
   const prefix = isHome ? "vs" : "@";
   const result = won ? "W" : "L";
-  const dateStr = new Date(game.date).toLocaleDateString("en-US", {
+  const dateStr = formatSportDate(sport, game.date, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -261,7 +373,7 @@ function renderNba(data, sport = "nba", title, compact = false) {
     lines.push("**📅 Recent Games:**");
     lines.push("```");
     for (const game of recentGames) {
-      lines.push(formatGameResult(game, team.id));
+      lines.push(formatGameResult(game, team.id, sport));
     }
     lines.push("```");
   } else {
@@ -285,7 +397,7 @@ function renderNba(data, sport = "nba", title, compact = false) {
           // shift a day. NBA games are given as UTC instants; interpreting them
           // in US Eastern time shows the actual calendar day the game was played.
           const when = gdate
-            ? new Date(gdate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
+            ? formatDate(gdate, { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
             : "";
           detail += ` vs ${gopp}${when ? ` (${when})` : ""}`;
         }
@@ -335,7 +447,7 @@ function renderNflSpotlight(lines, spotlight, emoji, compact) {
     let detail = parts.length > 0 ? parts.join(" · ") : "No stats recorded";
     if (lastGame.opponent) {
       const when = lastGame.date
-        ? new Date(lastGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
+        ? formatDate(lastGame.date, { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
         : "";
       detail += ` vs ${lastGame.opponent}${when ? ` (${when})` : ""}`;
     }
@@ -373,7 +485,7 @@ function renderNhlSpotlight(lines, spotlight, emoji, compact) {
       : `${stat(lastGame.goals)} G · ${stat(lastGame.assists)} A · ${stat(lastGame.points)} P`;
     if (lastGame.opponent) {
       const when = lastGame.date
-        ? new Date(lastGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
+        ? formatDate(lastGame.date, { month: "short", day: "numeric", year: "numeric", timeZone: "America/New_York" })
         : "";
       detail += ` vs ${lastGame.opponent}${when ? ` (${when})` : ""}`;
     }
@@ -385,7 +497,7 @@ function renderNhlSpotlight(lines, spotlight, emoji, compact) {
   }
 }
 
-function formatMlbGameResult(game, teamId) {
+function formatMlbGameResult(game, teamId, sport) {
   const isHome = game.home_team.id === teamId;
   const teamScore = isHome ? game.home_team_score : game.visitor_team_score;
   const oppScore = isHome ? game.visitor_team_score : game.home_team_score;
@@ -393,7 +505,7 @@ function formatMlbGameResult(game, teamId) {
   const won = teamScore > oppScore;
   const prefix = isHome ? "vs" : "@";
   const result = won ? "W" : "L";
-  const dateStr = new Date(game.date).toLocaleDateString("en-US", {
+  const dateStr = formatSportDate(sport, game.date, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -434,7 +546,9 @@ function renderMlb(data, title) {
     lines.push("**📅 Recent Games:**");
     lines.push("```");
     for (const game of recentGames) {
-      lines.push(formatMlbGameResult(game, team.id));
+      // renderMlb is MLB-specific and takes no `sport` argument, so the key is
+      // passed literally.
+      lines.push(formatMlbGameResult(game, team.id, "mlb"));
     }
     lines.push("```");
   } else {
@@ -455,7 +569,7 @@ function renderMlb(data, title) {
         // Render the date in Eastern time so a late-night game doesn't shift a
         // day. MLB game dates are calendar dates in the MLB Stats API, while
         // demo data uses full ISO timestamps, so both shapes are handled.
-        const when = gdate ? formatCalendarDate(gdate) : "";
+        const when = gdate ? formatCalendarDate(gdate, "mlb") : "";
         detail += ` vs ${gopp}${when ? ` (${when})` : ""}`;
       }
       lines.push("");
@@ -472,21 +586,49 @@ function renderMlb(data, title) {
 // Render a game date as "Jan 3, 2026". The live feeds return calendar dates
 // ("2026-09-15") while demo data carries full ISO timestamps, so a bare date is
 // anchored to midday to stop a UTC parse shifting it to the previous day.
-function formatCalendarDate(value) {
+/**
+ * Format a date for a board.
+ *
+ * A calendar date — a demo clock value or a schedule date that ESPN publishes as
+ * plain YYYY-MM-DD, with no time and no zone — must read the same on every
+ * machine and in every zone: 2026-01-03 means the 3rd. Parsing it as an instant
+ * and rendering it through the machine's zone is what made the committed example
+ * boards differ by a day between a laptop and a CI runner, and the same mistake
+ * rendered live schedule dates a day early on any machine west of UTC.
+ *
+ * Full instants are real moments, so they keep their existing handling and are
+ * formatted in the zone the caller asks for.
+ */
+function formatDate(value, options) {
   if (!value) return "";
   const raw = String(value);
-  const anchor = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T12:00:00` : raw;
-  return new Date(anchor).toLocaleDateString("en-US", {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(raw)) {
+    return new Date(`${raw}T00:00:00Z`)
+      .toLocaleDateString("en-US", { ...options, timeZone: "UTC" });
+  }
+  return new Date(raw).toLocaleDateString("en-US", options);
+}
+
+function formatCalendarDate(value, sport) {
+  const options = {
     month: "short",
     day: "numeric",
     year: "numeric",
-  });
+  };
+  // When a sport is supplied the date is a real instant from a live feed, so it
+  // must be quoted in that sport's zone rather than the host's. Without one the
+  // value is a bare calendar date and formatDate already pins it to UTC.
+  return sport
+    ? formatSportDate(sport, value, options)
+    : formatDate(value, options);
 }
 
-function formatNflGameResult(game) {
+function formatNflGameResult(game, sport = "nfl") {
   const prefix = game.isHome ? "vs" : "@";
   const result = game.won ? "W" : "L";
-  const dateStr = formatCalendarDate(game.date);
+  // ESPN reports kick-off as a UTC instant, so the zone must be explicit or a
+  // Saturday-night game reads as Sunday on a host east of the US.
+  const dateStr = formatCalendarDate(game.date, sport);
 
   const tag = game.gameType === 3 ? " [Playoffs]" : "";
   return `${game.won ? "✅" : "❌"} ${result} ${String(game.teamScore).padStart(2)}-${String(game.oppScore).padEnd(2)} ${prefix} ${game.oppAbbr.padEnd(3)} (${dateStr})${tag}`;
@@ -508,16 +650,23 @@ function renderNfl(data, sport = "nfl", title, compact = false) {
   lines.push(...extraTeamLines(data));
   lines.push("");
 
-  const totalGames = record.wins + record.losses;
-  const winPct = totalGames > 0
+  // Some feeds publish only a win count (college football's conference
+  // standings have no loss or games-played figure at all). A null `losses`
+  // means "unknown", so state the wins without inventing a record or a
+  // percentage that would always read 100%.
+  const lossesKnown = record.losses !== null && record.losses !== undefined;
+  const totalGames = lossesKnown ? record.wins + record.losses : record.wins;
+  const winPct = lossesKnown && totalGames > 0
     ? ((record.wins / totalGames) * 100).toFixed(1)
-    : "0.0";
+    : null;
 
   if (totalGames > 0) {
     lines.push(
-      `📊 ${record.season} Season: ${record.wins}W - ${record.losses}L (${winPct}%)`
+      lossesKnown
+        ? `📊 ${record.season} Season: ${record.wins}W - ${record.losses}L (${winPct}%)`
+        : `📊 ${record.season} Season: ${record.wins}W`
     );
-    lines.push(`   ${generateBarChart(parseFloat(winPct), 25)}`);
+    if (winPct !== null) lines.push(`   ${generateBarChart(parseFloat(winPct), 25)}`);
     lines.push("");
   }
 
@@ -525,7 +674,7 @@ function renderNfl(data, sport = "nfl", title, compact = false) {
     lines.push("**📅 Recent Games:**");
     lines.push("```");
     for (const game of recentGames) {
-      lines.push(formatNflGameResult(game));
+      lines.push(formatNflGameResult(game, sport));
     }
     lines.push("```");
   } else {
@@ -573,7 +722,7 @@ function renderNhl(data, sport = "nhl", title, compact = false) {
     lines.push("**📅 Recent Games:**");
     lines.push("```");
     for (const game of recentGames) {
-      lines.push(formatGameResult(game, team.id));
+      lines.push(formatGameResult(game, team.id, sport));
     }
     lines.push("```");
   } else {
@@ -588,11 +737,11 @@ function renderNhl(data, sport = "nhl", title, compact = false) {
   return lines.join("\n");
 }
 
-function formatMlsGameResult(game) {
+function formatMlsGameResult(game, sport = "mls") {
   const prefix = game.isHome ? "vs" : "@";
   const result = game.won ? "W" : game.drew ? "D" : "L";
   const icon = game.won ? "✅" : game.drew ? "🟡" : "❌";
-  const dateStr = new Date(game.date).toLocaleDateString("en-US", {
+  const dateStr = formatSportDate(sport, game.date, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -636,7 +785,7 @@ function renderSoccer(data, sport = "mls", fallbackLabel = "MLS", title, compact
     lines.push("**📅 Recent Games:**");
     lines.push("```");
     for (const game of recentGames) {
-      lines.push(formatMlsGameResult(game));
+      lines.push(formatMlsGameResult(game, sport));
     }
     lines.push("```");
   } else {
@@ -672,7 +821,7 @@ function renderSoccerSpotlight(lines, spotlight, emoji, compact) {
     let detail = parts.length > 0 ? parts.join(" · ") : "No stats recorded";
     if (lastGame.opponent) {
       const when = lastGame.date
-        ? new Date(lastGame.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
+        ? formatDate(lastGame.date, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })
         : "";
       detail += ` vs ${lastGame.opponent}${when ? ` (${when})` : ""}`;
     }
@@ -738,11 +887,75 @@ function renderDriverStanding(sport, label, data, title) {
   return lines.join("\n");
 }
 
+// Mixed martial arts has no standings and no scores, so a fighter's board is the
+// career record plus the fights either side of today. ESPN's MMA feed reports a
+// lifetime W-L-D rather than a per-season one, so the record is labelled
+// accordingly — calling it a season record would be a lie the data does not
+// support.
+function renderUfc(data, title) {
+  const { team, record, emoji, logoUrl, recentGames, nextGame } = data;
+  const lines = [];
+
+  lines.push(...headingLines("ufc", title));
+  if (logoUrl) {
+    lines.push(`<img src="${logoUrl}" alt="UFC logo" width="72" align="right" />`);
+    lines.push("");
+  }
+  lines.push(`### ${emoji} ${team.full_name} (${team.abbreviation})`);
+  // The division the fighter last competed in, read from the bout itself.
+  if (team.conference) lines.push(team.conference);
+  lines.push(seasonStatusLine("ufc"));
+  lines.push("");
+
+  const bouts = record.wins + record.losses + record.draws;
+  if (bouts > 0) {
+    const draws = record.draws ? ` - ${record.draws}D` : "";
+    lines.push(`🥊 Career record: ${record.wins}W - ${record.losses}L${draws}`);
+    lines.push(`   ${generateBarChart((record.wins / bouts) * 100, 25)}`);
+    lines.push("");
+  }
+
+  // ESPN leaves the country blank for some fighters, so a missing flag drops
+  // out of the line rather than rendering as a placeholder glyph.
+  const named = (flag, text) => (flag ? `${flag} ${text}` : text);
+
+  if (nextGame) {
+    lines.push("**📅 Next Fight:**");
+    lines.push("```");
+    lines.push(`${named(nextGame.opponentFlag, `vs ${nextGame.opponentName} (${nextGame.opponent})`)} — ${formatCalendarDate(nextGame.date, "ufc")}`);
+    const where = [nextGame.event, nextGame.venue].filter(Boolean).join(" · ");
+    if (where) lines.push(where);
+    lines.push("```");
+    lines.push("");
+  } else {
+    lines.push("📅 No fight announced");
+    lines.push("");
+  }
+
+  if (recentGames.length > 0) {
+    lines.push("**📅 Recent Fights:**");
+    lines.push("```");
+    for (const fight of recentGames) {
+      const icon = fight.drew ? "🟡" : fight.won ? "✅" : "❌";
+      const result = fight.drew ? "D" : fight.won ? "W" : "L";
+      const round = fight.round ? ` (R${fight.round})` : "";
+      lines.push(
+        `${icon} ${result}${round} vs ${named(fight.opponentFlag, fight.opponent)} — ${formatCalendarDate(fight.date, "ufc")}`,
+      );
+    }
+    lines.push("```");
+  } else {
+    lines.push("📅 No completed fights found");
+  }
+
+  return lines.join("\n");
+}
+
 // Tennis is an individual sport: a board shows a single ranked player's world
 // ranking, ranking points, movement, and most recent match result. ATP and WTA
 // share this same shape, differing only in league key and tour label.
 function renderTennisPlayer(sport, tourLabel, data, title) {
-  const { team, emoji, logoUrl, standing, rankPoints, previousRank, trend, lastMatch } = data;
+  const { team, emoji, logoUrl, standing, previousRank, trend, lastMatch } = data;
   const lines = [];
 
   lines.push(...headingLines(sport, title));
@@ -754,11 +967,14 @@ function renderTennisPlayer(sport, tourLabel, data, title) {
   lines.push(`${tourLabel} · World Ranking`);
   lines.push("");
 
-  // World ranking, points, and movement form a compact meta line, mirroring the
+  // World ranking and movement form a compact meta line, mirroring the
   // single status line used by team boards (e.g. MLB's season/standing/next).
+  // Ranking POINTS are deliberately omitted: ESPN re-posts them as tournaments
+  // progress, so a committed board carrying them is stale within days and the
+  // "example boards are current" CI gate can never stay green. Rank and
+  // movement are stable, so they carry the information.
   const meta = [];
   if (standing && standing.position) meta.push(`🏆 World No. ${standing.position}`);
-  if (rankPoints !== undefined) meta.push(`📍 ${rankPoints.toLocaleString()} ranking points`);
   if (previousRank !== undefined && trend) {
     const arrow = trend === "-" ? "—" : trend === "up" || trend === "+" ? "▲" : "▼";
     meta.push(`📈 Movement: ${arrow} (was No. ${previousRank})`);
@@ -773,8 +989,17 @@ function renderTennisPlayer(sport, tourLabel, data, title) {
   if (lastMatch && lastMatch.opponent) {
     const icon = lastMatch.won ? "✅" : "❌";
     const result = lastMatch.won ? "W" : "L";
+    // Tennis has no home venue, so a match date is quoted in UTC by convention.
+    // Passing the zone explicitly keeps the board identical on every host:
+    // without it an instant like 2026-09-30T04:00Z renders Sep 30 on UTC but
+    // Sep 29 on US Eastern machines.
     const when = lastMatch.date
-      ? new Date(lastMatch.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+      ? formatDate(lastMatch.date, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: "UTC",
+        })
       : "";
     let setsText = "";
     const [playerSets, oppSets] = lastMatch.sets || [];
@@ -860,6 +1085,8 @@ function render(sport, data, options = {}) {
       return renderSoccer(data, "uel", "UEFA Europa League", title, compact);
     case "worldcup":
       return renderSoccer(data, "worldcup", "FIFA World Cup", title, compact);
+    case "ufc":
+      return renderUfc(data, title);
     case "argentina":
       return renderSoccer(data, "argentina", "Argentine Primera", title, compact);
     case "aleague":

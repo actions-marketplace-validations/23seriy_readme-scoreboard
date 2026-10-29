@@ -427,7 +427,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Atlas | `ATS` | 216 |
 | Cruz Azul | `CAZ` | 218 |
 | Guadalajara | `GDL` | 219 |
-| FC Juarez | `JUA` | 17851 |
+| FC Juárez | `JUA` | 17851 |
 | León | `LEO` | 228 |
 | MAZ | `MAZ` | 20702 |
 | Monterrey | `MTY` | 220 |
@@ -627,7 +627,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Slovan Bratislava | `SLB` | 521 |
 | Slavia Prague | `SLP` | 494 |
 | VfB Stuttgart | `VFB` | 134 |
-| Viking FK | `VIK` | 510 |
+| Viking FK | `VFK` | 510 |
 | Villarreal | `VIL` | 102 |
 
 ## UEFA Europa League
@@ -637,7 +637,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Team | Abbreviation | ID |
 |------|--------------|----|
 | Anderlecht | `AND` | 441 |
-| ARARAT-ARMENIA | `Ararat` | 20024 |
+| Ararat-Armenia | `ARA` | 20024 |
 | AZ Alkmaar | `AZ` | 140 |
 | Bayer Leverkusen | `B04` | 131 |
 | Besiktas | `BES` | 1895 |
@@ -659,7 +659,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Manchester United | `MUN` | 360 |
 | NEC Nijmegen | `NEC` | 147 |
 | NK Celje | `NKC` | 3362 |
-| OFI CRETE | `OFI Crete` | 1010 |
+| OFI Crete | `OFI` | 1010 |
 | Marseille | `OLM` | 176 |
 | Olympiacos | `OLY` | 435 |
 | Omonia Nicosia | `OMON` | 617 |
@@ -1184,7 +1184,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | California Golden Bears | `CAL` | 25 |
 | Campbell Fighting Camels | `CAM` | 2097 |
 | Canisius Golden Griffins | `CAN` | 2099 |
-| Central Arkansas Bears | `CARK` | 2110 |
+| Central Arkansas Sugar Bears | `CARK` | 2110 |
 | California Baptist Lancers | `CBU` | 2856 |
 | Central Connecticut Blue Devils | `CCSU` | 2115 |
 | Coastal Carolina Chanticleers | `CCU` | 324 |
@@ -1226,7 +1226,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Elon Phoenix | `ELON` | 2210 |
 | Eastern Michigan Eagles | `EMU` | 2199 |
 | East Texas A&M Lions | `ETAM` | 2837 |
-| East Tennessee State Bucs | `ETSU` | 2193 |
+| East Tennessee State Buccaneers | `ETSU` | 2193 |
 | Evansville Purple Aces | `EVAN` | 339 |
 | Eastern Washington Eagles | `EWU` | 331 |
 | Fairfield Stags | `FAIR` | 2217 |
@@ -1254,7 +1254,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Seton Hall Pirates | `HALL` | 2550 |
 | Hampton Lady Pirates | `HAMP` | 2261 |
 | Harvard Crimson | `HARV` | 108 |
-| Hawai'i Rainbow Warriors | `HAW` | 62 |
+| Hawai'i Rainbow Wahine | `HAW` | 62 |
 | Holy Cross Crusaders | `HC` | 107 |
 | Houston Christian Huskies | `HCU` | 2277 |
 | Hofstra Pride | `HOF` | 2275 |
@@ -1876,7 +1876,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Maryville (TN) Scots | `MCTN` | 2373 |
 | Maryland Terrapins | `MD` | 120 |
 | UMass Dartmouth Corsairs | `MDAR` | 379 |
-| MADONNA | `MDNN` | 126146 |
+| Madonna Crusaders | `MDNN` | 126146 |
 | Maine Black Bears | `ME` | 311 |
 | Memphis Tigers | `MEM` | 235 |
 | Mercer Bears | `MER` | 2382 |
@@ -1933,7 +1933,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Michigan Tech Huskies | `MTU` | 2392 |
 | Methodist Monarchs | `MU` | 291 |
 | Muhlenberg Mules | `MUHL` | 2422 |
-| Marian (IN) MARIAN | `MUIN` | 2366 |
+| Marian (IN) Knights | `MUIN` | 2366 |
 | Murray State Racers | `MUR` | 93 |
 | Mississippi Valley State Delta Devils | `MVSU` | 2400 |
 | Northwest Missouri State Bearcats | `MWMO` | 138 |
@@ -1985,7 +1985,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Oklahoma Baptist Bison | `OKBU` | 319 |
 | Oklahoma State Cowboys | `OKST` | 197 |
 | St. Olaf Oles | `OLAF` | 133 |
-| Oklahoma Panhandle OK PANHANDLE ST | `OPSU` | 2824 |
+| Oklahoma Panhandle Aggies | `OPSU` | 2824 |
 | Oregon Ducks | `ORE` | 2483 |
 | Oregon State Beavers | `ORST` | 204 |
 | Ohio State Buckeyes | `OSU` | 194 |
@@ -2463,18 +2463,18 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| Adelaide United | `ADE` | 5321 |
-| Auckland FC | `AFC` | 22344 |
-| Brisbane Roar | `BRR` | 5326 |
-| Central Coast Mariners | `CCM` | 5325 |
+| Adelaide United FC | `ADL` | 5321 |
+| Auckland FC | `AUC` | 22344 |
+| Brisbane Roar FC | `BRI` | 5326 |
+| Central Coast Mariners FC | `CCM` | 5325 |
 | Macarthur FC | `MAC` | 19340 |
-| Melbourne City FC | `MCY` | 11143 |
-| Melbourne Victory | `MVC` | 5328 |
+| Melbourne City FC | `MBC` | 11143 |
+| Melbourne Victory | `MBV` | 5328 |
 | Newcastle Jets | `NEW` | 5323 |
-| Perth Glory | `PER` | 5322 |
+| Perth Glory FC | `PER` | 5322 |
 | Sydney FC | `SYD` | 5327 |
-| Wellington Phoenix FC | `WEL` | 8352 |
-| Western Sydney Wanderers | `WSW` | 13696 |
+| Wellington Phoenix | `WEL` | 8352 |
+| Western Sydney Wanderers FC | `WSW` | 13696 |
 
 ## Indian Super League
 
@@ -2484,14 +2484,15 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 |------|--------------|----|
 | Bengaluru FC | `BFC` | 18851 |
 | Chennaiyin FC | `CFC` | 18000 |
-| SC East Bengal | `EBEN` | 8897 |
-| FC Goa | `GOA` | 18003 |
+| Churchill Brothers | `CHU` | 8896 |
+| East Bengal FC | `EBFC` | 8897 |
+| FC GOA | `FC Goa` | 18003 |
 | Inter Kashi | `ITKA` | 22069 |
-| Jamshedpur FC | `JFC` | 18850 |
+| JFC | `JFC` | 18850 |
 | Kerala Blasters FC | `KER` | 17997 |
 | Mohun Bagan Super Giant | `MBSG` | 20774 |
 | Mumbai City FC | `MCFC` | 18002 |
-| Mohammedan SC | `MOH` | 20842 |
+| MOH | `MOH` | 20842 |
 | NorthEast United FC | `NEU` | 18004 |
 | Odisha FC | `OFC` | 17998 |
 | Punjab FC | `PFC` | 18894 |
@@ -2503,7 +2504,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 
 | Team | Abbreviation | ID |
 |------|--------------|----|
-| Beijing Guoan | `BG` | 2052 |
+| Beijing Guoan | `BEI` | 2052 |
 | Chengdu Rongcheng | `CHE` | 21355 |
 | Chongqing Tonglianglong | `CHO` | 131704 |
 | Dalian Yingbo | `DYI` | 22537 |
@@ -2511,10 +2512,10 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Liaoning Tieren | `LIA` | 131705 |
 | Qingdao Hainiu | `QIN` | 21910 |
 | Qingdao West Coast | `QWC` | 22198 |
-| Shanghai Shenhua | `SHE` | 977 |
+| Shanghai Shenhua FC | `SFC` | 977 |
+| Shanghai Port FC | `SHP` | 15515 |
 | Shandong Taishan | `SHT` | 7521 |
 | Shenzhen Xinpengcheng | `SHX` | 22199 |
-| Shanghai Port | `SIPG` | 15515 |
 | Tianjin Jinmen Tiger | `TIG` | 8239 |
 | Wuhan Three Towns | `WTT` | 21506 |
 | Yunnan Yukun | `YUN` | 22536 |
@@ -2534,7 +2535,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | Kalamata | `KAL` | 132429 |
 | Kifisia | `KIF` | 21969 |
 | Levadiakos | `LEV` | 5276 |
-| OFI CRETE | `OFI Crete` | 1010 |
+| OFI Crete | `OFI` | 1010 |
 | Olympiacos | `OLY` | 435 |
 | Panetolikos | `PAN` | 11431 |
 | Panathinaikos | `PAO` | 443 |
@@ -2600,7 +2601,7 @@ Generated from the adapter registries. Use the abbreviation in the `team` input.
 | SK Brann | `SKBR` | 620 |
 | Tromso | `TRO` | 5270 |
 | Vålerenga | `VAL` | 2791 |
-| Viking FK | `VIK` | 510 |
+| Viking FK | `VFK` | 510 |
 
 ## Swedish Allsvenskan
 

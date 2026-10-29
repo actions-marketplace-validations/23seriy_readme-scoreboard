@@ -4,28 +4,29 @@
 
 ### 🦢 New York Rangers (NYR)
 Eastern Conference · Metropolitan Division
-🔴 Off-season · Next season starts October 2026
+🔴 Off-season · Next season starts September 29, 2026
 
 🏅 Standing: Metropolitan · 4
-📅 Next: vs COL (Jan 5)
+
+📅 Next: vs COL (Jan 6)
 
 📊 2025-2026 Record: 42W - 28L (60.0%)
    ███████████████░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W   8-0   vs BOS (Jan 3, 2026)
-❌ L   5-8   @ SEA (Dec 27, 2025)
-✅ W   3-0   @ LAK (Dec 20, 2025)
-❌ L   6-7   vs PIT (Dec 13, 2025)
-✅ W   7-1   @ CAR (Dec 6, 2025)
+✅ W   8-0   vs BOS (Jan 4, 2026)
+❌ L   5-8   @ SEA (Dec 28, 2025)
+✅ W   3-0   @ LAK (Dec 21, 2025)
+❌ L   6-7   vs PIT (Dec 14, 2025)
+✅ W   7-1   @ CAR (Dec 7, 2025)
 ```
 
 **🦢 Player Spotlight: Artemi Panarin**
-<img src="https://assets.nhle.com/mugs/nhl/20252026/8478550.png" alt="Artemi Panarin headshot" height="72" align="right" />
+<img src="https://assets.nhle.com/mugs/nhl/latest/8478550.png" alt="Artemi Panarin headshot" height="72" align="right" />
 45 G · 30 A · 120 PTS
 
 **📅 Last Game:**
 ```
-1 G · 2 A · 3 P vs BOS (Jan 3, 2026)
+1 G · 2 A · 3 P vs BOS (Jan 4, 2026)
 ```

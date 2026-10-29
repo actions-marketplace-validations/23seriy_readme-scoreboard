@@ -418,7 +418,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: aleague
-    team: ADE
+    team: ADL
     marker: readme-scoreboard-aleague
 ```
 
@@ -442,7 +442,7 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     gh_token: ${{ secrets.GH_TOKEN }}
     target_repo: ${{ github.repository }}
     sport: csl
-    team: BG
+    team: BEI
     marker: readme-scoreboard-csl
 ```
 
@@ -504,5 +504,17 @@ Copy a step below into your workflow. Add a matching marker pair to your README 
     sport: sweden
     team: AIK
     marker: readme-scoreboard-sweden
+```
+
+## UFC
+
+```yaml
+- uses: 23seriy/readme-scoreboard@v1
+  with:
+    gh_token: ${{ secrets.GH_TOKEN }}
+    target_repo: ${{ github.repository }}
+    sport: ufc
+    team: STR
+    marker: readme-scoreboard-ufc
 ```
 

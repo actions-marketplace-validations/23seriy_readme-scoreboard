@@ -10,8 +10,261 @@ that would alter what appears in your README or require editing your workflow.
 
 ## [Unreleased]
 
+### Fixed
+
+- **A season that has barely started shows last season's games, not "No recent
+ games found".** In
+  the first days of a season — or in the window after a fixture list rolls over
+but before any game
+  is played — the board fell back to an empty game list and a 0-0 record, which
+reads as broken
+  rather than as a season that has just begun. NBA and the 30 soccer leagues now
+walk back one season
+  and show those results and that same season's record and standing. A season
+that has any completed
+  game is untouched, so this only fills a board that would otherwise be blank.
+  Seen on the Leafs and Lakers boards, which both said "No recent games found"
+while last season's
+  results were available.
+
+### Changed
+
+- **The README's preview shows the live board again.** That block is pasted by hand and claimed to be
+  real output, so it had drifted: it still advertised `🔴 Off-season · Next season starts October
+  2026`, showed no standing and no next fixture, and listed a record from a season that had ended. It
+  is refreshed from the running action's own output. A test holds it to the pieces a board has —
+  presence and shape — rather than to exact values, because a snapshot of live data cannot be
+  compared for equality. Nothing read that block at all before.
+- **Demo boards name conferences the way the live feed does** — `Western Conference`, not `West
+  Conference`. The renderer appends the word "Conference", so the short form read as a typo on the
+  page the README shows first.
+
+### Fixed
+
+- **A stale player name stopped the example boards generating at all.** The exam
+ples pin one player per
+  sport, and a roster move made that name invalid, so `npm run examples:generate`
+aborted with
+  "Unknown player ... on ARIZ" and the scheduled refresh failed — taking every b
+oard with it, not just
+  the affected one. The Arizona entry now names a current player, and
+`npm run health:apis` verifies every
+  example player against their live roster so the breakage is reported as one na
+med entry instead of
+  breaking generation on a schedule.
+- **A college football board reported a win total that contradicted the games i
+t listed.** ESPN's
+  conference standings return one entry whose `stats` array is every category co
+ncatenated — overall
+  first, then Home, Road, vs Division, vs Conference, vs AP Top 25 — so `wins` a
+ppears once per
+  category and `Object.fromEntries` kept only the **last** one. Alabama's 5-0 ove
+rall season was
+  therefore reported as its 1-0 record against ranked teams, printed directly abo
+ve a list of five
+  wins. The overall figures are now taken from the first occurrence of each stat.
+  College football also publishes **no loss figure at all** (no `losses`, no
+`gamesPlayed`), so a
+  board claimed `1W - 0L (100.0%)` and every team looked undefeated; wins are no
+w stated on their
+  own (`📊 2026 Season: 5W`) instead of inventing a record and a win percentage.
+
+- **`main` went red whenever the live example boards drifted, blocking unrelated
+work.** The boards are
+  generated from live league APIs and refreshed by a scheduled workflow, which
+opens a pull request that
+  then waits for a maintainer — observed waiting times were 10 and 29 hours.
+While that request is open the
+  committed files no longer match the generator, and because the freshness chec
+k ran on every push to
+  `main`, the next unrelated merge inherited the failure and had to be unblocke
+d by hand. A pull request that
+  changes what a board renders is still blocked (regenerating is the author's jo
+b), but on a push the same
+  comparison now reports the drift as a warning instead of failing a build nobod
+y can fix. The check also
+  reads `git status --porcelain` rather than `git diff`, so a board the generato
+r adds or renames is caught,
+  not only one it edits.
+
+## [1.17.0] - 2026-09-30
+
+### Fixed
+
+- **Boards disagreed about which season it was, depending on the machine's
+timezone.** Every adapter decided the
+  current season with the *host's* calendar month (`new Date().getMonth()`).
+Because a machine east of UTC
+  crosses a month boundary hours earlier, the same board could report a different
+year: at 2026-09-30T21:47Z the
+  UTC month was still September, so the season year was 2025, while Asia/Tokyo had
+already rolled into October
+  and produced 2026. Fifteen sample boards changed year between zones — every NHL,
+G League and IndyCar example —
+  and the CI `lint` job failed for all three open automation PRs. A new
+`src/clock.js` reads the calendar in UTC
+  and all ten season calculations, plus the season-status line and the
+college/NFL/NBA/G League/tennis/motorsport
+  adapters, now use it, so the answer no longer depends on where the process runs.
+Guarded by
+  `tests/clock.test.js`, which pins the behaviour at the boundary instant itself —
+the bug otherwise only
+  appears in the few hours a year a month boundary is crossed.
+
+- **Tennis and football boards rendered a different day depending on the machine
+that generated them.** Match
+  and kick-off times arrive from ESPN as UTC instants, and four places formatted
+them in the *host's* zone
+  instead of the sport's. The same soccer-style fix applied to the team boards h
+ad missed them, so a tennis
+  "Last Match" read Sep 30 on a UTC machine and Sep 29 on a US Eastern one, and
+college football games were a
+  day later on hosts in Tokyo or Auckland. Because the daily refresh regenerates
+these files, the difference
+  turned into a permanent red "example boards are current" check on `main` that n
+o amount of regenerating
+  could clear. Tennis match dates are now quoted in UTC and football dates in th
+e conference's local zone.
+  New guard `tests/renderers/live-board-dates.test.js` renders live-shaped paylo
+ads in six timezones and
+  asserts one result — the existing demo-board guard could not catch this, becau
+se demo dates are calendar
+  strings rather than instants.
+- **Tennis boards printed a live ranking-points total, so they went stale within
+days.** ESPN re-posts
+  ranking points as tournaments progress (the men's No. 1 moved 11,500 → 12,800
+→ 11,000 during a single
+  session), which meant any committed board holding the number was wrong almost
+immediately and the
+  freshness check could never stay green. The ranking position and movement arro
+w are stable and still
+  shown; the points figure is no longer rendered.
+
+- **The example-board freshness check ran on every pull request, so unrelated PRs failed.** Once the
+  boards became live-data driven, regenerating a long-lived automation branch picked up league data
+  the branch predates and reported five boards as stale — on PRs that only touched markdown and JSON.
+  The check now runs only when a PR changes something that decides a board's output (`scripts/` or
+  `src/`), and always on a push to `main`, so it still catches a merge that left the boards stale.
+  This is a correction to how the gate introduced with the live-data boards is scoped; it also fixes
+  three open automation PRs that were red for this reason.
+
+- **A board could claim a league position for a season that has not started.** An unplayed
+  standings table is not empty — ESPN returns every team on 0 games and 0 points, ordered
+  **alphabetically** — and the board read that array position as a rank. The A-League showcase
+  therefore opened with `🏅 Standing: 2026-27 A-League · 1` for Adelaide United, whose only claim to
+  first place was that "Adelaide" sorts first with no matches played. A position is now reported
+  only once the table has results, so a not-yet-started season shows the next fixture and nothing
+  else. Two leagues were affected today: the A-League and the Indian Super League.
+- **Two leagues reported "🟢 Season in progress" through their entire off-season.** The A-League and
+  the ISL had their season windows stored as the rounded July and September guesses, so from July
+  onwards a board announced a season underway weeks before its first fixture. Their real openers are
+  October 16 and October 10, verified against each league's live fixture calendar. Corrected in the
+  registry and in the generated README table.
+- **The next fixture sat on the same line as the standing.** A single newline is a soft break in
+  Markdown, so `🏅 Standing: … · 2` and `📅 Next: …` were folded into one wrapped paragraph on the
+  profile instead of reading as two rows. They are now separate lines in every board that shows
+  both.
+- **The daily season-date check failed on a time of day.** The check that verifies every league's
+  season window compares the registry's opening date against the live one, and it compared them as
+  exact instants. The fixture calendar reports a kick-off (`2026-02-21T08:00Z`) while the registry
+  stores the day (`2026-02-21T00:00Z`), so thirteen leagues were reported as starting before
+  themselves — the error message quoted the same date on both sides. The comparison is now by
+  calendar day, which is the level the check exists to police: a genuine earlier-season override is
+  still caught.
+- **A game's date could differ by a day depending on where the board was generated.** Leagues play in
+  the evening, so a North American fixture belongs to the previous UTC day: ESPN reports the Lakers'
+  `May 11` playoff game as `2026-05-12T02:30Z`. The recent-games list had no timezone, so it printed
+  `May 12` on a UTC machine and `May 11` in New York — the same board showing two dates for one game.
+  Dates are now rendered in the zone the league plays in, so they match the fixture list, and NBA,
+  WNBA, NCAAB, NCAAW, NFL, NHL, MLB, MLS and every soccer league agree everywhere. This surfaced
+  while regenerating the example boards: CI (UTC) produced eight files that differed from the same
+  command run locally (EDT).
+
+### Changed
+
+- **The example boards in `examples/` are now built from live league data.** They were generated from the
+  action's offline sample data, which made them a fiction: the college-football board showed an 18-6
+  record and a `14-2` score in a sport where two points cannot be scored, and the tennis boards
+  named players who had left their club. Every figure is now real as of the day it was generated.
+  Run `npm run examples:generate` for live boards, or `npm run examples:generate:demo` for the
+  offline samples.
+
+## [1.16.0] - 2026-09-26
+
 ### Added
 
+- **Soccer boards now show the next fixture.** `📅 Next: vs LEE (Oct 10)` appears on Premier
+  League, La Liga, MLS and the other eighteen soccer leagues, alongside the standing and recent
+  results they already had. The adapter had always been able to render it — the schedule call it
+  read simply returned a page of finished matches, so the next fixture was never in the response.
+  Asking the same endpoint for future fixtures instead takes the number of leagues that can show a
+  next fixture from 7 of 43 to 30. Leagues that legitimately have no upcoming match — a cup between
+  editions, a completed season — are unchanged.
+
+## [1.15.2] - 2026-09-26
+
+### Fixed
+
+- **The off-season "next season starts" date was read from the wrong field.** Every league's start
+  is stored twice in the registry — once as a month and day, once as a real date — and the two
+  disagree for 15 of 43 leagues, because the month/day is a rounded guess. The status line read the
+  guess, so the NBA announced `October 1, 2026` where its own dated window, and its opener, is
+  `October 20`. The dated value now wins, and the year arithmetic advances from it, so a board
+  sitting past its own start date rolls to the following year instead of printing a date in the past.
+  Twenty-eight leagues already agreed and are unchanged.
+
+## [1.15.1] - 2026-09-26
+
+### Fixed
+
+- **Hockey and tennis athlete images were blank or generic.** The NHL spotlight headshot pointed at
+  `mugs/nhl/<season>/<id>.png`, a path that answers `200` with an 11 KB placeholder for every player
+  and every season — GitHub drew the grey silhouette, so the broken image looked like a working URL.
+  It now uses the season-free path the league's own API reports. A tennis board also shows the
+  player's ESPN headshot rather than a generic tennis icon, because a tennis board tracks one person.
+- **A hockey board showed no recent games, and a 0-0 record, during the off-season.** Late September
+  counts as off-season, but the upcoming season had already played pre-season fixtures — which are
+  final — and those were taken as proof the season had started, so the adapter settled one call short
+  of the completed season. It now requires a completed regular-season or playoff game, which is what
+  brings last season's results back. The next fixture still comes from the upcoming season, so the
+  board keeps announcing the opener.
+- **The next season start named a month, and for hockey it named the wrong one.** The registry said
+  October while its own fallback date, and the league's API, both said September 29.
+- **A standing from a completed season read as a live one.** The NHL reports no in-season standing
+  off-season, so its board printed a final table as current.
+
+### Changed
+
+- **The status line names a date:** `🔴 Off-season · Next season starts September 29, 2026` instead
+  of `... September 2026`. The registry already stores the day, so printing it costs nothing. The
+  World Cup keeps its pinned edition and now reads `June 11, 2030`.
+- **A standing taken from a finished season says so:** `🏅 Standing (2025-26): Atlantic · 8`. Leagues
+  whose standing is current are unchanged.
+
+### Added
+
+- **`npm run audit:leagues`**, a maintainer-facing check of every configured league for the classes
+  of bug that reached a board: a 0-0 record alongside listed games, an image URL that resolves to a
+  placeholder, and an off-season board whose next season start is already in the past. It reports 40
+  of 43 leagues clean and names three open findings — `belgian` has no teams configured, and `ncaaf`
+  and `ncaa_hockey` report 0-0 records over games they list. It runs on request, not in CI, because
+  it makes roughly 100 live requests.
+
+## [1.15.0] - 2026-09-26
+
+### Added
+
+- **UFC, as `ufc`** — a fighter's career record, their next bout, and their recent results, keyed by
+  surname code (`STR` for Strickland, `VOL` for Volkanovski). 40 fighters taken from the season's
+  cards. This is the first sport here with no scores and no standings: ESPN's MMA feed reports a
+  lifetime W-L-D, so the record is labelled a career record rather than a season one, and no
+  standing is shown at all instead of inventing a position. It is also the first league whose
+  upstream feed publishes **no athlete id** — a name is the only identity ESPN gives — so the
+  roster is matched by name, with case, punctuation and diacritics normalised, rather than by id.
+  `player:` is not offered: `ufc` joins the documented list of leagues that already render a single
+  athlete board.
+- **A per-league `entityLabel`**, so a heading can name the right noun — UFC boards read
+  "My Favourite UFC Fighter", which "Player" would have got wrong.
 - **The FIFA World Cup, as `worldcup`.** All 48 qualified nations are configured with their ESPN
   team id and country flag, so a board works for any of them rather than a handful of favourites,
   and `player:` works here like every other soccer league (ESPN serves a full squad roster and
@@ -27,6 +280,20 @@ that would alter what appears in your README or require editing your workflow.
 - **A guard that every league has a runnable demo command**, and negative tests for the three
   existing demo-consistency checks, which had only ever been called on data that satisfied them —
   nothing proved they would fire at all.
+- **A CI gate that the generated artefacts are current.** Regenerating the example boards and
+  failing on any resulting diff sounds like ceremony until you know that a generator fix does not
+  regenerate what was already committed: six boards carried a stale `W 0-0` result for days with
+  nothing to notice. The gate is what caught the timezone bug below, on its first run.
+
+### Changed
+
+- **Node 24 is now declared rather than assumed** — in `.nvmrc`, in the `engines` field, in the
+  action's own Node setup, and in the docs. Nothing changes for anyone using the action; the
+  requirement was simply invisible before, and a major version behind it is easy to not notice.
+- **Two unreachable methods left the shared free-API base class.** `fetchData` and
+  `fetchRecentGames` had no callers left (every subclass overrode or ignored them), and two of the
+  tests covering them had been recomputing the methods' arithmetic inline instead of calling them,
+  so they passed regardless. Both are gone, and what remained is now called for real.
 
 ### Fixed
 
@@ -34,7 +301,30 @@ that would alter what appears in your README or require editing your workflow.
   with a subtraction floored at zero, so a zero-point winner drew 0-0 — reachable wherever scores
   start at zero, meaning every soccer and hockey league, though no committed gallery happened to
   contain one until the World Cup demo did. A result that contradicts its own scoreline is now a
-  consistency failure checked across all 42 leagues, so no adapter can reintroduce it.
+  consistency failure checked across all 43 leagues, so no adapter can reintroduce it. Six committed
+  example boards still carried the old "W 0-0" output, because fixing the generator does not
+  regenerate the artefacts — they are now regenerated, and a test reads the committed files rather
+  than trusting the generator.
+- **Compact mode left a UFC board's fight log in place.** Compaction strips the recent-results block
+  by matching its heading, and UFC's read "Recent Fights", so `compact: true` kept the fights in the
+  action and in the league gallery. The heading is covered now, and the pattern lives in one shared
+  module — it had been copied identically into the action and two scripts, which is how a new sport
+  could match none of them.
+- **A bout could appear twice on a UFC board.** The adapter walks back a season when a fighter's
+  recent results are thin, and the same card can arrive from two adjacent season queries, so fights
+  are now de-duplicated before the board is built.
+- **The country flag map is now escape sequences, and fully validated.** Literal flag glyphs in that
+  file proved fragile: a toolchain passing them through replaced one of the two regional indicators
+  with U+FFFD, which blanks a country's name in the generated directory without failing anything
+  else. A test now decodes every key and asserts a country resolves for every UFC fighter.
+- **A board could differ by a day depending on your timezone.** Sample values were stored as
+  UTC-midnight instants and then formatted in the *local* zone, so any machine east of UTC
+  rendered the next day: the same input produced a different board on different machines, and the
+  committed example boards had been generated a day early. Date-only values are now formatted in
+  UTC, while real timestamps — live game times, which genuinely have a time of day — keep the
+  reader's zone as they should. Every sample date is a calendar date now, and a test renders all of
+  them in five timezones and asserts a single result, in child processes, because Node caches the
+  timezone at startup.
 
 ## [1.14.2] - 2026-09-20
 
@@ -605,7 +895,12 @@ Initial release.
 - `marker` input, so multiple scoreboards can live in one README
 - Team abbreviation tables and demo mode (`--demo`)
 
-[Unreleased]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.2...HEAD
+[Unreleased]: https://github.com/23seriy/readme-scoreboard/compare/v1.17.0...HEAD
+[1.17.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.16.0...v1.17.0
+[1.16.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.15.2...v1.16.0
+[1.15.2]: https://github.com/23seriy/readme-scoreboard/compare/v1.15.1...v1.15.2
+[1.15.1]: https://github.com/23seriy/readme-scoreboard/compare/v1.15.0...v1.15.1
+[1.15.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.2...v1.15.0
 [1.14.2]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.1...v1.14.2
 [1.14.1]: https://github.com/23seriy/readme-scoreboard/compare/v1.14.0...v1.14.1
 [1.14.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.13.1...v1.14.0

@@ -10,20 +10,22 @@ Team: **ATL** · Category: Basketball · Data source: ESPN public API
 
 ### 🌙 Atlanta Dream (ATL)
 Eastern Conference
-🟢 Season in progress
+🔴 Off-season · Next season starts May 8, 2027
 
 🏅 Standing: Eastern · 1
+
+📅 Next: vs GS (Oct 29)
 
 📊 2026 Record: 30W - 14L (68.2%)
    █████████████████░░░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W  83-65  @ NY  (Sep 24, 2026)
-✅ W  95-84  @ NY  (Sep 22, 2026)
-✅ W 106-81  vs CHI (Sep 19, 2026)
-✅ W 103-59  vs CON (Sep 17, 2026)
-✅ W  89-81  vs MIN (Aug 30, 2026)
+❌ L  55-64  @ GS  (Oct 26, 2026) [Playoffs]
+❌ L  62-67  vs GS  (Oct 24, 2026) [Playoffs]
+✅ W  97-71  vs GS  (Oct 21, 2026) [Playoffs]
+✅ W  79-65  @ GS  (Oct 19, 2026) [Playoffs]
+❌ L  64-68  @ GS  (Oct 17, 2026) [Playoffs]
 ```
 
 ## Custom title
@@ -36,20 +38,22 @@ The `title:` input replaces the default heading.
 
 ### 🌙 Atlanta Dream (ATL)
 Eastern Conference
-🟢 Season in progress
+🔴 Off-season · Next season starts May 8, 2027
 
 🏅 Standing: Eastern · 1
+
+📅 Next: vs GS (Oct 29)
 
 📊 2026 Record: 30W - 14L (68.2%)
    █████████████████░░░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W  83-65  @ NY  (Sep 24, 2026)
-✅ W  95-84  @ NY  (Sep 22, 2026)
-✅ W 106-81  vs CHI (Sep 19, 2026)
-✅ W 103-59  vs CON (Sep 17, 2026)
-✅ W  89-81  vs MIN (Aug 30, 2026)
+❌ L  55-64  @ GS  (Oct 26, 2026) [Playoffs]
+❌ L  62-67  vs GS  (Oct 24, 2026) [Playoffs]
+✅ W  97-71  vs GS  (Oct 21, 2026) [Playoffs]
+✅ W  79-65  @ GS  (Oct 19, 2026) [Playoffs]
+❌ L  64-68  @ GS  (Oct 17, 2026) [Playoffs]
 ```
 
 ## Compact mode
@@ -61,9 +65,11 @@ The `compact: true` input drops the logo and recent-game details.
 
 ### 🌙 Atlanta Dream (ATL)
 Eastern Conference
-🟢 Season in progress
+🔴 Off-season · Next season starts May 8, 2027
 
 🏅 Standing: Eastern · 1
+
+📅 Next: vs GS (Oct 29)
 
 📊 2026 Record: 30W - 14L (68.2%)
    █████████████████░░░░░░░░

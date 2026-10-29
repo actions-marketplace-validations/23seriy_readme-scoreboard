@@ -9,21 +9,23 @@ Team: **BAH** · Category: Soccer · Data source: ESPN public API
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/9967.png" alt="Bahia logo" width="72" align="right" />
 
 ### 🔵 Bahia (BAH)
-Série A
+Brasileirão
 🟢 Season in progress
 
-🏅 Standing: 5
+🏅 Standing (2026): Brasileirão · 7
 
-📊 2026 Record: 12W - 6L - 10D  (46 pts)
-   ███████████████▏░░░░░░░░░
+📅 Next: vs SAO (Oct 29)
+
+📊 2026 Record: 13W - 8L - 11D  (50 pts)
+   ██████████████▍░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+🟡 D 1-1 @ SAN   (Oct 24, 2026)
+❌ L 0-3 vs FLA   (Oct 18, 2026)
+✅ W 1-0 vs MIR   (Oct 11, 2026)
+❌ L 0-1 @ PAL   (Oct 8, 2026)
 ❌ L 1-2 @ CAP   (Sep 20, 2026)
-✅ W 2-1 vs REMO  (Sep 14, 2026)
-✅ W 3-2 @ BRA   (Sep 5, 2026)
-✅ W 3-2 vs INT   (Aug 30, 2026)
-✅ W 2-0 @ VIT   (Aug 23, 2026)
 ```
 
 ## Custom title
@@ -35,21 +37,23 @@ The `title:` input replaces the default heading.
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/9967.png" alt="Bahia logo" width="72" align="right" />
 
 ### 🔵 Bahia (BAH)
-Série A
+Brasileirão
 🟢 Season in progress
 
-🏅 Standing: 5
+🏅 Standing (2026): Brasileirão · 7
 
-📊 2026 Record: 12W - 6L - 10D  (46 pts)
-   ███████████████▏░░░░░░░░░
+📅 Next: vs SAO (Oct 29)
+
+📊 2026 Record: 13W - 8L - 11D  (50 pts)
+   ██████████████▍░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+🟡 D 1-1 @ SAN   (Oct 24, 2026)
+❌ L 0-3 vs FLA   (Oct 18, 2026)
+✅ W 1-0 vs MIR   (Oct 11, 2026)
+❌ L 0-1 @ PAL   (Oct 8, 2026)
 ❌ L 1-2 @ CAP   (Sep 20, 2026)
-✅ W 2-1 vs REMO  (Sep 14, 2026)
-✅ W 3-2 @ BRA   (Sep 5, 2026)
-✅ W 3-2 vs INT   (Aug 30, 2026)
-✅ W 2-0 @ VIT   (Aug 23, 2026)
 ```
 
 ## Compact mode
@@ -60,13 +64,15 @@ The `compact: true` input drops the logo and recent-game details.
 
 
 ### 🔵 Bahia (BAH)
-Série A
+Brasileirão
 🟢 Season in progress
 
-🏅 Standing: 5
+🏅 Standing (2026): Brasileirão · 7
 
-📊 2026 Record: 12W - 6L - 10D  (46 pts)
-   ███████████████▏░░░░░░░░░
+📅 Next: vs SAO (Oct 29)
+
+📊 2026 Record: 13W - 8L - 11D  (50 pts)
+   ██████████████▍░░░░░░░░░░
 
 
 

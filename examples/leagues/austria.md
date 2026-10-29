@@ -9,21 +9,23 @@ Team: **ALU** · Category: Soccer · Data source: ESPN public API
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/21540.png" alt="Austria Lustenau logo" width="72" align="right" />
 
 ### 🟤 Austria Lustenau (ALU)
-2026-27 
+Bundesliga
 🟢 Season in progress
 
-🏅 Standing: 2026-27  · 9
+🏅 Standing (2026): Bundesliga · 10
 
-📊 2026 Record: 2W - 3L - 2D  (8 pts)
-   ██████████▋░░░░░░░░░░░░░░
+📅 Next: @ SLZ (Nov 1)
+
+📊 2026 Record: 2W - 6L - 2D  (8 pts)
+   ███████▌░░░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+❌ L 1-5 @ VIE   (Oct 24, 2026)
+❌ L 0-4 vs LAS   (Oct 17, 2026)
+❌ L 3-4 @ HAR   (Oct 11, 2026)
 ✅ W 2-0 vs SCR   (Sep 19, 2026)
 ❌ L 1-2 @ VIE   (Sep 13, 2026)
-❌ L 0-4 vs WST   (Aug 28, 2026)
-🟡 D 1-1 @ STG   (Aug 22, 2026)
-✅ W 2-1 vs WOL   (Aug 15, 2026)
 ```
 
 ## Custom title
@@ -35,21 +37,23 @@ The `title:` input replaces the default heading.
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/21540.png" alt="Austria Lustenau logo" width="72" align="right" />
 
 ### 🟤 Austria Lustenau (ALU)
-2026-27 
+Bundesliga
 🟢 Season in progress
 
-🏅 Standing: 2026-27  · 9
+🏅 Standing (2026): Bundesliga · 10
 
-📊 2026 Record: 2W - 3L - 2D  (8 pts)
-   ██████████▋░░░░░░░░░░░░░░
+📅 Next: @ SLZ (Nov 1)
+
+📊 2026 Record: 2W - 6L - 2D  (8 pts)
+   ███████▌░░░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+❌ L 1-5 @ VIE   (Oct 24, 2026)
+❌ L 0-4 vs LAS   (Oct 17, 2026)
+❌ L 3-4 @ HAR   (Oct 11, 2026)
 ✅ W 2-0 vs SCR   (Sep 19, 2026)
 ❌ L 1-2 @ VIE   (Sep 13, 2026)
-❌ L 0-4 vs WST   (Aug 28, 2026)
-🟡 D 1-1 @ STG   (Aug 22, 2026)
-✅ W 2-1 vs WOL   (Aug 15, 2026)
 ```
 
 ## Compact mode
@@ -60,13 +64,15 @@ The `compact: true` input drops the logo and recent-game details.
 
 
 ### 🟤 Austria Lustenau (ALU)
-2026-27 
+Bundesliga
 🟢 Season in progress
 
-🏅 Standing: 2026-27  · 9
+🏅 Standing (2026): Bundesliga · 10
 
-📊 2026 Record: 2W - 3L - 2D  (8 pts)
-   ██████████▋░░░░░░░░░░░░░░
+📅 Next: @ SLZ (Nov 1)
+
+📊 2026 Record: 2W - 6L - 2D  (8 pts)
+   ███████▌░░░░░░░░░░░░░░░░░
 
 
 

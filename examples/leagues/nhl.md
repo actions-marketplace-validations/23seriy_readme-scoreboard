@@ -10,12 +10,23 @@ Team: **ANA** · Category: Hockey · Data source: official league API
 
 ### 🦆 Anaheim Ducks (ANA)
 Western Conference · Pacific Division
-🔴 Off-season · Next season starts October 2026
+🟢 Season in progress
 
-🏅 Standing: Pacific · 3
-📅 Next: @ SJS (Sep 25)
+🏅 Standing (2026-27): Pacific · 5
 
-📅 No recent games found
+📅 Next: vs BUF (Oct 30)
+
+📊 2025-2026 Record: 5W - 7L (41.7%)
+   ██████████▍░░░░░░░░░░░░░░
+
+**📅 Recent Games:**
+```
+❌ L   5-6   vs VAN (Oct 27, 2026)
+✅ W   5-4   @ PHI (Oct 24, 2026)
+❌ L   1-4   @ NJD (Oct 22, 2026)
+❌ L   2-3   @ NYI (Oct 20, 2026)
+❌ L   2-5   @ NYR (Oct 19, 2026)
+```
 
 ## Custom title
 
@@ -27,12 +38,23 @@ The `title:` input replaces the default heading.
 
 ### 🦆 Anaheim Ducks (ANA)
 Western Conference · Pacific Division
-🔴 Off-season · Next season starts October 2026
+🟢 Season in progress
 
-🏅 Standing: Pacific · 3
-📅 Next: @ SJS (Sep 25)
+🏅 Standing (2026-27): Pacific · 5
 
-📅 No recent games found
+📅 Next: vs BUF (Oct 30)
+
+📊 2025-2026 Record: 5W - 7L (41.7%)
+   ██████████▍░░░░░░░░░░░░░░
+
+**📅 Recent Games:**
+```
+❌ L   5-6   vs VAN (Oct 27, 2026)
+✅ W   5-4   @ PHI (Oct 24, 2026)
+❌ L   1-4   @ NJD (Oct 22, 2026)
+❌ L   2-3   @ NYI (Oct 20, 2026)
+❌ L   2-5   @ NYR (Oct 19, 2026)
+```
 
 ## Compact mode
 
@@ -43,12 +65,16 @@ The `compact: true` input drops the logo and recent-game details.
 
 ### 🦆 Anaheim Ducks (ANA)
 Western Conference · Pacific Division
-🔴 Off-season · Next season starts October 2026
+🟢 Season in progress
 
-🏅 Standing: Pacific · 3
-📅 Next: @ SJS (Sep 25)
+🏅 Standing (2026-27): Pacific · 5
 
-📅 No recent games found
+📅 Next: vs BUF (Oct 30)
+
+📊 2025-2026 Record: 5W - 7L (41.7%)
+   ██████████▍░░░░░░░░░░░░░░
+
+
 
 ## Badge mode
 

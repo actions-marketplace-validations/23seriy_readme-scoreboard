@@ -12,13 +12,17 @@ Team: **RMA** · Category: Soccer · Data source: ESPN public API
 League Phase
 🟢 Season in progress
 
-🏅 Standing: League Phase · 14
+🏅 Standing (2026): League Phase · 4
 
-📊 2026 Record: 1W - 0L - 0D  (3 pts)
+📅 Next: @ AEK (Nov 4)
+
+📊 2026 Record: 3W - 0L - 0D  (9 pts)
    █████████████████████████
 
 **📅 Recent Games:**
 ```
+✅ W 4-1 vs RBL   (Oct 21, 2026)
+✅ W 4-3 @ ROMA  (Oct 14, 2026)
 ✅ W 2-1 vs INT   (Sep 8, 2026)
 ```
 
@@ -34,13 +38,17 @@ The `title:` input replaces the default heading.
 League Phase
 🟢 Season in progress
 
-🏅 Standing: League Phase · 14
+🏅 Standing (2026): League Phase · 4
 
-📊 2026 Record: 1W - 0L - 0D  (3 pts)
+📅 Next: @ AEK (Nov 4)
+
+📊 2026 Record: 3W - 0L - 0D  (9 pts)
    █████████████████████████
 
 **📅 Recent Games:**
 ```
+✅ W 4-1 vs RBL   (Oct 21, 2026)
+✅ W 4-3 @ ROMA  (Oct 14, 2026)
 ✅ W 2-1 vs INT   (Sep 8, 2026)
 ```
 
@@ -55,9 +63,11 @@ The `compact: true` input drops the logo and recent-game details.
 League Phase
 🟢 Season in progress
 
-🏅 Standing: League Phase · 14
+🏅 Standing (2026): League Phase · 4
 
-📊 2026 Record: 1W - 0L - 0D  (3 pts)
+📅 Next: @ AEK (Nov 4)
+
+📊 2026 Record: 3W - 0L - 0D  (9 pts)
    █████████████████████████
 
 

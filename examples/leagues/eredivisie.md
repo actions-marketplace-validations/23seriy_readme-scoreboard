@@ -12,18 +12,20 @@ Team: **AJA** · Category: Soccer · Data source: ESPN public API
 2026-2027 Dutch Eredivisie
 🟢 Season in progress
 
-🏅 Standing: 2026-2027 Dutch Eredivisie · 5
+🏅 Standing (2026): 2026-2027 Dutch Eredivisie · 2
 
-📊 2026 Record: 4W - 1L - 2D  (14 pts)
-   █████████████████▊░░░░░░░
+📅 Next: vs AZ (Oct 31)
+
+📊 2026 Record: 6W - 1L - 3D  (21 pts)
+   ██████████████████▊░░░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 2-1 @ SPA   (Oct 25, 2026)
+✅ W 5-2 @ GRO   (Oct 18, 2026)
+🟡 D 1-1 vs NEC   (Oct 10, 2026)
 🟡 D 2-2 vs EXC   (Sep 19, 2026)
 ✅ W 5-1 vs WIL   (Sep 15, 2026)
-✅ W 5-1 @ FOR   (Sep 12, 2026)
-❌ L 1-3 vs PSV   (Sep 5, 2026)
-✅ W 4-0 @ TEL   (Aug 30, 2026)
 ```
 
 ## Custom title
@@ -38,18 +40,20 @@ The `title:` input replaces the default heading.
 2026-2027 Dutch Eredivisie
 🟢 Season in progress
 
-🏅 Standing: 2026-2027 Dutch Eredivisie · 5
+🏅 Standing (2026): 2026-2027 Dutch Eredivisie · 2
 
-📊 2026 Record: 4W - 1L - 2D  (14 pts)
-   █████████████████▊░░░░░░░
+📅 Next: vs AZ (Oct 31)
+
+📊 2026 Record: 6W - 1L - 3D  (21 pts)
+   ██████████████████▊░░░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 2-1 @ SPA   (Oct 25, 2026)
+✅ W 5-2 @ GRO   (Oct 18, 2026)
+🟡 D 1-1 vs NEC   (Oct 10, 2026)
 🟡 D 2-2 vs EXC   (Sep 19, 2026)
 ✅ W 5-1 vs WIL   (Sep 15, 2026)
-✅ W 5-1 @ FOR   (Sep 12, 2026)
-❌ L 1-3 vs PSV   (Sep 5, 2026)
-✅ W 4-0 @ TEL   (Aug 30, 2026)
 ```
 
 ## Compact mode
@@ -63,10 +67,12 @@ The `compact: true` input drops the logo and recent-game details.
 2026-2027 Dutch Eredivisie
 🟢 Season in progress
 
-🏅 Standing: 2026-2027 Dutch Eredivisie · 5
+🏅 Standing (2026): 2026-2027 Dutch Eredivisie · 2
 
-📊 2026 Record: 4W - 1L - 2D  (14 pts)
-   █████████████████▊░░░░░░░
+📅 Next: vs AZ (Oct 31)
+
+📊 2026 Record: 6W - 1L - 3D  (21 pts)
+   ██████████████████▊░░░░░░
 
 
 

@@ -3,28 +3,30 @@
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="Real Madrid logo" width="72" align="right" />
 
 ### 👑 Real Madrid (RMA)
-La Liga
+2026-27 LALIGA
 🟢 Season in progress
 
-🏅 Standing: La Liga · 2
-📅 Next: vs BET (Jan 10)
+🏅 Standing (2026): 2026-27 LALIGA · 3
 
-📊 2026 Record: 18W - 6L - 6D  (60 pts)
-   █████████████████▌░░░░░░░
+📅 Next: @ RAC (Nov 1)
+
+📊 2026 Record: 8W - 2L - 0D  (24 pts)
+   ████████████████████░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W 0-0 @ ATM   (Jan 3, 2026)
-🟡 D 2-2 @ GIR   (Dec 27, 2025)
-✅ W 2-0 @ CEL   (Dec 20, 2025)
-❌ L 3-6 @ VIL   (Dec 13, 2025)
-✅ W 1-0 vs SEV   (Dec 6, 2025)
+✅ W 2-1 @ BAR   (Oct 25, 2026)
+✅ W 4-1 vs SEV   (Oct 18, 2026)
+✅ W 1-0 vs VIL   (Oct 10, 2026)
+❌ L 1-2 @ ATM   (Sep 20, 2026)
+✅ W 3-2 @ ELC   (Sep 15, 2026)
 ```
 
-**👑 Player Spotlight: Kylian Mbappe**
-20 APP · 3 G · 9 A
+**👑 Player Spotlight: Kylian Mbappé**
+<img src="https://a.espncdn.com/i/headshots/soccer/players/full/231388.png" alt="Kylian Mbappé headshot" height="72" align="right" />
+10 APP · 11 G · 2 A
 
 **📅 Last Game:**
 ```
-1 G · 1 A vs ATM (Jan 4, 2026)
+2 G · 0 A vs BAR (Oct 25, 2026)
 ```

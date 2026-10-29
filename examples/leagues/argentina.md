@@ -12,18 +12,20 @@ Team: **ALDO** · Category: Soccer · Data source: ESPN public API
 Group B
 🟢 Season in progress
 
-🏅 Standing: Group B · 10
+🏅 Standing (2026): Group B · 10
 
-📊 2026 Record: 2W - 6L - 2D  (8 pts)
-   ███████▌░░░░░░░░░░░░░░░░░
+📅 Next: @ RAC (Oct 31)
+
+📊 2026 Record: 3W - 9L - 2D  (11 pts)
+   ███████▏░░░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 1-0 vs BEL   (Oct 25, 2026)
+❌ L 1-2 @ AAE   (Oct 18, 2026)
+❌ L 1-3 vs SARM  (Oct 9, 2026)
+❌ L 0-1 @ HUR   (Oct 4, 2026)
 ✅ W 1-0 vs CAT   (Sep 21, 2026)
-❌ L 3-4 @ RIV   (Sep 12, 2026)
-✅ W 3-1 vs BAN   (Sep 5, 2026)
-❌ L 1-2 @ ARGJ  (Aug 30, 2026)
-❌ L 1-3 vs USF   (Aug 21, 2026)
 ```
 
 ## Custom title
@@ -38,18 +40,20 @@ The `title:` input replaces the default heading.
 Group B
 🟢 Season in progress
 
-🏅 Standing: Group B · 10
+🏅 Standing (2026): Group B · 10
 
-📊 2026 Record: 2W - 6L - 2D  (8 pts)
-   ███████▌░░░░░░░░░░░░░░░░░
+📅 Next: @ RAC (Oct 31)
+
+📊 2026 Record: 3W - 9L - 2D  (11 pts)
+   ███████▏░░░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 1-0 vs BEL   (Oct 25, 2026)
+❌ L 1-2 @ AAE   (Oct 18, 2026)
+❌ L 1-3 vs SARM  (Oct 9, 2026)
+❌ L 0-1 @ HUR   (Oct 4, 2026)
 ✅ W 1-0 vs CAT   (Sep 21, 2026)
-❌ L 3-4 @ RIV   (Sep 12, 2026)
-✅ W 3-1 vs BAN   (Sep 5, 2026)
-❌ L 1-2 @ ARGJ  (Aug 30, 2026)
-❌ L 1-3 vs USF   (Aug 21, 2026)
 ```
 
 ## Compact mode
@@ -63,10 +67,12 @@ The `compact: true` input drops the logo and recent-game details.
 Group B
 🟢 Season in progress
 
-🏅 Standing: Group B · 10
+🏅 Standing (2026): Group B · 10
 
-📊 2026 Record: 2W - 6L - 2D  (8 pts)
-   ███████▌░░░░░░░░░░░░░░░░░
+📅 Next: @ RAC (Oct 31)
+
+📊 2026 Record: 3W - 9L - 2D  (11 pts)
+   ███████▏░░░░░░░░░░░░░░░░░
 
 
 

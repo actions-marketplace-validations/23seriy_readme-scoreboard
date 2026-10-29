@@ -2,22 +2,22 @@
 <img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Los Angeles Lakers logo" width="72" align="right" />
 
 ### 👑 Los Angeles Lakers (LAL)
-West Conference · Pacific Division
-🔴 Off-season · Next season starts October 2026
+Western Conference · Pacific Division
+🟢 Season in progress
 
-🏅 Standing: West · 3
-📅 Next: vs BOS (Jan 5)
+🏅 Standing: Western · 10
 
-📊 2025-2026 Record: 50W - 32L (61.0%)
-   ███████████████▎░░░░░░░░░
+📅 Next: @ LAC (Oct 29)
+
+📊 2026-2027 Record: 3W - 1L (75.0%)
+   ██████████████████▊░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W 119-113 @ PHX (Jan 3, 2026)
-❌ L 112-113 vs MIL (Dec 27, 2025)
-✅ W  99-93  @ CHI (Dec 20, 2025)
-❌ L 130-143 @ DEN (Dec 13, 2025)
-✅ W 113-112 vs OKC (Dec 6, 2025)
+❌ L 129-136 vs POR (Oct 27, 2026)
+✅ W 132-123 @ UTAH (Oct 25, 2026)
+✅ W 125-117 vs LAC (Oct 23, 2026)
+✅ W 127-105 vs GS  (Oct 21, 2026)
 ```
 
 
@@ -27,39 +27,39 @@ West Conference · Pacific Division
 American League · AL East
 🟢 Season in progress
 
-🏅 Standing: AL East · 4
-📅 Next: vs SEA (Jan 5)
+🏅 Standing: AL East · 2
 
-📊 2026 Record: 42W - 28L (60.0%)
-   ███████████████░░░░░░░░░░
+📊 2026 Record: 93W - 68L (57.8%)
+   ██████████████▍░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W  1-0  vs TEX (Jan 3, 2026)
-❌ L  0-1  @ SD  (Dec 27, 2025)
-✅ W  7-4  vs BOS (Dec 20, 2025)
-❌ L  5-11 vs MIL (Dec 13, 2025)
-✅ W  6-0  vs CLE (Dec 6, 2025)
+❌ L  3-4  vs TB  (Oct 7, 2026) [Playoffs]
+❌ L  2-5  @ TB  (Oct 5, 2026) [Playoffs]
+❌ L  0-1  @ TB  (Oct 3, 2026) [Playoffs]
+✅ W  9-2  vs BOS (Sep 30, 2026) [Playoffs]
+✅ W  9-0  vs BOS (Sep 29, 2026) [Playoffs]
 ```
 
 
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/359.png" alt="Arsenal logo" width="72" align="right" />
 
 ### 🔴 Arsenal (ARS)
-Premier League
+2026-27 English Premier League
 🟢 Season in progress
 
-🏅 Standing: Premier League · 2
-📅 Next: vs TOT (Jan 10)
+🏅 Standing (2026): 2026-27 English Premier League · 2
 
-📊 2026 Record: 18W - 6L - 6D  (60 pts)
-   █████████████████▌░░░░░░░
+📅 Next: @ LIV (Nov 1)
+
+📊 2026 Record: 7W - 1L - 0D  (21 pts)
+   █████████████████████▉░░░
 
 **📅 Recent Games:**
 ```
-✅ W 0-0 vs LIV   (Jan 3, 2026)
-❌ L 0-1 vs BHA   (Dec 27, 2025)
-✅ W 4-0 @ NEW   (Dec 20, 2025)
-🟡 D 1-1 @ MNC   (Dec 13, 2025)
-✅ W 1-0 vs EVE   (Dec 6, 2025)
+✅ W 2-0 vs EVE   (Oct 24, 2026)
+✅ W 1-0 @ NFO   (Oct 18, 2026)
+✅ W 2-1 vs LEE   (Oct 10, 2026)
+❌ L 0-3 @ BHA   (Sep 19, 2026)
+✅ W 2-0 @ SUN   (Sep 12, 2026)
 ```

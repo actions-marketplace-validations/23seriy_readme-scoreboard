@@ -3,28 +3,28 @@
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/86.png" alt="Real Madrid logo" width="72" align="right" />
 
 ### 👑 Real Madrid (RMA)
-UEFA Champions League
+League Phase
 🟢 Season in progress
 
-🏅 Standing: UEFA Champions League · 2
-📅 Next: vs BAY (Jan 10)
+🏅 Standing (2026): League Phase · 4
 
-📊 2026 Record: 18W - 6L - 6D  (60 pts)
-   █████████████████▌░░░░░░░
+📅 Next: @ AEK (Nov 4)
+
+📊 2026 Record: 3W - 0L - 0D  (9 pts)
+   █████████████████████████
 
 **📅 Recent Games:**
 ```
-✅ W 4-3 vs BEN   (Jan 3, 2026)
-❌ L 3-11 @ PSG   (Dec 27, 2025)
-✅ W 1-0 vs MCI   (Dec 20, 2025)
-❌ L 2-10 @ NAP   (Dec 13, 2025)
-✅ W 0-0 @ LIV   (Dec 6, 2025)
+✅ W 4-1 vs RBL   (Oct 21, 2026)
+✅ W 4-3 @ ROMA  (Oct 14, 2026)
+✅ W 2-1 vs INT   (Sep 8, 2026)
 ```
 
-**👑 Player Spotlight: Vinicius Junior**
-25 APP · 11 G · 5 A
+**👑 Player Spotlight: Vinícius Júnior**
+<img src="https://a.espncdn.com/i/headshots/soccer/players/full/252107.png" alt="Vinícius Júnior headshot" height="72" align="right" />
+8 APP · 1 G · 3 A
 
 **📅 Last Game:**
 ```
-1 G · 1 A vs BEN (Jan 4, 2026)
+0 G · 0 A vs VIL (Oct 10, 2026)
 ```

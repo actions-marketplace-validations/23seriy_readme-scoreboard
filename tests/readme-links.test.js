@@ -247,6 +247,48 @@ describe("repository CI configuration", () => {
     expect(ci).toContain("npm run lint");
   });
 
+  it("fails when the generated example boards are stale", () => {
+    // Those boards are generated from LIVE league APIs, so the gate runs only
+    // when a PR changes something that decides a board's output. Running it on
+    // every PR made long-lived automation branches fail for data they predate —
+    // five boards reported stale on PRs that only touched markdown and JSON.
+    expect(ci).toContain("npm run examples:generate");
+    // `git diff` alone ignores untracked files, so a newly emitted board or a
+    // rename would pass unnoticed. The gate reads `status --porcelain`, which
+    // reports both, and the generator also deletes what it no longer produces.
+    expect(ci).toContain("git status --porcelain -- examples ':!examples/leagues'");
+    // The gallery is live-data driven and excluded on purpose: including it
+    // would make the gate permanently red. A glob like 'examples/*.md' is not
+    // narrow enough, because git's '*' matches across '/'.
+    expect(ci).toContain(":!examples/leagues");
+  });
+
+  it("blocks a stale board on a pull request but only warns on a push", () => {
+    // The boards refresh themselves on a schedule and that refresh lands as a
+    // pull request, which sat open for 10 and 29 hours in practice. While it is
+    // open the committed files no longer match the generator, so failing on
+    // `push` reddened main for a data change nobody had made — and every
+    // unrelated merge in that window inherited it. A PR touching src/scripts is
+    // still blocked, because regenerating is the author's to do.
+    expect(ci).toContain('if [ "${{ github.event_name }}" = "pull_request" ]');
+    expect(ci).toContain("::error::The example boards are stale");
+    expect(ci).toContain("::warning::The example boards are stale");
+    // The failing path must only be reachable on a pull request.
+    const boardStep = ci.slice(
+      ci.indexOf("Check the generated example boards are current"),
+      ci.indexOf("Check a src change came with a changelog entry"),
+    );
+    expect(boardStep).toMatch(/pull_request" \]; then[\s\S]*?exit 1/);
+    expect(boardStep).not.toContain("git diff --exit-code");
+  });
+
+  it("scopes the board freshness check to changes that can alter a board", () => {
+    // The gate is conditional, so verify the condition itself rather than just
+    // the command.
+    expect(ci).toContain("steps.changed.outputs.boards != 'false'");
+    expect(ci).toMatch(/git diff --name-only "\$base" HEAD -- scripts src/);
+  });
+
   it("enforces coverage thresholds in CI", () => {
     expect(require("../package.json").scripts["test:coverage"]).toBe(
       "jest --coverage --runInBand",
@@ -446,5 +488,76 @@ describe("documentation and action metadata", () => {
     expect(contributing).toContain("422 target_commitish is invalid");
     // The v1 alias moves on `release: published`.
     expect(contributing).toContain("release.yml");
+  });
+});
+
+describe("contributor guidance", () => {
+  it("documents the coverage and regression-test rules", () => {
+    // Both rules were learned the hard way. Keeping them written down is what
+    // makes them apply to the next change, not only the one that learned them.
+    expect(contributing).toContain("## Quality Gates");
+    expect(contributing).toContain("Coverage must not drop");
+    expect(contributing).toContain("ratchet the thresholds up");
+    expect(contributing).toContain("Every fix ships with the test that would have caught it");
+    expect(contributing).toContain("watch it fail against the old code");
+  });
+
+  it("points contributors at the guard that should already cover a case", () => {
+    // Adding a redundant guard is cheap; losing an existing one silently is not.
+    expect(contributing).toContain("Where the existing guards live");
+    [
+      "tests/readme-links.test.js",
+      "tests/config/leagues.test.js",
+      "tests/adapters/demo-consistency.test.js",
+      "tests/examples.test.js",
+      "tests/league-gallery.test.js",
+      "tests/compact.test.js",
+    ].forEach((guard) => expect(contributing).toContain(guard));
+  });
+
+  it("lists the artefacts a new league has to regenerate", () => {
+    // Every command here was missed at some point and only caught afterwards by
+    // a guard, so the checklist is the cheap way to avoid repeating that.
+    [
+      "scripts/update-season-status.js",
+      "npm run leagues:manifest",
+      "npm run leagues:examples",
+      "npm run leagues:showcase",
+      "npm run teams:directory",
+      "npm run players:directory",
+      "npm run smoke:demo",
+      "npm run health:apis",
+    ].forEach((step) => expect(contributing).toContain(step));
+  });
+});
+
+// The README's Preview section is a snapshot of real output, so it cannot be
+// compared for equality — every run of the action changes it. What it CAN be
+// held to is shape: the block must be an actual board, with the pieces the
+// renderer produces. Earlier it was a hand-pasted copy that had quietly lost
+// its standing row and gained a season-start line the action no longer emits,
+// and nothing read it.
+//
+// Freshness is not enforced here. If it drifts, it drifts — the honest fix for
+// that is regenerating it, not asserting that a snapshot equals a live feed.
+describe("README preview", () => {
+  const lines = readme.split("Live output for the Lakers")[1]?.split("\n---\n")[0] || "";
+
+  it("is present and nests one heading level down", () => {
+    expect(lines).toContain("### [");
+    expect(lines).toContain("My Favourite NBA Team");
+    expect(lines).toContain("#### 👑 Los Angeles Lakers (LAL)");
+  });
+
+  it("carries the pieces a real board has", () => {
+    expect(lines).toContain("Conference ·");
+    expect(lines).toMatch(/\n(🟢 Season in progress|🔴 Off-season)/);
+    expect(lines).toMatch(/\n🏅 Standing:/);
+    expect(lines).toMatch(/\n📅 Next: /);
+    expect(lines).toContain("lal.png");
+  });
+
+  it("has no placeholder text or unresolved template", () => {
+    expect(lines).not.toMatch(/undefined|NaN|Invalid Date|\{\{|\}\}/);
   });
 });

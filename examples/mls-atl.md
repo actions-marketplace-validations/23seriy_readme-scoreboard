@@ -6,17 +6,18 @@
 Eastern Conference
 🟢 Season in progress
 
-🏅 Standing: MLS · 2
-📅 Next: vs SEA (Jan 10)
+🏅 Standing (2026): Eastern Conference · 12
 
-📊 2026 Record: 18W - 6L - 6D  (60 pts)
-   █████████████████▌░░░░░░░
+📅 Next: @ NYC (Oct 28)
+
+📊 2026 Record: 8W - 17L - 6D  (30 pts)
+   ████████▊░░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W 4-0 vs MIA   (Jan 3, 2026)
-❌ L 2-6 @ ATX   (Dec 27, 2025)
-✅ W 4-0 @ CIN   (Dec 20, 2025)
-❌ L 2-3 @ CLB   (Dec 13, 2025)
-✅ W 4-0 vs LAFC  (Dec 6, 2025)
+❌ L 2-3 vs CHI   (Oct 24, 2026)
+❌ L 1-3 vs MIA   (Oct 17, 2026)
+✅ W 3-0 @ MTL   (Oct 14, 2026)
+❌ L 1-3 vs CIN   (Oct 10, 2026)
+🟡 D 2-2 vs NYC   (Sep 26, 2026)
 ```

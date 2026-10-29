@@ -12,18 +12,20 @@ Team: **AND** · Category: Soccer · Data source: ESPN public API
 Pro League
 🟢 Season in progress
 
-🏅 Standing: Pro League · 5
+🏅 Standing (2026): Pro League · 5
 
-📊 2026 Record: 4W - 2L - 1D  (13 pts)
-   ████████████████░░░░░░░░░
+📅 Next: vs KVCW (Oct 31)
+
+📊 2026 Record: 5W - 3L - 1D  (16 pts)
+   ███████████████▎░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+❌ L 0-4 @ GENT  (Oct 25, 2026)
+✅ W 2-1 @ CBK   (Oct 10, 2026)
 ✅ W 3-0 vs ZUL   (Sep 19, 2026)
 ✅ W 1-0 @ KVM   (Sep 11, 2026)
 🟡 D 0-0 vs GENK  (Sep 6, 2026)
-✅ W 1-0 vs KVK   (Sep 3, 2026)
-❌ L 0-3 @ USG   (Aug 30, 2026)
 ```
 
 ## Custom title
@@ -38,18 +40,20 @@ The `title:` input replaces the default heading.
 Pro League
 🟢 Season in progress
 
-🏅 Standing: Pro League · 5
+🏅 Standing (2026): Pro League · 5
 
-📊 2026 Record: 4W - 2L - 1D  (13 pts)
-   ████████████████░░░░░░░░░
+📅 Next: vs KVCW (Oct 31)
+
+📊 2026 Record: 5W - 3L - 1D  (16 pts)
+   ███████████████▎░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+❌ L 0-4 @ GENT  (Oct 25, 2026)
+✅ W 2-1 @ CBK   (Oct 10, 2026)
 ✅ W 3-0 vs ZUL   (Sep 19, 2026)
 ✅ W 1-0 @ KVM   (Sep 11, 2026)
 🟡 D 0-0 vs GENK  (Sep 6, 2026)
-✅ W 1-0 vs KVK   (Sep 3, 2026)
-❌ L 0-3 @ USG   (Aug 30, 2026)
 ```
 
 ## Compact mode
@@ -63,10 +67,12 @@ The `compact: true` input drops the logo and recent-game details.
 Pro League
 🟢 Season in progress
 
-🏅 Standing: Pro League · 5
+🏅 Standing (2026): Pro League · 5
 
-📊 2026 Record: 4W - 2L - 1D  (13 pts)
-   ████████████████░░░░░░░░░
+📅 Next: vs KVCW (Oct 31)
+
+📊 2026 Record: 5W - 3L - 1D  (16 pts)
+   ███████████████▎░░░░░░░░░
 
 
 

@@ -1,5 +1,6 @@
 const {
   classifySeason,
+  fetchSeason,
   formatSeasonCell,
   normalizeSeasonWindow,
   updateSupportedSportsTable,
@@ -55,7 +56,11 @@ describe("season status updater", () => {
 
   it("opens a team-directory maintenance PR with the workflow token", () => {
     expect(teamDirWorkflow).toContain("pull-requests: write");
-    expect(teamDirWorkflow).toContain("GH_TOKEN: ${{ github.token }}");
+    // Prefers the PAT so the PR is not attributed to `github-actions[bot]`,
+    // which the `first_time_contributors` approval policy parks at
+    // `action_required` (see workflow-concurrency.test.js). `github.token`
+    // remains as the fallback.
+    expect(teamDirWorkflow).toContain("secrets.AUTOMATION_TOKEN || github.token");
     expect(teamDirWorkflow).toContain("gh pr create");
     expect(teamDirWorkflow).toContain("automation/team-directory");
   });
@@ -87,6 +92,42 @@ describe("season status updater", () => {
 
     expect(status).toEqual({ active: false, date: "2027-03-01" });
     expect(formatSeasonCell(status)).toBe("🔴 Off-season · starts 2027-03-01");
+  });
+
+  it("takes the season start from the fixture calendar, not the rounded placeholder", async () => {
+    // ESPN's `season.startDate` is always the 1st of a month and disagrees with
+    // the league's own fixtures for 24 of 27 soccer leagues. The A-League
+    // declares July 1 for a season that opens October 16, which made every
+    // A-League board claim "in progress" through the whole off-season.
+    const request = async () => ({
+      data: {
+        leagues: [{
+          season: { startDate: "2026-07-01T04:00:00Z", endDate: "2027-07-01T03:59:59Z", year: 2026 },
+          calendar: ["2026-10-16T07:00:00Z", "2026-10-17T07:00:00Z", "2026-10-23T07:00:00Z"],
+        }],
+      },
+    });
+
+    const season = await fetchSeason("soccer/aus.1", request);
+
+    expect(season.startDate).toBe("2026-10-16T07:00:00.000Z");
+    // The declared end is kept: the calendar is a window that can run past the
+    // last fixture, and no end-side placeholder problem has been seen.
+    expect(season.endDate).toBe("2027-07-01T03:59:59Z");
+  });
+
+  it("falls back to the declared season dates when no calendar is returned", async () => {
+    // Not every league publishes a calendar. Without this the earliest-of()
+    // on an empty list would be Infinity and throw.
+    const request = async () => ({
+      data: {
+        leagues: [{ season: { startDate: "2026-08-15T04:00:00Z", endDate: "2027-06-01T03:59:59Z" } }],
+      },
+    });
+
+    const season = await fetchSeason("soccer/esp.1", request);
+
+    expect(season.startDate).toBe("2026-08-15T04:00:00Z");
   });
 
   it("uses the first regular-season contest date for NCAA men's basketball", () => {

@@ -110,6 +110,128 @@ describe("renderMlb / formatMlbGameResult", () => {
     expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: American League · 2/);
   });
 
+  it("puts the next game on its own row, not joined to the standing", () => {
+    const data = {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      standing: { position: 2, label: "American League" },
+      nextGame: { date: "2026-07-20T20:00:00Z", opponent: "NYY", isHome: false },
+    };
+    const output = render("mlb", data);
+    // A single "\n" is a soft break: GitHub folds the two into one wrapped
+    // paragraph (`... · 2 📅 Next: @ NYY`) exactly as the A-League showcase
+    // rendered. Only a BLANK line makes them two rows.
+    expect(output).toMatch(/🏅 Standing: American League · 2\n\n📅 Next: @ NYY/);
+    expect(output).not.toMatch(/🏅 Standing: American League · 2\n📅 Next:/);
+  });
+
+  it("names the season in the standing when the adapter supplies one", () => {
+    const output = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      standing: { position: 5, label: "Série A", season: 2026 },
+    });
+    expect(output).toContain("🏅 Standing (2026): Série A · 5");
+  });
+
+  it("renders an evening game date in the league's timezone", () => {
+    // A North American evening game belongs to the previous UTC day. ESPN
+    // reports the Lakers' 2026-05-11 playoff game as 2026-05-12T02:30Z, so
+    // formatting the instant in the viewer's zone printed May 12 on a UTC
+    // machine and May 11 in New York — the same board, two dates. This is the
+    // NBA path; the fixture below is real.
+    const output = render("nba", {
+      team: { id: 13, abbreviation: "LAL", full_name: "Los Angeles Lakers", league: "Western Conference", division: "Pacific Division" },
+      record: { wins: 50, losses: 32, season: 2026 },
+      emoji: "🟣",
+      logoUrl: "https://example.com/lal.png",
+      recentGames: [{
+        date: "2026-05-12T02:30Z",
+        home_team: { id: 13, abbreviation: "LAL" },
+        visitor_team: { id: 25, abbreviation: "OKC" },
+        home_team_score: 110,
+        visitor_team_score: 115,
+        gameType: 3,
+      }],
+    });
+    expect(output).toContain("(May 11, 2026)");
+    expect(output).not.toContain("(May 12, 2026)");
+  });
+
+  it("leaves the season off the standing when the adapter omits it", () => {
+    // The suffix is opt-in: a league whose standing is unambiguously current
+    // keeps the shorter row, so existing boards do not change.
+    const output = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      standing: { position: 5, label: "Série A" },
+    });
+    expect(output).toContain("🏅 Standing: Série A · 5");
+    expect(output).not.toContain("Standing (");
+  });
+
+  it("renders the next game date in the sport's timezone, not the viewer's", () => {
+    // A fixture is an instant, so an evening kick-off in the Americas falls on
+    // the next UTC day. Palmeiras v Bahia is 2026-10-09T00:30Z: the evening of
+    // October 8 in Brazil. Formatting in the host's zone made the SAME board
+    // print "Oct 9" on a UTC machine and "Oct 8" on a Brazilian one.
+    //
+    // The date is chosen so the assertion holds in EVERY host zone: 00:30Z is
+    // still Oct 9 from UTC eastward (so a Tokyo or UTC runner sees Oct 9 either
+    // way), and the pinned "Oct 9" only fails for a runner behind UTC if the
+    // zone is not pinned. Testing mid-UTC-day instead would go red only on some
+    // machines, which is how the original bug survived.
+    const data = {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      nextGame: { date: "2026-10-09T00:30:00Z", opponent: "PAL", isHome: false },
+    };
+    const output = render("mlb", data);
+    expect(output).toContain("📅 Next: @ PAL (Oct 9)");
+  });
+
+  it("does not shift the next game date for a viewer behind UTC", () => {
+    // Runs the renderer in a child process with TZ set. Doing it in-process
+    // does nothing: Node caches the timezone at startup. This is the assertion
+    // that actually catches an unpinned formatDate, because only a zone behind
+    // UTC lands on the previous calendar day.
+    const { execFileSync } = require("child_process");
+    // The module path is injected so the child resolves the same copy under
+    // test. Written with string concatenation rather than a template because
+    // the script itself contains `$` sequences that must survive intact.
+    const script = [
+      "const { render } = require(" + JSON.stringify(require.resolve("../../src/renderers/markdown")) + ");",
+      "process.stdout.write(render('mlb', {",
+      "  team: { abbreviation: 'MLB', full_name: 'Test', conference: '', division: '' },",
+      "  record: { wins: 1, losses: 1, draws: 0, season: 2026 },",
+      "  recentGames: [],",
+      "  emoji: '\\u26be',",
+      "  logoUrl: 'https://example.com/logo.png',",
+      "  standing: null,",
+      "  nextGame: { date: '2026-10-09T00:30:00Z', opponent: 'PAL', isHome: false },",
+      "}));",
+    ].join("\n");
+    const output = execFileSync(process.execPath, ["-e", script], {
+      env: { ...process.env, TZ: "America/Sao_Paulo" },
+      encoding: "utf8",
+    });
+    expect(output).toContain("📅 Next: @ PAL (Oct 9)");
+  });
+
+  it("honours an explicit timeZone on the next game", () => {
+    const output = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      nextGame: {
+        date: "2026-10-09T00:30:00Z",
+        opponent: "PAL",
+        isHome: false,
+        timeZone: "America/Sao_Paulo",
+      },
+    });
+    expect(output).toContain("📅 Next: @ PAL (Oct 8)");
+  });
+
   it("omits rich-stat lines when the adapter does not provide them", () => {
     const output = render("mlb", { ...BASE_MLB_DATA, recentGames: [] });
     expect(output).not.toContain("🏅 Standing:");
@@ -500,7 +622,7 @@ describe("season status line", () => {
     // The annual arithmetic would claim "June 2027" — a year with no tournament.
     freezeAt("2027-03-01T12:00:00Z");
     expect(render("worldcup", { ...WORLDCUP_DATA, recentGames: [] }))
-      .toContain("🔴 Off-season · Next season starts June 2030");
+      .toContain("🔴 Off-season · Next season starts June 11, 2030");
   });
 
   it("still computes the following year for an annual league", () => {
@@ -508,7 +630,7 @@ describe("season status line", () => {
     // with its start month already behind it — the +1 branch.
     freezeAt("2026-12-20T12:00:00Z");
     expect(render("mls", { ...BASE_MLS_DATA, recentGames: [] }))
-      .toContain("🔴 Off-season · Next season starts late February 2027");
+      .toContain("🔴 Off-season · Next season starts February 21, 2027");
   });
 });
 
@@ -650,12 +772,12 @@ describe("Season status — next-season year", () => {
 
   it("names the current year when the start date is still ahead", () => {
     // Aug 8 with a season starting Aug 10 — starts in 2 days, not next year
-    expect(line("epl", 2026, 7, 8)).toContain("August 2026");
+    expect(line("epl", 2026, 7, 8)).toContain("Next season starts August 21, 2026");
   });
 
   it("names next year once this year's start date has passed", () => {
     // Jun 1 is after May's end and after no Aug start yet this year
-    expect(line("epl", 2026, 5, 1)).toContain("August 2026");
+    expect(line("epl", 2026, 5, 1)).toContain("Next season starts August 21, 2026");
   });
 
   it("reports the season as active once it has kicked off", () => {
@@ -666,8 +788,8 @@ describe("Season status — next-season year", () => {
   it("names the upcoming August throughout the summer gap", () => {
     // Jun and Jul sit between May's end and August's start, so the next
     // kickoff is still this year — never next year.
-    expect(line("epl", 2026, 5, 1)).toContain("August 2026");
-    expect(line("epl", 2026, 6, 15)).toContain("August 2026");
+    expect(line("epl", 2026, 5, 1)).toContain("Next season starts August 21, 2026");
+    expect(line("epl", 2026, 6, 15)).toContain("Next season starts August 21, 2026");
   });
 
   it("regression: does not skip a year on the eve of kickoff", () => {
@@ -1055,7 +1177,13 @@ describe("renderNba — WNBA variant", () => {
     const out = render("wnba", data());
     expect(out).toContain("Western Conference");
     expect(out).not.toContain("Division");
-    expect(out).not.toContain("· ");
+    // Assert on the conference/division line itself, not the whole document.
+    // The season status line legitimately reads
+    // "🔴 Off-season · Next season starts May 8, 2027", so a blanket
+    // `not.toContain("· ")` passed only while the WNBA was mid-season and broke
+    // the day the calendar reached its off-season — which is what turned `main`
+    // red and, through the merge commit, every open pull request with it.
+    expect(out).not.toMatch(/Conference · /);
   });
 
   it("still renders the division for the NBA, which has them", () => {
@@ -1282,13 +1410,22 @@ describe("renderAtp", () => {
     expect(output).toContain("Novak Djokovic (DJO)");
   });
 
-  it("groups ranking, points, and movement onto one meta line", () => {
+  it("groups ranking and movement onto one meta line", () => {
     const output = render("atp", BASE_ATP_DATA);
     expect(output).toContain("🏆 World No. 5");
-    expect(output).toContain("📍 3,770 ranking points");
     expect(output).toContain("📈 Movement");
-    // All three share a single line (joined by ·), not three separate lines.
-    expect(output).toMatch(/🏆 World No\. 5 · 📍 3,770 ranking points · 📈 Movement/);
+    // Both share a single line (joined by ·), not two separate lines.
+    expect(output).toMatch(/🏆 World No\. 5 · 📈 Movement/);
+  });
+
+  it("never renders ranking points, which change between refreshes", () => {
+    // ESPN re-posts ranking points as tournaments progress, so a committed
+    // board carrying them goes stale within days and the "example boards are
+    // current" CI gate can never stay green. See the tennis freshness fix.
+    const output = render("atp", BASE_ATP_DATA);
+    expect(output).not.toContain("ranking points");
+    expect(output).not.toContain("3,770");
+    expect(output).not.toContain("📍");
   });
 
   it("renders the last match on its own labeled fenced block", () => {
@@ -1315,8 +1452,7 @@ describe("renderAtp", () => {
     expect(output).not.toContain("🏆");
     expect(output).not.toContain("ranking points");
     expect(output).not.toContain("Movement");
-  });
-});
+  });});
 
 describe("renderWta", () => {
   const BASE_WTA_DATA = {
@@ -1341,12 +1477,18 @@ describe("renderWta", () => {
     expect(output).toContain("Aryna Sabalenka (SAB)");
   });
 
-  it("groups ranking, points, and movement onto one meta line", () => {
+  it("groups ranking and movement onto one meta line", () => {
     const output = render("wta", BASE_WTA_DATA);
     expect(output).toContain("🏆 World No. 1");
-    expect(output).toContain("📍 8,575 ranking points");
     expect(output).toContain("📈 Movement");
-    expect(output).toMatch(/🏆 World No\. 1 · 📍 8,575 ranking points · 📈 Movement/);
+    expect(output).toMatch(/🏆 World No\. 1 · 📈 Movement/);
+  });
+
+  it("never renders ranking points, which change between refreshes", () => {
+    const output = render("wta", BASE_WTA_DATA);
+    expect(output).not.toContain("ranking points");
+    expect(output).not.toContain("8,575");
+    expect(output).not.toContain("📍");
   });
 
   it("renders the last match on its own labeled fenced block", () => {
@@ -1555,3 +1697,130 @@ describe("renderNhl — player spotlight", () => {
     expect(render("nhl", BASE)).not.toContain("Player Spotlight");
   });
 });
+
+describe("UFC renderer", () => {
+  const ENG = "\u{1F3F4}\u{E0067}\u{E0062}\u{E0065}\u{E006E}\u{E0067}\u{E007F}";
+  const UFC_DATA = {
+    team: {
+      id: 0,
+      abbreviation: "EVL",
+      name: "Evloev",
+      full_name: "Movsar Evloev",
+      conference: "Featherweight",
+      division: "",
+    },
+    record: { wins: 20, losses: 0, draws: 0, season: "2026" },
+    emoji: "🇷🇺",
+    logoUrl: "https://a.espncdn.com/i/teamlogos/leagues/500/ufc.png",
+    recentGames: [{
+      date: "2026-03-21T21:00Z",
+      opponent: "Lerone Murphy",
+      opponentAbbr: "MUR",
+      opponentFlag: ENG,
+      won: true,
+      drew: false,
+      round: 5,
+      event: "UFC Fight Night",
+    }],
+    nextGame: {
+      date: "2026-10-24T21:00Z",
+      opponent: "VOL",
+      opponentName: "Alexander Volkanovski",
+      opponentFlag: "🇦🇺",
+      event: "UFC 333",
+      venue: "Etihad Arena",
+      weight: "Featherweight",
+    },
+    standing: null,
+    form: ["W"],
+  };
+  const ufc = (overrides = {}) => render("ufc", { ...UFC_DATA, ...overrides });
+
+  it("calls the record a career record, not a season one", () => {
+    // ESPN reports a lifetime W-L-D for a fighter; labelling it a season record
+    // would be wrong.
+    expect(ufc()).toContain("🥊 Career record: 20W - 0L");
+    expect(ufc()).not.toMatch(/2026 Record/);
+  });
+
+  it("renders the division and the fighter", () => {
+    const output = ufc();
+    expect(output).toContain("### 🇷🇺 Movsar Evloev (EVL)");
+    expect(output).toContain("Featherweight");
+  });
+
+  it("names the entity a Fighter in the default heading", () => {
+    const output = ufc();
+    expect(output).toContain("My Favourite UFC Fighter");
+    expect(output).not.toContain("My Favourite UFC Player");
+  });
+
+  it("links the heading at the MMA scoreboard rather than a teams endpoint", () => {
+    // MMA has no /teams collection, so the default link would be dead.
+    const heading = ufc().split("\n")[0];
+    expect(heading).toContain("https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard");
+    expect(heading).not.toContain("/ufc/teams");
+  });
+
+  it("shows the next fight with its opponent, card and venue", () => {
+    const output = ufc();
+    expect(output).toContain("**📅 Next Fight:**");
+    expect(output).toContain("🇦🇺 vs Alexander Volkanovski (VOL) — Oct 24, 2026");
+    expect(output).toContain("UFC 333 · Etihad Arena");
+  });
+
+  it("lists recent fights with the result and the finishing round", () => {
+    expect(ufc()).toContain(`✅ W (R5) vs ${ENG} Lerone Murphy — Mar 21, 2026`);
+  });
+
+  it("reports an unbooked fighter instead of inventing a fight", () => {
+    const output = ufc({ nextGame: null });
+    expect(output).toContain("📅 No fight announced");
+    expect(output).not.toContain("**📅 Next Fight:**");
+  });
+
+  it("drops a missing flag rather than printing a placeholder", () => {
+    const output = ufc({ nextGame: { ...UFC_DATA.nextGame, opponentFlag: "" } });
+    expect(output).toContain("vs Alexander Volkanovski (VOL)");
+    expect(output).not.toContain("🏳️");
+  });
+
+  it("renders a fighter with no completed fights", () => {
+    const output = ufc({ recentGames: [], form: [] });
+    expect(output).toContain("📅 No completed fights found");
+  });
+
+  it("renders without a standings block", () => {
+    // ESPN publishes no UFC rankings on this feed, so there is no position.
+    expect(ufc()).not.toMatch(/🏅 Standing/);
+  });
+
+  it("renders draws when a fighter has them", () => {
+    const output = ufc({
+      record: { wins: 10, losses: 2, draws: 1, season: "2026" },
+      recentGames: [{ ...UFC_DATA.recentGames[0], won: false, drew: true, round: null }],
+    });
+    expect(output).toContain("10W - 2L - 1D");
+    expect(output).toContain("🟡 D vs");
+  });
+});
+  // A standing can come from the last COMPLETED season: the NHL reports no
+  // in-season standing off-season, so its board would otherwise print a final
+  // table as though it were current. Naming the season keeps that honest, and
+  // leagues whose standing is live are unchanged.
+  it("names the season a standing came from, and omits it when it is current", () => {
+    const fromCompletedSeason = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      standing: { position: 8, label: "Atlantic", season: "2025-26" },
+    });
+    expect(fromCompletedSeason).toContain("🏅 Standing (2025-26): Atlantic · 8");
+
+    const live = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      standing: { position: 2, label: "American League" },
+    });
+    expect(live).toContain("🏅 Standing: American League · 2");
+    expect(live).not.toContain("🏅 Standing (");
+  });

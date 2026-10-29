@@ -6,16 +6,16 @@ Player: **SAB** · Category: Tennis · Data source: ESPN public API
 
 ## [<picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png"><img src="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png" alt="WTA Tennis" height="28" align="top"></picture> My Favourite WTA Tennis Player](https://site.api.espn.com/apis/site/v2/sports/tennis/wta/teams)
 
-<img src="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png" alt="Aryna Sabalenka logo" width="72" align="right" />
+<img src="https://a.espncdn.com/i/headshots/tennis/players/full/3038.png" alt="Aryna Sabalenka logo" width="72" align="right" />
 
 ### 🇧🇾 Aryna Sabalenka (SAB)
 WTA · World Ranking
 
-🏆 World No. 2 · 📍 7,875 ranking points · 📈 Movement: — (was No. 2)
+🏆 World No. 2 · 📈 Movement: — (was No. 2)
 
 **📅 Last Match:**
 ```
-❌ L vs Elena Rybakina (Sep 12, 2026) 4-6, 7-5, 2-6
+❌ L vs Ann Li (Oct 14, 2026) 6-3, 4-6, 6-7
 ```
 
 
@@ -25,16 +25,16 @@ The `title:` input replaces the default heading.
 
 ## [<picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png"><img src="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png" alt="WTA Tennis" height="28" align="top"></picture> My Aryna Sabalenka](https://site.api.espn.com/apis/site/v2/sports/tennis/wta/teams)
 
-<img src="https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png" alt="Aryna Sabalenka logo" width="72" align="right" />
+<img src="https://a.espncdn.com/i/headshots/tennis/players/full/3038.png" alt="Aryna Sabalenka logo" width="72" align="right" />
 
 ### 🇧🇾 Aryna Sabalenka (SAB)
 WTA · World Ranking
 
-🏆 World No. 2 · 📍 7,875 ranking points · 📈 Movement: — (was No. 2)
+🏆 World No. 2 · 📈 Movement: — (was No. 2)
 
 **📅 Last Match:**
 ```
-❌ L vs Elena Rybakina (Sep 12, 2026) 4-6, 7-5, 2-6
+❌ L vs Ann Li (Oct 14, 2026) 6-3, 4-6, 6-7
 ```
 
 
@@ -48,11 +48,11 @@ The `compact: true` input drops the logo and recent-game details.
 ### 🇧🇾 Aryna Sabalenka (SAB)
 WTA · World Ranking
 
-🏆 World No. 2 · 📍 7,875 ranking points · 📈 Movement: — (was No. 2)
+🏆 World No. 2 · 📈 Movement: — (was No. 2)
 
 **📅 Last Match:**
 ```
-❌ L vs Elena Rybakina (Sep 12, 2026) 4-6, 7-5, 2-6
+❌ L vs Ann Li (Oct 14, 2026) 6-3, 4-6, 6-7
 ```
 
 

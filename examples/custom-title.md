@@ -3,20 +3,20 @@
 <img src="https://a.espncdn.com/i/teamlogos/nba/500/bos.png" alt="Boston Celtics logo" width="72" align="right" />
 
 ### ☘️ Boston Celtics (BOS)
-East Conference · Atlantic Division
-🔴 Off-season · Next season starts October 2026
+Eastern Conference · Atlantic Division
+🟢 Season in progress
 
-🏅 Standing: East · 3
-📅 Next: vs DEN (Jan 5)
+🏅 Standing: Eastern · 5
 
-📊 2025-2026 Record: 50W - 32L (61.0%)
-   ███████████████▎░░░░░░░░░
+📅 Next: vs CHI (Oct 30)
+
+📊 2026-2027 Record: 3W - 1L (75.0%)
+   ██████████████████▊░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W  99-86  vs CHI (Jan 3, 2026)
-❌ L  93-97  vs MIA (Dec 27, 2025)
-✅ W 111-99  vs MIL (Dec 20, 2025)
-❌ L  93-105 @ OKC (Dec 13, 2025)
-✅ W 112-107 vs PHX (Dec 6, 2025)
+✅ W 125-124 vs BKN (Oct 27, 2026)
+✅ W 134-99  vs CHI (Oct 26, 2026)
+✅ W 107-103 vs NY  (Oct 23, 2026)
+❌ L 113-121 @ DET (Oct 20, 2026)
 ```

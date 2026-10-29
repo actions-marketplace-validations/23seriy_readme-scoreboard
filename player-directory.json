@@ -1,6 +1,6 @@
 {
   "generatedFrom": "src/config/leagues.js",
-  "generatedAt": "2026-09-24T10:29:39.828Z",
+  "generatedAt": "2026-10-28T11:36:06.993Z",
   "players": [
     {
       "league": "atp",
@@ -11,7 +11,7 @@
       "flag": "🇪🇸",
       "country": "Spain",
       "rank": 3,
-      "points": 5560
+      "points": 5610
     },
     {
       "league": "atp",
@@ -21,8 +21,8 @@
       "id": "2865",
       "flag": "🇰🇿",
       "country": "Kazakhstan",
-      "rank": 21,
-      "points": 2185
+      "rank": 20,
+      "points": 2285
     },
     {
       "league": "atp",
@@ -32,8 +32,8 @@
       "id": "11226",
       "flag": "🇵🇪",
       "country": "Peru",
-      "rank": 35,
-      "points": 1460
+      "rank": 32,
+      "points": 1445
     },
     {
       "league": "atp",
@@ -43,8 +43,8 @@
       "id": "3700",
       "flag": "🇦🇷",
       "country": "Argentina",
-      "rank": 22,
-      "points": 2130
+      "rank": 19,
+      "points": 2310
     },
     {
       "league": "atp",
@@ -54,8 +54,8 @@
       "id": "7602",
       "flag": "🇮🇹",
       "country": "Italy",
-      "rank": 7,
-      "points": 3720
+      "rank": 6,
+      "points": 3690
     },
     {
       "league": "atp",
@@ -65,8 +65,8 @@
       "id": "7833",
       "flag": "🇮🇹",
       "country": "Italy",
-      "rank": 20,
-      "points": 2200
+      "rank": 23,
+      "points": 2160
     },
     {
       "league": "atp",
@@ -76,8 +76,8 @@
       "id": "3212",
       "flag": "🇪🇸",
       "country": "Spain",
-      "rank": 29,
-      "points": 1680
+      "rank": 15,
+      "points": 2600
     },
     {
       "league": "atp",
@@ -87,8 +87,8 @@
       "id": "2651",
       "flag": "🇦🇺",
       "country": "Australia",
-      "rank": 9,
-      "points": 3300
+      "rank": 10,
+      "points": 3280
     },
     {
       "league": "atp",
@@ -99,7 +99,7 @@
       "flag": "🇷🇸",
       "country": "Serbia",
       "rank": 12,
-      "points": 2980
+      "points": 3090
     },
     {
       "league": "atp",
@@ -109,8 +109,8 @@
       "id": "3209",
       "flag": "🇨🇦",
       "country": "Canada",
-      "rank": 5,
-      "points": 3890
+      "rank": 7,
+      "points": 3515
     },
     {
       "league": "atp",
@@ -120,8 +120,8 @@
       "id": "10052",
       "flag": "🇫🇷",
       "country": "France",
-      "rank": 11,
-      "points": 3150
+      "rank": 8,
+      "points": 3425
     },
     {
       "league": "atp",
@@ -131,8 +131,8 @@
       "id": "11745",
       "flag": "🇧🇷",
       "country": "Brazil",
-      "rank": 28,
-      "points": 1750
+      "rank": 40,
+      "points": 1250
     },
     {
       "league": "atp",
@@ -142,8 +142,8 @@
       "id": "2946",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 10,
-      "points": 3175
+      "rank": 13,
+      "points": 2995
     },
     {
       "league": "atp",
@@ -153,8 +153,8 @@
       "id": "12657",
       "flag": "🇪🇸",
       "country": "Spain",
-      "rank": 14,
-      "points": 2659
+      "rank": 11,
+      "points": 3234
     },
     {
       "league": "atp",
@@ -164,8 +164,8 @@
       "id": "3754",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 23,
-      "points": 2120
+      "rank": 21,
+      "points": 2275
     },
     {
       "league": "atp",
@@ -175,8 +175,8 @@
       "id": "10386",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 13,
-      "points": 2715
+      "rank": 18,
+      "points": 2345
     },
     {
       "league": "atp",
@@ -186,8 +186,8 @@
       "id": "2383",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 6,
-      "points": 3770
+      "rank": 5,
+      "points": 3860
     },
     {
       "league": "atp",
@@ -197,7 +197,7 @@
       "id": "10319",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 15,
+      "rank": 16,
       "points": 2495
     },
     {
@@ -208,8 +208,8 @@
       "id": "3764",
       "flag": "🇮🇹",
       "country": "Italy",
-      "rank": 24,
-      "points": 2100
+      "rank": 26,
+      "points": 1920
     },
     {
       "league": "atp",
@@ -219,8 +219,8 @@
       "id": "3774",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 16,
-      "points": 2410
+      "rank": 17,
+      "points": 2375
     },
     {
       "league": "atp",
@@ -230,8 +230,8 @@
       "id": "2964",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 18,
-      "points": 2325
+      "rank": 14,
+      "points": 2675
     },
     {
       "league": "atp",
@@ -241,8 +241,8 @@
       "id": "3511",
       "flag": "🇫🇷",
       "country": "France",
-      "rank": 31,
-      "points": 1583
+      "rank": 61,
+      "points": 870
     },
     {
       "league": "atp",
@@ -252,8 +252,8 @@
       "id": "2642",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 25,
-      "points": 1930
+      "rank": 22,
+      "points": 2175
     },
     {
       "league": "atp",
@@ -263,8 +263,8 @@
       "id": "2989",
       "flag": "🇳🇴",
       "country": "Norway",
-      "rank": 17,
-      "points": 2335
+      "rank": 25,
+      "points": 1995
     },
     {
       "league": "atp",
@@ -286,7 +286,7 @@
       "flag": "🇮🇹",
       "country": "Italy",
       "rank": 1,
-      "points": 11500
+      "points": 10450
     },
     {
       "league": "atp",
@@ -296,7 +296,7 @@
       "id": "2970",
       "flag": "🇨🇱",
       "country": "Chile",
-      "rank": 32,
+      "rank": 30,
       "points": 1565
     },
     {
@@ -307,7 +307,7 @@
       "id": "2708",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 8,
+      "rank": 9,
       "points": 3380
     },
     {
@@ -318,8 +318,8 @@
       "id": "9376",
       "flag": "🇲🇨",
       "country": "Monaco",
-      "rank": 19,
-      "points": 2250
+      "rank": 31,
+      "points": 1480
     },
     {
       "league": "atp",
@@ -330,7 +330,7 @@
       "flag": "🇩🇪",
       "country": "Germany",
       "rank": 2,
-      "points": 9690
+      "points": 9750
     },
     {
       "league": "indycar",
@@ -993,6 +993,446 @@
       "points": null
     },
     {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "ABU",
+      "name": "Loai Abushaar",
+      "id": 5401059,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "ADA",
+      "name": "Matt Adams",
+      "id": 5364347,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "ADE",
+      "name": "Israel Adesanya",
+      "id": 4285679,
+      "flag": "🇳🇬",
+      "country": "Nigeria",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "ALL",
+      "name": "Brendan Allen",
+      "id": 4025699,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "APO",
+      "name": "Alex Apodaca",
+      "id": 5394582,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "BER",
+      "name": "Arlind Berisha",
+      "id": 5369721,
+      "flag": "🇦🇱",
+      "country": "Albania",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "BON",
+      "name": "Gabriel Bonfim",
+      "id": 4921516,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "COS",
+      "name": "Melquizael Costa",
+      "id": 4425763,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "DAR",
+      "name": "Adam Darby",
+      "id": 5369446,
+      "flag": "🇮🇪",
+      "country": "Ireland",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "EVL",
+      "name": "Movsar Evloev",
+      "id": 4029275,
+      "flag": "🇷🇺",
+      "country": "Russia",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "FIG",
+      "name": "Deiveson Figueiredo",
+      "id": 4189320,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "GAE",
+      "name": "Justin Gaethje",
+      "id": 3022345,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "GAM",
+      "name": "Mateusz Gamrot",
+      "id": 3068125,
+      "flag": "🇵🇱",
+      "country": "Poland",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "HAI",
+      "name": "Theo Haig",
+      "id": 4977642,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "HER",
+      "name": "Anthony Hernandez",
+      "id": 4290956,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "HOL",
+      "name": "Max Holloway",
+      "id": 2614933,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "HOO",
+      "name": "Dan Hooker",
+      "id": 3109135,
+      "flag": "🇳🇿",
+      "country": "New Zealand",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "HOR",
+      "name": "Kyoji Horiguchi",
+      "id": 2613374,
+      "flag": "🇯🇵",
+      "country": "Japan",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "HUN",
+      "name": "Zevan Hunt",
+      "id": 5369672,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "LOP",
+      "name": "Diego Lopes",
+      "id": 4881999,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "MAK",
+      "name": "Islam Makhachev",
+      "id": 3332412,
+      "flag": "🇷🇺",
+      "country": "Russia",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "MAL",
+      "name": "Mike Malott",
+      "id": 3165120,
+      "flag": "🇨🇦",
+      "country": "Canada",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "MIR",
+      "name": "Bella Mir",
+      "id": 5369428,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "MOI",
+      "name": "Renato Moicano",
+      "id": 3028863,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "MUH",
+      "name": "Belal Muhammad",
+      "id": 3172112,
+      "flag": "🇵🇸",
+      "country": "Palestine",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "OLI",
+      "name": "Charles Oliveira",
+      "id": 2504169,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "OLV",
+      "name": "Vinicius Oliveira",
+      "id": 4884877,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PAN",
+      "name": "Alexandre Pantoja",
+      "id": 2560746,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PAR",
+      "name": "Salahdine Parnasse",
+      "id": 4312859,
+      "flag": "🇫🇷",
+      "country": "France",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PAS",
+      "name": "Quentin Pasley",
+      "id": 5307124,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PER",
+      "name": "Mayton Perea",
+      "id": 5369676,
+      "flag": "🇪🇨",
+      "country": "Ecuador",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PIM",
+      "name": "Paddy Pimblett",
+      "id": 4008549,
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "country": "England",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PLE",
+      "name": "Dricus Du Plessis",
+      "id": 3166126,
+      "flag": "🇿🇦",
+      "country": "South Africa",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PRA",
+      "name": "Carlos Prates",
+      "id": 4294832,
+      "flag": "🇧🇷",
+      "country": "Brazil",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "PRO",
+      "name": "Jiří Procházka",
+      "id": 3156612,
+      "flag": "🇨🇿",
+      "country": "Czechia",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "STE",
+      "name": "Aljamain Sterling",
+      "id": 3031559,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "STR",
+      "name": "Sean Strickland",
+      "id": 3093653,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "VOL",
+      "name": "Alexander Volkanovski",
+      "id": 3949584,
+      "flag": "🇦🇺",
+      "country": "Australia",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "WIN",
+      "name": "Anthony Wint",
+      "id": 3128853,
+      "flag": "🇺🇸",
+      "country": "United States",
+      "rank": null,
+      "points": null
+    },
+    {
+      "league": "ufc",
+      "leagueName": "UFC",
+      "abbreviation": "YAD",
+      "name": "Song Yadong",
+      "id": 3151289,
+      "flag": "🇨🇳",
+      "country": "China",
+      "rank": null,
+      "points": null
+    },
+    {
       "league": "wta",
       "leagueName": "WTA Tennis",
       "abbreviation": "ALE",
@@ -1000,8 +1440,8 @@
       "id": "3182",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 27,
-      "points": 1811
+      "rank": 33,
+      "points": 1591
     },
     {
       "league": "wta",
@@ -1011,8 +1451,8 @@
       "id": "3380",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 29,
-      "points": 1573
+      "rank": 31,
+      "points": 1681
     },
     {
       "league": "wta",
@@ -1022,8 +1462,8 @@
       "id": "9820",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 5,
-      "points": 5743
+      "rank": 3,
+      "points": 6306
     },
     {
       "league": "wta",
@@ -1033,8 +1473,8 @@
       "id": "3221",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 11,
-      "points": 3363
+      "rank": 17,
+      "points": 2363
     },
     {
       "league": "wta",
@@ -1044,8 +1484,8 @@
       "id": "7819",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 28,
-      "points": 1710
+      "rank": 32,
+      "points": 1633
     },
     {
       "league": "wta",
@@ -1055,8 +1495,8 @@
       "id": "2183",
       "flag": "🇨🇭",
       "country": "Switzerland",
-      "rank": 12,
-      "points": 2935
+      "rank": 20,
+      "points": 2222
     },
     {
       "league": "wta",
@@ -1066,8 +1506,8 @@
       "id": "2392",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 26,
-      "points": 1873
+      "rank": 24,
+      "points": 1959
     },
     {
       "league": "wta",
@@ -1077,8 +1517,8 @@
       "id": "3417",
       "flag": "🇵🇱",
       "country": "Poland",
-      "rank": 25,
-      "points": 1888
+      "rank": 11,
+      "points": 3016
     },
     {
       "league": "wta",
@@ -1089,7 +1529,7 @@
       "flag": "🇷🇴",
       "country": "Romania",
       "rank": 16,
-      "points": 2464
+      "points": 2386
     },
     {
       "league": "wta",
@@ -1099,8 +1539,8 @@
       "id": "7759",
       "flag": "🇵🇭",
       "country": "Philippines",
-      "rank": 18,
-      "points": 2276
+      "rank": 19,
+      "points": 2241
     },
     {
       "league": "wta",
@@ -1110,8 +1550,8 @@
       "id": "3626",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 4,
-      "points": 7244
+      "rank": 5,
+      "points": 5973
     },
     {
       "league": "wta",
@@ -1121,8 +1561,8 @@
       "id": "14311",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 13,
-      "points": 2841
+      "rank": 12,
+      "points": 2941
     },
     {
       "league": "wta",
@@ -1132,8 +1572,8 @@
       "id": "2977",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 21,
-      "points": 2043
+      "rank": 25,
+      "points": 1935
     },
     {
       "league": "wta",
@@ -1143,7 +1583,7 @@
       "id": "1556",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 22,
+      "rank": 21,
       "points": 2029
     },
     {
@@ -1155,7 +1595,7 @@
       "flag": "🇺🇦",
       "country": "Ukraine",
       "rank": 10,
-      "points": 4040
+      "points": 3920
     },
     {
       "league": "wta",
@@ -1165,8 +1605,8 @@
       "id": "2042",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 44,
-      "points": 1139
+      "rank": 46,
+      "points": 1133
     },
     {
       "league": "wta",
@@ -1177,7 +1617,7 @@
       "flag": "🇨🇦",
       "country": "Canada",
       "rank": 15,
-      "points": 2521
+      "points": 2393
     },
     {
       "league": "wta",
@@ -1187,8 +1627,8 @@
       "id": "2221",
       "flag": "🇧🇪",
       "country": "Belgium",
-      "rank": 19,
-      "points": 2165
+      "rank": 14,
+      "points": 2540
     },
     {
       "league": "wta",
@@ -1198,8 +1638,8 @@
       "id": "3039",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 8,
-      "points": 4683
+      "rank": 7,
+      "points": 4725
     },
     {
       "league": "wta",
@@ -1209,8 +1649,8 @@
       "id": "3785",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 23,
-      "points": 2024
+      "rank": 28,
+      "points": 1794
     },
     {
       "league": "wta",
@@ -1220,8 +1660,8 @@
       "id": "6970",
       "flag": "🇨🇿",
       "country": "Czechia",
-      "rank": 6,
-      "points": 5328
+      "rank": 9,
+      "points": 4353
     },
     {
       "league": "wta",
@@ -1231,8 +1671,8 @@
       "id": "2789",
       "flag": "🇯🇵",
       "country": "Japan",
-      "rank": 17,
-      "points": 2306
+      "rank": 18,
+      "points": 2287
     },
     {
       "league": "wta",
@@ -1242,8 +1682,8 @@
       "id": "2615",
       "flag": "🇮🇹",
       "country": "Italy",
-      "rank": 20,
-      "points": 2123
+      "rank": 35,
+      "points": 1512
     },
     {
       "league": "wta",
@@ -1253,8 +1693,8 @@
       "id": "2113",
       "flag": "🇺🇸",
       "country": "United States",
-      "rank": 3,
-      "points": 7265
+      "rank": 4,
+      "points": 6225
     },
     {
       "league": "wta",
@@ -1264,8 +1704,8 @@
       "id": "2971",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 24,
-      "points": 1926
+      "rank": 27,
+      "points": 1814
     },
     {
       "league": "wta",
@@ -1276,7 +1716,7 @@
       "flag": "🇰🇿",
       "country": "Kazakhstan",
       "rank": 1,
-      "points": 9901
+      "points": 9501
     },
     {
       "league": "wta",
@@ -1287,7 +1727,7 @@
       "flag": "🇧🇾",
       "country": "Belarus",
       "rank": 2,
-      "points": 7875
+      "points": 7550
     },
     {
       "league": "wta",
@@ -1297,8 +1737,8 @@
       "id": "8017",
       "flag": "🇷🇺",
       "country": "Russia",
-      "rank": 14,
-      "points": 2588
+      "rank": 13,
+      "points": 2798
     },
     {
       "league": "wta",
@@ -1308,8 +1748,8 @@
       "id": "1797",
       "flag": "🇺🇦",
       "country": "Ukraine",
-      "rank": 7,
-      "points": 4809
+      "rank": 6,
+      "points": 5229
     },
     {
       "league": "wta",
@@ -1319,8 +1759,8 @@
       "id": "3730",
       "flag": "🇵🇱",
       "country": "Poland",
-      "rank": 9,
-      "points": 4119
+      "rank": 8,
+      "points": 4389
     }
   ]
 }

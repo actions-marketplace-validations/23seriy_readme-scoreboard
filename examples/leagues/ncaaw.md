@@ -10,12 +10,12 @@ Team: **CONN** · Category: Basketball · Data source: ESPN public API
 
 ### 🏀 UConn Huskies (CONN)
 Big East Conference Conference
-🔴 Off-season · Next season starts November 2026
+🔴 Off-season · Next season starts November 2, 2026
 
 🏅 Standing: Big East Conference · 11
 
-📊 2025-2026 Record: 20W - 0L (100.0%)
-   █████████████████████████
+📊 2025-2026 Record: 38W - 1L (97.4%)
+   ████████████████████████▎
 
 **📅 Recent Games:**
 ```
@@ -36,12 +36,12 @@ The `title:` input replaces the default heading.
 
 ### 🏀 UConn Huskies (CONN)
 Big East Conference Conference
-🔴 Off-season · Next season starts November 2026
+🔴 Off-season · Next season starts November 2, 2026
 
 🏅 Standing: Big East Conference · 11
 
-📊 2025-2026 Record: 20W - 0L (100.0%)
-   █████████████████████████
+📊 2025-2026 Record: 38W - 1L (97.4%)
+   ████████████████████████▎
 
 **📅 Recent Games:**
 ```
@@ -61,12 +61,12 @@ The `compact: true` input drops the logo and recent-game details.
 
 ### 🏀 UConn Huskies (CONN)
 Big East Conference Conference
-🔴 Off-season · Next season starts November 2026
+🔴 Off-season · Next season starts November 2, 2026
 
 🏅 Standing: Big East Conference · 11
 
-📊 2025-2026 Record: 20W - 0L (100.0%)
-   █████████████████████████
+📊 2025-2026 Record: 38W - 1L (97.4%)
+   ████████████████████████▎
 
 
 

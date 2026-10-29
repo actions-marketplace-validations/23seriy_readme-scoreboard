@@ -9,10 +9,21 @@ Team: **BFC** · Category: Soccer · Data source: ESPN public API
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/18851.png" alt="Bengaluru FC logo" width="72" align="right" />
 
 ### 🔵 Bengaluru FC (BFC)
-Indian Super League
+2026-27 ISL
 🟢 Season in progress
 
-📅 No recent games found
+🏅 Standing (2026): 2026-27 ISL · 4
+
+📅 Next: @ NEU (Oct 30)
+
+📊 2026 Record: 2W - 0L - 0D  (6 pts)
+   █████████████████████████
+
+**📅 Recent Games:**
+```
+✅ W 2-0 vs CFC   (Oct 17, 2026)
+✅ W 3-2 vs SCD   (Oct 10, 2026)
+```
 
 ## Custom title
 
@@ -23,10 +34,21 @@ The `title:` input replaces the default heading.
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/18851.png" alt="Bengaluru FC logo" width="72" align="right" />
 
 ### 🔵 Bengaluru FC (BFC)
-Indian Super League
+2026-27 ISL
 🟢 Season in progress
 
-📅 No recent games found
+🏅 Standing (2026): 2026-27 ISL · 4
+
+📅 Next: @ NEU (Oct 30)
+
+📊 2026 Record: 2W - 0L - 0D  (6 pts)
+   █████████████████████████
+
+**📅 Recent Games:**
+```
+✅ W 2-0 vs CFC   (Oct 17, 2026)
+✅ W 3-2 vs SCD   (Oct 10, 2026)
+```
 
 ## Compact mode
 
@@ -36,10 +58,17 @@ The `compact: true` input drops the logo and recent-game details.
 
 
 ### 🔵 Bengaluru FC (BFC)
-Indian Super League
+2026-27 ISL
 🟢 Season in progress
 
-📅 No recent games found
+🏅 Standing (2026): 2026-27 ISL · 4
+
+📅 Next: @ NEU (Oct 30)
+
+📊 2026 Record: 2W - 0L - 0D  (6 pts)
+   █████████████████████████
+
+
 
 ## Badge mode
 

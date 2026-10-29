@@ -12,18 +12,20 @@ Team: **ALV** · Category: Soccer · Data source: ESPN public API
 2026-2027 Portuguese Liga
 🟢 Season in progress
 
-🏅 Standing: 2026-2027 Portuguese Liga · 12
+🏅 Standing (2026): 2026-2027 Portuguese Liga · 10
 
-📊 2026 Record: 2W - 3L - 2D  (8 pts)
-   ██████████▋░░░░░░░░░░░░░░
+📅 Next: @ SLB (Nov 2)
+
+📊 2026 Record: 3W - 4L - 2D  (11 pts)
+   ███████████░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+❌ L 0-1 vs FCA   (Oct 24, 2026)
+✅ W 4-1 @ FCF   (Oct 12, 2026)
 ✅ W 1-0 vs RAFC  (Sep 19, 2026)
 ✅ W 3-1 @ CDN   (Sep 12, 2026)
 ❌ L 1-2 vs SCB   (Sep 5, 2026)
-🟡 D 1-1 vs CDSC  (Aug 29, 2026)
-❌ L 1-3 @ SCP   (Aug 22, 2026)
 ```
 
 ## Custom title
@@ -38,18 +40,20 @@ The `title:` input replaces the default heading.
 2026-2027 Portuguese Liga
 🟢 Season in progress
 
-🏅 Standing: 2026-2027 Portuguese Liga · 12
+🏅 Standing (2026): 2026-2027 Portuguese Liga · 10
 
-📊 2026 Record: 2W - 3L - 2D  (8 pts)
-   ██████████▋░░░░░░░░░░░░░░
+📅 Next: @ SLB (Nov 2)
+
+📊 2026 Record: 3W - 4L - 2D  (11 pts)
+   ███████████░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+❌ L 0-1 vs FCA   (Oct 24, 2026)
+✅ W 4-1 @ FCF   (Oct 12, 2026)
 ✅ W 1-0 vs RAFC  (Sep 19, 2026)
 ✅ W 3-1 @ CDN   (Sep 12, 2026)
 ❌ L 1-2 vs SCB   (Sep 5, 2026)
-🟡 D 1-1 vs CDSC  (Aug 29, 2026)
-❌ L 1-3 @ SCP   (Aug 22, 2026)
 ```
 
 ## Compact mode
@@ -63,10 +67,12 @@ The `compact: true` input drops the logo and recent-game details.
 2026-2027 Portuguese Liga
 🟢 Season in progress
 
-🏅 Standing: 2026-2027 Portuguese Liga · 12
+🏅 Standing (2026): 2026-2027 Portuguese Liga · 10
 
-📊 2026 Record: 2W - 3L - 2D  (8 pts)
-   ██████████▋░░░░░░░░░░░░░░
+📅 Next: @ SLB (Nov 2)
+
+📊 2026 Record: 3W - 4L - 2D  (11 pts)
+   ███████████░░░░░░░░░░░░░░
 
 
 

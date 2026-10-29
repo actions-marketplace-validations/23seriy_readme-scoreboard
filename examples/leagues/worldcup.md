@@ -10,9 +10,9 @@ Team: **ALG** · Category: Soccer · Data source: ESPN public API
 
 ### 🇩🇿 Algeria (ALG)
 Group J
-🔴 Off-season · Next season starts June 2030
+🔴 Off-season · Next season starts June 11, 2030
 
-🏅 Standing: Group J · 3
+🏅 Standing (2026): Group J · 3
 
 📊 2026 Record: 1W - 1L - 1D  (4 pts)
    ████████████▌░░░░░░░░░░░░
@@ -35,9 +35,9 @@ The `title:` input replaces the default heading.
 
 ### 🇩🇿 Algeria (ALG)
 Group J
-🔴 Off-season · Next season starts June 2030
+🔴 Off-season · Next season starts June 11, 2030
 
-🏅 Standing: Group J · 3
+🏅 Standing (2026): Group J · 3
 
 📊 2026 Record: 1W - 1L - 1D  (4 pts)
    ████████████▌░░░░░░░░░░░░
@@ -59,9 +59,9 @@ The `compact: true` input drops the logo and recent-game details.
 
 ### 🇩🇿 Algeria (ALG)
 Group J
-🔴 Off-season · Next season starts June 2030
+🔴 Off-season · Next season starts June 11, 2030
 
-🏅 Standing: Group J · 3
+🏅 Standing (2026): Group J · 3
 
 📊 2026 Record: 1W - 1L - 1D  (4 pts)
    ████████████▌░░░░░░░░░░░░

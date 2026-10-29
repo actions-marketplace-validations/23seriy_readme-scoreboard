@@ -12,18 +12,20 @@ Team: **ACH** · Category: Soccer · Data source: ESPN public API
 Regular Season
 🟢 Season in progress
 
-🏅 Standing: Regular Season · 6
+🏅 Standing (2026): Regular Season · 6
 
-📊 2026 Record: 3W - 4L - 2D  (11 pts)
-   ███████████░░░░░░░░░░░░░░
+📅 Next: @ VIB (Nov 1)
+
+📊 2026 Record: 4W - 4L - 4D  (16 pts)
+   ████████████▌░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 5-1 vs SON   (Oct 25, 2026)
+🟡 D 0-0 vs RAN   (Oct 16, 2026)
+🟡 D 3-3 @ SIF   (Oct 11, 2026)
 🟡 D 2-2 vs AGF   (Sep 20, 2026)
 ❌ L 0-2 @ KBH   (Sep 11, 2026)
-✅ W 5-2 @ SON   (Sep 6, 2026)
-❌ L 2-3 vs VIB   (Aug 28, 2026)
-✅ W 2-1 vs LBK   (Aug 23, 2026)
 ```
 
 ## Custom title
@@ -38,18 +40,20 @@ The `title:` input replaces the default heading.
 Regular Season
 🟢 Season in progress
 
-🏅 Standing: Regular Season · 6
+🏅 Standing (2026): Regular Season · 6
 
-📊 2026 Record: 3W - 4L - 2D  (11 pts)
-   ███████████░░░░░░░░░░░░░░
+📅 Next: @ VIB (Nov 1)
+
+📊 2026 Record: 4W - 4L - 4D  (16 pts)
+   ████████████▌░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 5-1 vs SON   (Oct 25, 2026)
+🟡 D 0-0 vs RAN   (Oct 16, 2026)
+🟡 D 3-3 @ SIF   (Oct 11, 2026)
 🟡 D 2-2 vs AGF   (Sep 20, 2026)
 ❌ L 0-2 @ KBH   (Sep 11, 2026)
-✅ W 5-2 @ SON   (Sep 6, 2026)
-❌ L 2-3 vs VIB   (Aug 28, 2026)
-✅ W 2-1 vs LBK   (Aug 23, 2026)
 ```
 
 ## Compact mode
@@ -63,10 +67,12 @@ The `compact: true` input drops the logo and recent-game details.
 Regular Season
 🟢 Season in progress
 
-🏅 Standing: Regular Season · 6
+🏅 Standing (2026): Regular Season · 6
 
-📊 2026 Record: 3W - 4L - 2D  (11 pts)
-   ███████████░░░░░░░░░░░░░░
+📅 Next: @ VIB (Nov 1)
+
+📊 2026 Record: 4W - 4L - 4D  (16 pts)
+   ████████████▌░░░░░░░░░░░░
 
 
 

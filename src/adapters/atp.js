@@ -1,4 +1,5 @@
 const { get: httpGet } = require("../http");
+const { utcParts } = require("../clock");
 
 const ESPN_BASE = "https://site.api.espn.com/apis/site/v2/sports/tennis/atp";
 const ESPN_CORE_BASE = "https://sports.core.api.espn.com/v2/sports/tennis/leagues/atp";
@@ -63,13 +64,20 @@ const DEMO_PLAYERS = {
 const DATA_SOURCE = "ESPN public API";
 
 function getSeasonYear() {
-  return new Date().getFullYear();
+  return utcParts().year;
 }
 
 // ATP has no per-team logo on ESPN's CDN, so fall back to the tennis icon used
 // by the ATP league itself.
-function getLogoUrl() {
-  return "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png";
+// A tennis board tracks one player, so the image beside the heading is that
+// player's own headshot rather than a generic sport icon. ESPN publishes ATP
+// headshots under the same /i/headshots tree the other sports use. An unknown
+// abbreviation keeps the icon, so a board never renders a broken image.
+function getLogoUrl(abbr) {
+  const player = PLAYER_IDS[String(abbr || "").toUpperCase()];
+  return player
+    ? `https://a.espncdn.com/i/headshots/tennis/players/full/${player.id}.png`
+    : "https://a.espncdn.com/combiner/i?img=/redesign/assets/img/icons/ESPN-icon-tennis.png";
 }
 
 async function fetchRankings() {
@@ -217,7 +225,7 @@ function getDemoData(abbr) {
     lastMatch: {
       opponent: "Alexander Zverev",
       won: true,
-      date: "2026-07-12T15:05:00Z",
+      date: "2026-07-12",
       sets: [[6, 7, 6, 6], [7, 6, 3, 4]],
     },
   };

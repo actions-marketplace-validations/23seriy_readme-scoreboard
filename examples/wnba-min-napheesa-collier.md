@@ -4,26 +4,27 @@
 
 ### 🐆 Minnesota Lynx (MIN)
 Western Conference
-🟢 Season in progress
+🔴 Off-season · Next season starts May 8, 2027
 
 🏅 Standing: Western · 1
-📅 Next: vs POR (Jan 6)
 
-📊 2026 Record: 28W - 7L (80.0%)
-   ████████████████████░░░░░
+📊 2026 Record: 33W - 11L (75.0%)
+   ██████████████████▊░░░░░░
 
 **📅 Recent Games:**
 ```
-✅ W  85-81  @ POR (Jan 1, 2026)
-✅ W  92-78  vs SEA (Dec 29, 2025)
-❌ L  74-88  @ LV  (Dec 26, 2025)
+❌ L  71-87  @ NY  (Sep 29, 2026) [Playoffs]
+❌ L  75-91  vs NY  (Sep 27, 2026) [Playoffs]
+✅ W  86-66  vs IND (Sep 24, 2026)
+❌ L  77-96  @ IND (Sep 22, 2026)
+✅ W 101-89  @ CON (Sep 20, 2026)
 ```
 
 **🐆 Player Spotlight: Napheesa Collier**
 <img src="https://a.espncdn.com/i/headshots/wnba/players/full/3917450.png" alt="Napheesa Collier headshot" height="72" align="right" />
-20.1 PPG · 6.1 RPG · 3.1 APG
+16.8 PPG · 6.9 RPG · 2.6 APG
 
 **📅 Last Game:**
 ```
-23 PTS · 5 REB · 8 AST · 35 MIN vs POR (Jan 1, 2026)
+14 PTS · 7 REB · 1 AST · 33 MIN vs New York Liberty (Sep 29, 2026)
 ```

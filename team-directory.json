@@ -1,6 +1,6 @@
 {
   "generatedFrom": "src/config/leagues.js",
-  "generatedAt": "2026-09-24T10:29:39.316Z",
+  "generatedAt": "2026-10-28T11:36:06.605Z",
   "teams": [
     {
       "league": "nba",
@@ -2295,7 +2295,7 @@
       "league": "ligamx",
       "leagueName": "Liga MX",
       "abbreviation": "JUA",
-      "name": "FC Juarez",
+      "name": "FC Juárez",
       "id": "17851"
     },
     {
@@ -3358,7 +3358,7 @@
     {
       "league": "ucl",
       "leagueName": "UEFA Champions League",
-      "abbreviation": "VIK",
+      "abbreviation": "VFK",
       "name": "Viking FK",
       "id": "510"
     },
@@ -3407,13 +3407,6 @@
     {
       "league": "uel",
       "leagueName": "UEFA Europa League",
-      "abbreviation": "Ararat",
-      "name": "ARARAT-ARMENIA",
-      "id": "20024"
-    },
-    {
-      "league": "uel",
-      "leagueName": "UEFA Europa League",
       "abbreviation": "AZ",
       "name": "AZ Alkmaar",
       "id": "140"
@@ -3424,6 +3417,13 @@
       "abbreviation": "AND",
       "name": "Anderlecht",
       "id": "441"
+    },
+    {
+      "league": "uel",
+      "leagueName": "UEFA Europa League",
+      "abbreviation": "ARA",
+      "name": "Ararat-Armenia",
+      "id": "20024"
     },
     {
       "league": "uel",
@@ -3554,8 +3554,8 @@
     {
       "league": "uel",
       "leagueName": "UEFA Europa League",
-      "abbreviation": "OFI Crete",
-      "name": "OFI CRETE",
+      "abbreviation": "OFI",
+      "name": "OFI Crete",
       "id": "1010"
     },
     {
@@ -7076,7 +7076,7 @@
       "league": "ncaaw",
       "leagueName": "NCAA Women's Basketball",
       "abbreviation": "CARK",
-      "name": "Central Arkansas Bears",
+      "name": "Central Arkansas Sugar Bears",
       "id": "2110"
     },
     {
@@ -7300,7 +7300,7 @@
       "league": "ncaaw",
       "leagueName": "NCAA Women's Basketball",
       "abbreviation": "ETSU",
-      "name": "East Tennessee State Bucs",
+      "name": "East Tennessee State Buccaneers",
       "id": "2193"
     },
     {
@@ -7531,7 +7531,7 @@
       "league": "ncaaw",
       "leagueName": "NCAA Women's Basketball",
       "abbreviation": "HAW",
-      "name": "Hawai'i Rainbow Warriors",
+      "name": "Hawai'i Rainbow Wahine",
       "id": "62"
     },
     {
@@ -11793,13 +11793,6 @@
     {
       "league": "ncaaf",
       "leagueName": "College Football",
-      "abbreviation": "MDNN",
-      "name": "MADONNA",
-      "id": "126146"
-    },
-    {
-      "league": "ncaaf",
-      "leagueName": "College Football",
       "abbreviation": "MB",
       "name": "MANITOBA",
       "id": "2770"
@@ -11817,6 +11810,13 @@
       "abbreviation": "MAC",
       "name": "Macalester Scots",
       "id": "2359"
+    },
+    {
+      "league": "ncaaf",
+      "leagueName": "College Football",
+      "abbreviation": "MDNN",
+      "name": "Madonna Crusaders",
+      "id": "126146"
     },
     {
       "league": "ncaaf",
@@ -11850,7 +11850,7 @@
       "league": "ncaaf",
       "leagueName": "College Football",
       "abbreviation": "MUIN",
-      "name": "Marian (IN) MARIAN",
+      "name": "Marian (IN) Knights",
       "id": "2366"
     },
     {
@@ -12676,7 +12676,7 @@
       "league": "ncaaf",
       "leagueName": "College Football",
       "abbreviation": "OPSU",
-      "name": "Oklahoma Panhandle OK PANHANDLE ST",
+      "name": "Oklahoma Panhandle Aggies",
       "id": "2824"
     },
     {
@@ -15720,29 +15720,29 @@
     {
       "league": "aleague",
       "leagueName": "A-League Men",
-      "abbreviation": "ADE",
-      "name": "Adelaide United",
+      "abbreviation": "ADL",
+      "name": "Adelaide United FC",
       "id": "5321"
     },
     {
       "league": "aleague",
       "leagueName": "A-League Men",
-      "abbreviation": "AFC",
+      "abbreviation": "AUC",
       "name": "Auckland FC",
       "id": "22344"
     },
     {
       "league": "aleague",
       "leagueName": "A-League Men",
-      "abbreviation": "BRR",
-      "name": "Brisbane Roar",
+      "abbreviation": "BRI",
+      "name": "Brisbane Roar FC",
       "id": "5326"
     },
     {
       "league": "aleague",
       "leagueName": "A-League Men",
       "abbreviation": "CCM",
-      "name": "Central Coast Mariners",
+      "name": "Central Coast Mariners FC",
       "id": "5325"
     },
     {
@@ -15755,14 +15755,14 @@
     {
       "league": "aleague",
       "leagueName": "A-League Men",
-      "abbreviation": "MCY",
+      "abbreviation": "MBC",
       "name": "Melbourne City FC",
       "id": "11143"
     },
     {
       "league": "aleague",
       "leagueName": "A-League Men",
-      "abbreviation": "MVC",
+      "abbreviation": "MBV",
       "name": "Melbourne Victory",
       "id": "5328"
     },
@@ -15777,7 +15777,7 @@
       "league": "aleague",
       "leagueName": "A-League Men",
       "abbreviation": "PER",
-      "name": "Perth Glory",
+      "name": "Perth Glory FC",
       "id": "5322"
     },
     {
@@ -15791,14 +15791,14 @@
       "league": "aleague",
       "leagueName": "A-League Men",
       "abbreviation": "WEL",
-      "name": "Wellington Phoenix FC",
+      "name": "Wellington Phoenix",
       "id": "8352"
     },
     {
       "league": "aleague",
       "leagueName": "A-League Men",
       "abbreviation": "WSW",
-      "name": "Western Sydney Wanderers",
+      "name": "Western Sydney Wanderers FC",
       "id": "13696"
     },
     {
@@ -15818,8 +15818,8 @@
     {
       "league": "isl",
       "leagueName": "Indian Super League",
-      "abbreviation": "GOA",
-      "name": "FC Goa",
+      "abbreviation": "FC Goa",
+      "name": "FC GOA",
       "id": "18003"
     },
     {
@@ -15833,8 +15833,8 @@
       "league": "isl",
       "leagueName": "Indian Super League",
       "abbreviation": "JFC",
-      "name": "Jamshedpur FC",
-      "id": "18850"
+      "name": "JFC",
+      "id": 18850
     },
     {
       "league": "isl",
@@ -15847,8 +15847,8 @@
       "league": "isl",
       "leagueName": "Indian Super League",
       "abbreviation": "MOH",
-      "name": "Mohammedan SC",
-      "id": "20842"
+      "name": "MOH",
+      "id": 20842
     },
     {
       "league": "isl",
@@ -15888,8 +15888,8 @@
     {
       "league": "isl",
       "leagueName": "Indian Super League",
-      "abbreviation": "EBEN",
-      "name": "SC East Bengal",
+      "abbreviation": "EBFC",
+      "name": "East Bengal FC",
       "id": "8897"
     },
     {
@@ -15900,9 +15900,16 @@
       "id": "131703"
     },
     {
+      "league": "isl",
+      "leagueName": "Indian Super League",
+      "abbreviation": "CHU",
+      "name": "Churchill Brothers",
+      "id": "8896"
+    },
+    {
       "league": "csl",
       "leagueName": "Chinese Super League",
-      "abbreviation": "BG",
+      "abbreviation": "BEI",
       "name": "Beijing Guoan",
       "id": "2052"
     },
@@ -15965,15 +15972,15 @@
     {
       "league": "csl",
       "leagueName": "Chinese Super League",
-      "abbreviation": "SIPG",
-      "name": "Shanghai Port",
+      "abbreviation": "SHP",
+      "name": "Shanghai Port FC",
       "id": "15515"
     },
     {
       "league": "csl",
       "leagueName": "Chinese Super League",
-      "abbreviation": "SHE",
-      "name": "Shanghai Shenhua",
+      "abbreviation": "SFC",
+      "name": "Shanghai Shenhua FC",
       "id": "977"
     },
     {
@@ -16070,8 +16077,8 @@
     {
       "league": "greek",
       "leagueName": "Greek Super League",
-      "abbreviation": "OFI Crete",
-      "name": "OFI CRETE",
+      "abbreviation": "OFI",
+      "name": "OFI Crete",
       "id": "1010"
     },
     {
@@ -16385,7 +16392,7 @@
     {
       "league": "norway",
       "leagueName": "Norwegian Eliteserien",
-      "abbreviation": "VIK",
+      "abbreviation": "VFK",
       "name": "Viking FK",
       "id": "510"
     },
