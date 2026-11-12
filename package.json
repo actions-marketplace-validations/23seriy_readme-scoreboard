@@ -1,11 +1,11 @@
 {
   "name": "readme-scoreboard",
-  "version": "1.17.0",
+  "version": "1.18.0",
   "description": "🏆 Live sports stats on your GitHub profile README",
   "author": "solshanetski",
   "license": "MIT",
   "engines": {
-    "node": ">=24"
+    "node": ">=26"
   },
   "scripts": {
     "start": "node src/index.js",
@@ -24,6 +24,7 @@
     "leagues:examples": "node scripts/generate-league-examples.js",
     "leagues:showcase": "node scripts/generate-league-showcase.js",
     "examples:generate": "node scripts/generate-examples.js",
+    "readme:preview": "node scripts/update-readme-preview.js",
     "examples:generate:demo": "node scripts/generate-examples.js --demo",
     "smoke:demo": "node scripts/demo-smoke.js",
     "test": "jest",
@@ -32,12 +33,17 @@
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
-    "axios": "^1.20.0",
-    "dotenv": "^18.0.8"
+    "axios": "^1.21.0",
+    "dotenv": "^18.0.9"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.13.0",
+    "eslint": "^10.14.0",
     "jest": "^30.5.2"
+  },
+  "overrides": {
+    "deepmerge": "4.3.1",
+    "glob": "^14.0.4",
+    "minimatch": "^11.0.5"
   }
 }

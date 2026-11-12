@@ -10,12 +10,11 @@ Team: **ARIZ** · Category: Basketball · Data source: ESPN public API
 
 ### 🐻 Arizona Wildcats (ARIZ)
 Big 12 Conference Conference
-🔴 Off-season · Next season starts November 2, 2026
+🟢 Season in progress
 
-🏅 Standing: Big 12 Conference · 16
+🏅 Standing: Big 12 Conference · 1
 
-📊 2025-2026 Record: 36W - 3L (92.3%)
-   ███████████████████████░░
+📊 2025-2026 Record: 36W - 3L (92.3%)<br>&nbsp;&nbsp;&nbsp;███████████████████████░░
 
 **📅 Recent Games:**
 ```
@@ -36,12 +35,11 @@ The `title:` input replaces the default heading.
 
 ### 🐻 Arizona Wildcats (ARIZ)
 Big 12 Conference Conference
-🔴 Off-season · Next season starts November 2, 2026
+🟢 Season in progress
 
-🏅 Standing: Big 12 Conference · 16
+🏅 Standing: Big 12 Conference · 1
 
-📊 2025-2026 Record: 36W - 3L (92.3%)
-   ███████████████████████░░
+📊 2025-2026 Record: 36W - 3L (92.3%)<br>&nbsp;&nbsp;&nbsp;███████████████████████░░
 
 **📅 Recent Games:**
 ```
@@ -61,12 +59,11 @@ The `compact: true` input drops the logo and recent-game details.
 
 ### 🐻 Arizona Wildcats (ARIZ)
 Big 12 Conference Conference
-🔴 Off-season · Next season starts November 2, 2026
+🟢 Season in progress
 
-🏅 Standing: Big 12 Conference · 16
+🏅 Standing: Big 12 Conference · 1
 
-📊 2025-2026 Record: 36W - 3L (92.3%)
-   ███████████████████████░░
+📊 2025-2026 Record: 36W - 3L (92.3%)<br>&nbsp;&nbsp;&nbsp;███████████████████████░░
 
 
 

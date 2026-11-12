@@ -47,8 +47,10 @@ from live data and refreshed daily, showing the default board plus the
 ## Preview
 
 This is what the action writes between your markers — heading, logos and all.
-Live output for the Lakers (heading levels lowered by one so it nests here):
+The Lakers board below is the action's real output, regenerated from live league
+APIs by the daily refresh (heading levels lowered by one so it nests here):
 
+<!-- preview:start -->
 ### [<picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nba.png" alt="NBA" height="28" align="top"></picture> My Favourite NBA Team](https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams)
 
 <img src="https://a.espncdn.com/i/teamlogos/nba/500/lal.png" alt="Los Angeles Lakers logo" width="72" align="right" />
@@ -57,21 +59,21 @@ Live output for the Lakers (heading levels lowered by one so it nests here):
 Western Conference · Pacific Division
 🟢 Season in progress
 
-🏅 Standing: Western · 6
+🏅 Standing: Western · 2
 
-📅 Next: vs GS (Oct 22)
+📅 Next: @ PHX (Nov 15)
 
-📊 2025-2026 Record: 53W - 29L (64.6%)
-   ████████████████▏░░░░░░░░
+📊 2026-2027 Record: 10W - 2L (83.3%)<br>&nbsp;&nbsp;&nbsp;████████████████████▊░░░░
 
 **📅 Recent Games:**
 ```
-❌ L 110-115 vs OKC (May 11, 2026) [Playoffs]
-❌ L 108-131 vs OKC (May 9, 2026) [Playoffs]
-❌ L 107-125 @ OKC (May 7, 2026) [Playoffs]
-❌ L  90-108 @ OKC (May 5, 2026) [Playoffs]
-✅ W  98-78  @ HOU (May 1, 2026) [Playoffs]
+✅ W 123-112 @ MIL (Nov 11, 2026)
+✅ W 124-114 @ ATL (Nov 9, 2026)
+✅ W 121-116 @ DET (Nov 8, 2026)
+✅ W 124-118 vs POR (Nov 6, 2026)
+✅ W 116-103 @ SAC (Nov 4, 2026)
 ```
+<!-- preview:end -->
 
 ---
 
@@ -288,6 +290,21 @@ recent-games list — handy for a tighter profile:
           compact: true
 ```
 
+### How many recent games to list
+
+Boards list the five most recent results by default. Set `recent_games` from `1`
+to `5` to show fewer — five is the ceiling because that is how many results the
+data feeds return:
+
+```yaml
+      - uses: 23seriy/readme-scoreboard@v1
+        with:
+          gh_token: ${{ secrets.GH_TOKEN }}
+          sport: nba
+          team: LAL
+          recent_games: 3
+```
+
 ### Multiple teams in one run
 
 Set `teams:` to a comma-separated list to render several boards from a single
@@ -480,7 +497,7 @@ The **Season** column is refreshed daily by [`.github/workflows/update-season-st
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/9.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/9.png" alt="Ligue 1 logo" height="20"></picture> Ligue 1 | `ligue1` | 🟢 In progress · ends 2027-06-01 | [`soccer/fra.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/14.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/14.png" alt="Primeira Liga logo" height="20"></picture> Primeira Liga | `primeiraliga` | 🟢 In progress · ends 2027-07-01 | [`soccer/por.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/por.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/11.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/11.png" alt="Eredivisie logo" height="20"></picture> Eredivisie | `eredivisie` | 🟢 In progress · ends 2027-06-01 | [`soccer/ned.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/ned.1/teams) |
-| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/wnba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/wnba.png" alt="WNBA logo" height="20"></picture> WNBA | `wnba` | 🟢 In progress · ends 2026-11-05 | [`basketball/wnba`](https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/teams) |
+| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/wnba.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/wnba.png" alt="WNBA logo" height="20"></picture> WNBA | `wnba` | 🔴 Off-season · starts 2027-05-08 | [`basketball/wnba`](https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/22.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/22.png" alt="Liga MX logo" height="20"></picture> Liga MX | `ligamx` | 🟢 In progress · ends 2027-06-01 | [`soccer/mex.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/mex.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/85.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/85.png" alt="Brasileirão logo" height="20"></picture> Brasileirão | `brasileirao` | 🟢 In progress · ends 2026-12-31 | [`soccer/bra.1`](https://site.api.espn.com/apis/site/v2/sports/soccer/bra.1/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2323.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/2323.png" alt="NWSL logo" height="20"></picture> NWSL | `nwsl` | 🟢 In progress · ends 2026-12-31 | [`soccer/usa.nwsl`](https://site.api.espn.com/apis/site/v2/sports/soccer/usa.nwsl/teams) |
@@ -492,8 +509,8 @@ The **Season** column is refreshed daily by [`.github/workflows/update-season-st
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2310.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/2310.png" alt="UEFA Europa League logo" height="20"></picture> UEFA Europa League | `uel` | 🟢 In progress · ends 2027-07-01 | [`soccer/uefa.europa`](https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.europa/teams) |
 | ⚽&nbsp;Soccer | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/leaguelogos/soccer/500-dark/4.png"><img src="https://a.espncdn.com/i/leaguelogos/soccer/500/4.png" alt="FIFA World Cup logo" height="20"></picture> FIFA World Cup | `worldcup` | 🟢 In progress · ends 2026-12-31 | [`soccer/fifa.world`](https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/teams) |
 | 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba_gleague.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/nba_gleague.png" alt="NBA G League logo" height="20"></picture> NBA G League | `gleague` | 🔴 Off-season · starts 2026-12-19 | [`basketball/nba-development`](https://site.api.espn.com/apis/site/v2/sports/basketball/nba-development/teams) |
-| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png" alt="NCAA Men's Basketball logo" height="20"></picture> NCAA Men's Basketball | `ncaab` | 🔴 Off-season · starts 2026-11-02 | [`basketball/mens-college-basketball`](https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams) |
-| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png" alt="NCAA Women's Basketball logo" height="20"></picture> NCAA Women's Basketball | `ncaaw` | 🔴 Off-season · starts 2026-11-02 | [`basketball/womens-college-basketball`](https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/teams) |
+| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png" alt="NCAA Men's Basketball logo" height="20"></picture> NCAA Men's Basketball | `ncaab` | 🟢 In progress · ends 2027-04-07 | [`basketball/mens-college-basketball`](https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/teams) |
+| 🏀&nbsp;Basketball | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png" alt="NCAA Women's Basketball logo" height="20"></picture> NCAA Women's Basketball | `ncaaw` | 🟢 In progress · ends 2027-04-07 | [`basketball/womens-college-basketball`](https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/teams) |
 | 🏈&nbsp;Football | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-football-college.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-football-college.png" alt="College Football logo" height="20"></picture> College Football | `ncaaf` | 🟢 In progress · ends 2027-01-28 | [`football/college-football`](https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams) |
 | 🏒&nbsp;Hockey | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png"><img src="https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png" alt="NCAA Men's Ice Hockey logo" height="20"></picture> NCAA Men's Ice Hockey | `ncaa_hockey` | 🟢 In progress · ends 2027-05-01 | [`hockey/mens-college-hockey`](https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/teams) |
 | 🏆&nbsp;Racing | <picture><source media="(prefers-color-scheme: dark)" srcset="https://a.espncdn.com/i/teamlogos/leagues/500-dark/f1.png"><img src="https://a.espncdn.com/i/teamlogos/leagues/500/f1.png" alt="Formula 1 logo" height="20"></picture> Formula 1 | `f1` | 🟢 In progress · ends 2026-12-31 | [`racing/f1`](https://site.api.espn.com/apis/site/v2/sports/racing/f1/teams) |
@@ -527,7 +544,7 @@ truth, so this README no longer duplicates each league's roster inline.
 
 ## Run Locally
 
-Requires **Node.js 24 or newer**. The version is pinned in [`.nvmrc`](.nvmrc), so `nvm use`
+Requires **Node.js 26 or newer**. The version is pinned in [`.nvmrc`](.nvmrc), so `nvm use`
 selects the right one, and `package.json` declares the same minimum so package managers warn on
 an older runtime.
 
@@ -665,14 +682,16 @@ files you may need to refresh.
 | `sport` | No | `nba` | League key (for example, `nba`). See [Supported Sports](#supported-sports). |
 | `team` | Yes | — | Team or player abbreviation (e.g. `LAL`, `NYR`, `MIA`, or `SIN` for Jannik Sinner). Invalid abbreviations show example names. |
 | `player` | No | — | Player full name to feature alongside the team board (e.g. `Luka Doncic` or `Napheesa Collier`); must match the roster's exact spelling, including any diacritics. Supported for `nba`, `wnba`, `ncaab`, `ncaaw`, `mlb`, `nfl`, `nhl` and every soccer league; not supported together with `teams:` (use `team:` instead). |
-| `entity` | No | `team` | Entity type: `team` (default) or `player`. Inferred from the sport — individual sports like ATP Tennis and WTA Tennis default to `player`. |
+| `entity` | No | — | Entity type: `team` or `player`. Inferred from the sport when unset — individual sports (ATP, WTA, NASCAR, IndyCar, UFC) default to `player`. Set only to override the inference. |
 | `teams` | No | — | Comma-separated team/player abbreviations to render multiple boards in one run (e.g. `LAL, NYY, ARS`). |
 | `title` | No | `My Favourite <League> Team` | Custom heading text for the scoreboard (individual sports default to `<League> Player`). |
+| `link` | No | — | URL the board heading links to. Defaults to the league's data endpoint; set this to link the heading to your own page instead. |
 | `badge` | No | `false` | Render shields-style badges instead of a full scoreboard block. |
 | `marker` | No | `readme-scoreboard` | HTML comment marker name. Must match a marker pair in your README, or the job fails. Give each sport a unique name — sharing one pair means the later step silently overwrites the earlier |
 | `target_repo` | No | your profile repo | Repo to update, format: `owner/repo` |
 | `dry_run` | No | `false` | Fetch and render live data without updating a README. Accepts `true`/`false` (also `1`/`0` or `yes`/`no`) |
 | `compact` | No | `false` | Use a smaller block without team logos or recent-game details. Accepts `true`/`false` |
+| `recent_games` | No | `5` | How many recent games to list, from `1` to `5`. Adapters fetch five results, so `5` is the ceiling |
 
 Inputs are validated before any API request or README update. If a team abbreviation
 is not recognized, the action reports several valid abbreviations for that league;

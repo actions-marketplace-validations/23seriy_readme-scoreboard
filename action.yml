@@ -16,14 +16,16 @@ inputs:
     description: "Player full name to feature alongside the team board (e.g. 'Luka Doncic' or 'Bukayo Saka'); must match the roster's exact spelling, including accents. Supported for sport: nba, wnba, ncaab, ncaaw, mlb, nfl, nhl, and every soccer league (mls, epl, laliga, bundesliga, seriea, ligue1, primeiraliga, eredivisie, ligamx, brasileirao, nwsl, saudipro, j1, scottish, belgian, ucl, uel, argentina, aleague, isl, csl, greek, austria, denmark, norway, sweden). Not supported together with teams: (multiple boards)."
     required: false
   entity:
-    description: "Entity type: 'team' (default) or 'player'. Inferred from the sport; set this to track an individual player (e.g. ATP)."
+    description: "Entity type: 'team' or 'player'. Inferred from the sport when unset — individual sports (ATP, WTA, NASCAR, IndyCar, UFC) default to 'player'. Set this only to override the inference."
     required: false
-    default: "team"
   teams:
     description: "Optional comma-separated list of team/player abbreviations to render multiple boards in one run (e.g. LAL, NYY, ARS)."
     required: false
   title:
     description: "Custom heading text for the scoreboard (default: 'My Favourite <League> Team')."
+    required: false
+  link:
+    description: "URL the board heading links to. Defaults to the league's data endpoint; set this to link the heading to your own page instead."
     required: false
   badge:
     description: "Render shields-style badges instead of a full scoreboard block (true/false)."
@@ -47,6 +49,10 @@ inputs:
     description: "Use a smaller README block without team logos or recent-game details (true/false)."
     required: false
     default: "false"
+  recent_games:
+    description: "How many recent games to list, from 1 to 5 (default: 5). Adapters fetch five results, so 5 is the ceiling."
+    required: false
+    default: "5"
 outputs:
   updated:
     description: "Whether the target README was changed"
@@ -62,7 +68,7 @@ runs:
   steps:
     - uses: actions/setup-node@v7
       with:
-        node-version: "24"
+        node-version: "26"
     - run: npm ci --omit=dev --ignore-scripts
       shell: bash
       working-directory: ${{ github.action_path }}
@@ -77,9 +83,11 @@ runs:
         TEAMS: ${{ inputs.teams }}
         ENTITY: ${{ inputs.entity }}
         TITLE: ${{ inputs.title }}
+        LINK: ${{ inputs.link }}
         BADGE: ${{ inputs.badge }}
         MARKER: ${{ inputs.marker }}
         TARGET_REPO: ${{ inputs.target_repo }}
         PLAYER: ${{ inputs.player }}
         DRY_RUN: ${{ inputs.dry_run }}
         COMPACT: ${{ inputs.compact }}
+        RECENT_GAMES: ${{ inputs.recent_games }}

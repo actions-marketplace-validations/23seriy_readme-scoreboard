@@ -10,12 +10,11 @@ Team: **ATH** · Category: Baseball · Data source: official league API
 
 ### 🐘 Athletics (ATH)
 American League · AL West
-🟢 Season in progress
+🔴 Off-season · Next season starts March 25, 2027
 
 🏅 Standing: AL West · 4
 
-📊 2026 Record: 64W - 98L (39.5%)
-   █████████▉░░░░░░░░░░░░░░░
+📊 2026 Record: 64W - 98L (39.5%)<br>&nbsp;&nbsp;&nbsp;█████████▉░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
@@ -36,12 +35,11 @@ The `title:` input replaces the default heading.
 
 ### 🐘 Athletics (ATH)
 American League · AL West
-🟢 Season in progress
+🔴 Off-season · Next season starts March 25, 2027
 
 🏅 Standing: AL West · 4
 
-📊 2026 Record: 64W - 98L (39.5%)
-   █████████▉░░░░░░░░░░░░░░░
+📊 2026 Record: 64W - 98L (39.5%)<br>&nbsp;&nbsp;&nbsp;█████████▉░░░░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
@@ -61,12 +59,11 @@ The `compact: true` input drops the logo and recent-game details.
 
 ### 🐘 Athletics (ATH)
 American League · AL West
-🟢 Season in progress
+🔴 Off-season · Next season starts March 25, 2027
 
 🏅 Standing: AL West · 4
 
-📊 2026 Record: 64W - 98L (39.5%)
-   █████████▉░░░░░░░░░░░░░░░
+📊 2026 Record: 64W - 98L (39.5%)<br>&nbsp;&nbsp;&nbsp;█████████▉░░░░░░░░░░░░░░░
 
 
 

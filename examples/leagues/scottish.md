@@ -9,23 +9,22 @@ Team: **CEL** · Category: Soccer · Data source: ESPN public API
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/256.png" alt="Celtic logo" width="72" align="right" />
 
 ### 🍀 Celtic (CEL)
-2026-27 Scottish Premiership
+First Phase
 🟢 Season in progress
 
-🏅 Standing (2026): 2026-27 Scottish Premiership · 1
+🏅 Standing (2026): First Phase · 1
 
-📅 Next: @ FALK (Nov 1)
+📅 Next: vs STM (Nov 21)
 
-📊 2026 Record: 9W - 1L - 1D  (28 pts)
-   █████████████████████▌░░░
+📊 2026 Record: 10W - 2L - 1D  (31 pts)<br>&nbsp;&nbsp;&nbsp;████████████████████▏░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 1-0 vs KIL   (Nov 8, 2026)
+❌ L 0-2 @ FALK  (Nov 1, 2026)
 🟡 D 2-2 vs DUN   (Oct 28, 2026)
 ✅ W 2-1 @ HIBS  (Oct 25, 2026)
 ✅ W 7-1 vs HOM   (Oct 18, 2026)
-✅ W 2-0 @ MOT   (Oct 11, 2026)
-❌ L 0-1 vs RAN   (Sep 20, 2026)
 ```
 
 ## Custom title
@@ -37,23 +36,22 @@ The `title:` input replaces the default heading.
 <img src="https://a.espncdn.com/i/teamlogos/soccer/500/256.png" alt="Celtic logo" width="72" align="right" />
 
 ### 🍀 Celtic (CEL)
-2026-27 Scottish Premiership
+First Phase
 🟢 Season in progress
 
-🏅 Standing (2026): 2026-27 Scottish Premiership · 1
+🏅 Standing (2026): First Phase · 1
 
-📅 Next: @ FALK (Nov 1)
+📅 Next: vs STM (Nov 21)
 
-📊 2026 Record: 9W - 1L - 1D  (28 pts)
-   █████████████████████▌░░░
+📊 2026 Record: 10W - 2L - 1D  (31 pts)<br>&nbsp;&nbsp;&nbsp;████████████████████▏░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 1-0 vs KIL   (Nov 8, 2026)
+❌ L 0-2 @ FALK  (Nov 1, 2026)
 🟡 D 2-2 vs DUN   (Oct 28, 2026)
 ✅ W 2-1 @ HIBS  (Oct 25, 2026)
 ✅ W 7-1 vs HOM   (Oct 18, 2026)
-✅ W 2-0 @ MOT   (Oct 11, 2026)
-❌ L 0-1 vs RAN   (Sep 20, 2026)
 ```
 
 ## Compact mode
@@ -64,15 +62,14 @@ The `compact: true` input drops the logo and recent-game details.
 
 
 ### 🍀 Celtic (CEL)
-2026-27 Scottish Premiership
+First Phase
 🟢 Season in progress
 
-🏅 Standing (2026): 2026-27 Scottish Premiership · 1
+🏅 Standing (2026): First Phase · 1
 
-📅 Next: @ FALK (Nov 1)
+📅 Next: vs STM (Nov 21)
 
-📊 2026 Record: 9W - 1L - 1D  (28 pts)
-   █████████████████████▌░░░
+📊 2026 Record: 10W - 2L - 1D  (31 pts)<br>&nbsp;&nbsp;&nbsp;████████████████████▏░░░░
 
 
 

@@ -5,20 +5,19 @@
 Western Conference · Pacific Division
 🟢 Season in progress
 
-🏅 Standing: Western · 4
+🏅 Standing: Western · 1
 
-📅 Next: @ GS (Oct 31)
+📅 Next: @ PHX (Nov 15)
 
-📊 2026-2027 Record: 4W - 1L (80.0%)
-   ████████████████████░░░░░
+📊 2026-2027 Record: 11W - 2L (84.6%)<br>&nbsp;&nbsp;&nbsp;█████████████████████▏░░░
 
 **📅 Recent Games:**
 ```
-✅ W 103-87  @ LAC (Oct 28, 2026)
-❌ L 129-136 vs POR (Oct 27, 2026)
-✅ W 132-123 @ UTAH (Oct 25, 2026)
-✅ W 125-117 vs LAC (Oct 23, 2026)
-✅ W 127-105 vs GS  (Oct 21, 2026)
+✅ W 123-112 @ MIL (Nov 11, 2026)
+✅ W 124-114 @ ATL (Nov 9, 2026)
+✅ W 121-116 @ DET (Nov 8, 2026)
+✅ W 124-118 vs POR (Nov 6, 2026)
+✅ W 116-103 @ SAC (Nov 4, 2026)
 ```
 
 
@@ -26,12 +25,11 @@ Western Conference · Pacific Division
 
 ### ⚾ New York Yankees (NYY)
 American League · AL East
-🟢 Season in progress
+🔴 Off-season · Next season starts March 25, 2027
 
 🏅 Standing: AL East · 2
 
-📊 2026 Record: 93W - 68L (57.8%)
-   ██████████████▍░░░░░░░░░░
+📊 2026 Record: 93W - 68L (57.8%)<br>&nbsp;&nbsp;&nbsp;██████████████▍░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
@@ -49,18 +47,17 @@ American League · AL East
 2026-27 English Premier League
 🟢 Season in progress
 
-🏅 Standing (2026): 2026-27 English Premier League · 2
+🏅 Standing (2026): 2026-27 English Premier League · 1
 
-📅 Next: @ LIV (Nov 1)
+📅 Next: @ NEW (Nov 21)
 
-📊 2026 Record: 7W - 1L - 0D  (21 pts)
-   █████████████████████▉░░░
+📊 2026 Record: 9W - 1L - 0D  (27 pts)<br>&nbsp;&nbsp;&nbsp;██████████████████████▌░░
 
 **📅 Recent Games:**
 ```
+✅ W 1-0 vs HUL   (Nov 7, 2026)
+✅ W 1-0 @ LIV   (Nov 1, 2026)
 ✅ W 2-0 vs EVE   (Oct 24, 2026)
 ✅ W 1-0 @ NFO   (Oct 18, 2026)
 ✅ W 2-1 vs LEE   (Oct 10, 2026)
-❌ L 0-3 @ BHA   (Sep 19, 2026)
-✅ W 2-0 @ SUN   (Sep 12, 2026)
 ```

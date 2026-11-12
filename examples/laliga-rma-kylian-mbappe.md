@@ -6,27 +6,27 @@
 2026-27 LALIGA
 🟢 Season in progress
 
-🏅 Standing (2026): 2026-27 LALIGA · 3
+🏅 Standing (2026): 2026-27 LALIGA · 2
 
-📅 Next: @ RAC (Nov 1)
+📅 Next: vs CEL (Nov 21)
 
-📊 2026 Record: 8W - 2L - 0D  (24 pts)
-   ████████████████████░░░░░
+📊 2026 Record: 10W - 2L - 0D  (30 pts)<br>&nbsp;&nbsp;&nbsp;████████████████████▊░░░░
 
 **📅 Recent Games:**
 ```
+✅ W 3-0 @ VAL   (Nov 7, 2026)
+✅ W 3-0 @ RAC   (Nov 1, 2026)
 ✅ W 2-1 @ BAR   (Oct 25, 2026)
 ✅ W 4-1 vs SEV   (Oct 18, 2026)
 ✅ W 1-0 vs VIL   (Oct 10, 2026)
-❌ L 1-2 @ ATM   (Sep 20, 2026)
-✅ W 3-2 @ ELC   (Sep 15, 2026)
 ```
 
-**👑 Player Spotlight: Kylian Mbappé**
 <img src="https://a.espncdn.com/i/headshots/soccer/players/full/231388.png" alt="Kylian Mbappé headshot" height="72" align="right" />
-10 APP · 11 G · 2 A
+
+**👑 Player Spotlight: Kylian Mbappé**
+12 APP · 13 G · 2 A
 
 **📅 Last Game:**
 ```
-2 G · 0 A vs BAR (Oct 25, 2026)
+1 G · 0 A vs VAL (Nov 7, 2026)
 ```

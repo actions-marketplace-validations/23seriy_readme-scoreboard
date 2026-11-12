@@ -4,12 +4,11 @@
 
 ### 🐻 Arizona Wildcats (ARIZ)
 Big 12 Conference Conference
-🔴 Off-season · Next season starts November 2, 2026
+🟢 Season in progress
 
 🏅 Standing: Big 12 Conference · 1
 
-📊 2025-2026 Record: 36W - 3L (92.3%)
-   ███████████████████████░░
+📊 2025-2026 Record: 36W - 3L (92.3%)<br>&nbsp;&nbsp;&nbsp;███████████████████████░░
 
 **📅 Recent Games:**
 ```
@@ -20,11 +19,12 @@ Big 12 Conference Conference
 ✅ W  73-57  vs ISU (Mar 2, 2026)
 ```
 
-**🐻 Player Spotlight: Motiejus Krivas**
 <img src="https://a.espncdn.com/i/headshots/mens-college-basketball/players/full/5174954.png" alt="Motiejus Krivas headshot" height="72" align="right" />
-10.6 PPG · 7.7 RPG · 1.0 APG
+
+**🐻 Player Spotlight: Motiejus Krivas**
+23.0 PPG · 7.5 RPG · 1.0 APG
 
 **📅 Last Game:**
 ```
-11 PTS · 6 REB · 1 AST · 28 MIN vs Michigan Wolverines (Apr 4, 2026)
+16 PTS · 7 REB · 1 AST · 26 MIN vs Northern Arizona Lumberjacks (Nov 10, 2026)
 ```

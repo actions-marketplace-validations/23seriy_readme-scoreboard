@@ -9,6 +9,6 @@ WTA · World Ranking
 
 **📅 Last Match:**
 ```
-❌ L vs Ann Li (Oct 14, 2026) 6-3, 4-6, 6-7
+❌ L vs Mirra Andreeva (Nov 11, 2026) 4-6, 0-6
 ```
 

@@ -4,12 +4,11 @@
 
 ### 🐦 Toronto Blue Jays (TOR)
 American League · AL East
-🟢 Season in progress
+🔴 Off-season · Next season starts March 25, 2027
 
 🏅 Standing: AL East · 5
 
-📊 2026 Record: 79W - 83L (48.8%)
-   ████████████▏░░░░░░░░░░░░
+📊 2026 Record: 79W - 83L (48.8%)<br>&nbsp;&nbsp;&nbsp;████████████▏░░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
@@ -20,8 +19,9 @@ American League · AL East
 ❌ L  2-4  @ BAL (Sep 23, 2026)
 ```
 
-**🐦 Player Spotlight: Vladimir Guerrero Jr.**
 <img src="https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/665489/headshot/67/current" alt="Vladimir Guerrero Jr. headshot" height="72" align="right" />
+
+**🐦 Player Spotlight: Vladimir Guerrero Jr.**
 .260 AVG · 9 HR · 57 RBI
 
 **📅 Last Game:**

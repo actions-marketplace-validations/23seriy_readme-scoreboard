@@ -4,12 +4,11 @@
 
 ### 🏀 UConn Huskies (CONN)
 Big East Conference Conference
-🔴 Off-season · Next season starts November 2, 2026
+🟢 Season in progress
 
 🏅 Standing: Big East Conference · 1
 
-📊 2025-2026 Record: 38W - 1L (97.4%)
-   ████████████████████████▎
+📊 2025-2026 Record: 38W - 1L (97.4%)<br>&nbsp;&nbsp;&nbsp;████████████████████████▎
 
 **📅 Recent Games:**
 ```
@@ -20,11 +19,12 @@ Big East Conference Conference
 ✅ W  90-52  vs UTSA (Mar 21, 2026)
 ```
 
-**🏀 Player Spotlight: KK Arnold**
 <img src="https://a.espncdn.com/i/headshots/womens-college-basketball/players/full/5174491.png" alt="KK Arnold headshot" height="72" align="right" />
-7.8 PPG · 2.3 RPG · 4.8 APG
+
+**🏀 Player Spotlight: KK Arnold**
+12.5 PPG · 2.5 RPG · 3.5 APG
 
 **📅 Last Game:**
 ```
-2 PTS · 0 REB · 4 AST · 27 MIN vs South Carolina Gamecocks (Apr 3, 2026)
+14 PTS · 2 REB · 5 AST · 32 MIN vs Iowa Hawkeyes (Nov 8, 2026)
 ```

@@ -12,20 +12,19 @@ Team: **ATL** · Category: Basketball · Data source: ESPN public API
 Eastern Conference · Southeast Division
 🟢 Season in progress
 
-🏅 Standing: Eastern · 13
+🏅 Standing: Eastern · 5
 
-📅 Next: vs CLE (Oct 30)
+📅 Next: @ CHI (Nov 14)
 
-📊 2026-2027 Record: 2W - 3L (40.0%)
-   ██████████░░░░░░░░░░░░░░░
+📊 2026-2027 Record: 7W - 5L (58.3%)<br>&nbsp;&nbsp;&nbsp;██████████████▌░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-❌ L 117-129 vs MIA (Oct 28, 2026)
-❌ L 110-120 @ HOU (Oct 26, 2026)
-❌ L 114-121 vs HOU (Oct 24, 2026)
-✅ W 128-81  @ CHA (Oct 23, 2026)
-✅ W 132-125 @ ORL (Oct 21, 2026)
+❌ L 114-124 vs LAL (Nov 9, 2026)
+✅ W 124-121 vs BKN (Nov 7, 2026)
+✅ W 139-132 vs WSH (Nov 6, 2026)
+✅ W 120-105 @ WSH (Nov 4, 2026)
+✅ W 108-104 @ IND (Nov 2, 2026)
 ```
 
 ## Custom title
@@ -40,20 +39,19 @@ The `title:` input replaces the default heading.
 Eastern Conference · Southeast Division
 🟢 Season in progress
 
-🏅 Standing: Eastern · 13
+🏅 Standing: Eastern · 5
 
-📅 Next: vs CLE (Oct 30)
+📅 Next: @ CHI (Nov 14)
 
-📊 2026-2027 Record: 2W - 3L (40.0%)
-   ██████████░░░░░░░░░░░░░░░
+📊 2026-2027 Record: 7W - 5L (58.3%)<br>&nbsp;&nbsp;&nbsp;██████████████▌░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-❌ L 117-129 vs MIA (Oct 28, 2026)
-❌ L 110-120 @ HOU (Oct 26, 2026)
-❌ L 114-121 vs HOU (Oct 24, 2026)
-✅ W 128-81  @ CHA (Oct 23, 2026)
-✅ W 132-125 @ ORL (Oct 21, 2026)
+❌ L 114-124 vs LAL (Nov 9, 2026)
+✅ W 124-121 vs BKN (Nov 7, 2026)
+✅ W 139-132 vs WSH (Nov 6, 2026)
+✅ W 120-105 @ WSH (Nov 4, 2026)
+✅ W 108-104 @ IND (Nov 2, 2026)
 ```
 
 ## Compact mode
@@ -67,12 +65,11 @@ The `compact: true` input drops the logo and recent-game details.
 Eastern Conference · Southeast Division
 🟢 Season in progress
 
-🏅 Standing: Eastern · 13
+🏅 Standing: Eastern · 5
 
-📅 Next: vs CLE (Oct 30)
+📅 Next: @ CHI (Nov 14)
 
-📊 2026-2027 Record: 2W - 3L (40.0%)
-   ██████████░░░░░░░░░░░░░░░
+📊 2026-2027 Record: 7W - 5L (58.3%)<br>&nbsp;&nbsp;&nbsp;██████████████▌░░░░░░░░░░
 
 
 

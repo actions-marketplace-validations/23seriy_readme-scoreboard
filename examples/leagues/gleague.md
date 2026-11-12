@@ -9,10 +9,12 @@ Team: **AUS** · Category: Basketball · Data source: ESPN public API
 <img src="https://a.espncdn.com/i/teamlogos/nba-development/500/aus.png" alt="Austin Spurs logo" width="72" align="right" />
 
 ### 🐐 Austin Spurs (AUS)
- Conference
+South Division Conference
 🔴 Off-season · Next season starts December 19, 2026
 
 📅 Next: vs STO (Dec 27)
+
+📊 2026-2027 Record: 2W - 0L (100.0%)<br>&nbsp;&nbsp;&nbsp;█████████████████████████
 
 📅 No recent games found
 
@@ -25,10 +27,12 @@ The `title:` input replaces the default heading.
 <img src="https://a.espncdn.com/i/teamlogos/nba-development/500/aus.png" alt="Austin Spurs logo" width="72" align="right" />
 
 ### 🐐 Austin Spurs (AUS)
- Conference
+South Division Conference
 🔴 Off-season · Next season starts December 19, 2026
 
 📅 Next: vs STO (Dec 27)
+
+📊 2026-2027 Record: 2W - 0L (100.0%)<br>&nbsp;&nbsp;&nbsp;█████████████████████████
 
 📅 No recent games found
 
@@ -40,10 +44,12 @@ The `compact: true` input drops the logo and recent-game details.
 
 
 ### 🐐 Austin Spurs (AUS)
- Conference
+South Division Conference
 🔴 Off-season · Next season starts December 19, 2026
 
 📅 Next: vs STO (Dec 27)
+
+📊 2026-2027 Record: 2W - 0L (100.0%)<br>&nbsp;&nbsp;&nbsp;█████████████████████████
 
 📅 No recent games found
 

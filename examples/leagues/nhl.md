@@ -12,20 +12,19 @@ Team: **ANA** · Category: Hockey · Data source: official league API
 Western Conference · Pacific Division
 🟢 Season in progress
 
-🏅 Standing (2026-27): Pacific · 5
+🏅 Standing (2026-27): Pacific · 3
 
-📅 Next: vs BUF (Oct 30)
+📅 Next: vs NSH (Nov 12)
 
-📊 2025-2026 Record: 5W - 7L (41.7%)
-   ██████████▍░░░░░░░░░░░░░░
+📊 2025-2026 Record: 10W - 8L (55.6%)<br>&nbsp;&nbsp;&nbsp;█████████████▉░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-❌ L   5-6   vs VAN (Oct 27, 2026)
-✅ W   5-4   @ PHI (Oct 24, 2026)
-❌ L   1-4   @ NJD (Oct 22, 2026)
-❌ L   2-3   @ NYI (Oct 20, 2026)
-❌ L   2-5   @ NYR (Oct 19, 2026)
+✅ W   5-2   vs PIT (Nov 8, 2026)
+✅ W   5-3   @ CGY (Nov 6, 2026)
+✅ W   5-4   @ EDM (Nov 5, 2026)
+✅ W   5-4   @ VAN (Nov 3, 2026)
+✅ W   6-3   vs OTT (Nov 1, 2026)
 ```
 
 ## Custom title
@@ -40,20 +39,19 @@ The `title:` input replaces the default heading.
 Western Conference · Pacific Division
 🟢 Season in progress
 
-🏅 Standing (2026-27): Pacific · 5
+🏅 Standing (2026-27): Pacific · 3
 
-📅 Next: vs BUF (Oct 30)
+📅 Next: vs NSH (Nov 12)
 
-📊 2025-2026 Record: 5W - 7L (41.7%)
-   ██████████▍░░░░░░░░░░░░░░
+📊 2025-2026 Record: 10W - 8L (55.6%)<br>&nbsp;&nbsp;&nbsp;█████████████▉░░░░░░░░░░░
 
 **📅 Recent Games:**
 ```
-❌ L   5-6   vs VAN (Oct 27, 2026)
-✅ W   5-4   @ PHI (Oct 24, 2026)
-❌ L   1-4   @ NJD (Oct 22, 2026)
-❌ L   2-3   @ NYI (Oct 20, 2026)
-❌ L   2-5   @ NYR (Oct 19, 2026)
+✅ W   5-2   vs PIT (Nov 8, 2026)
+✅ W   5-3   @ CGY (Nov 6, 2026)
+✅ W   5-4   @ EDM (Nov 5, 2026)
+✅ W   5-4   @ VAN (Nov 3, 2026)
+✅ W   6-3   vs OTT (Nov 1, 2026)
 ```
 
 ## Compact mode
@@ -67,12 +65,11 @@ The `compact: true` input drops the logo and recent-game details.
 Western Conference · Pacific Division
 🟢 Season in progress
 
-🏅 Standing (2026-27): Pacific · 5
+🏅 Standing (2026-27): Pacific · 3
 
-📅 Next: vs BUF (Oct 30)
+📅 Next: vs NSH (Nov 12)
 
-📊 2025-2026 Record: 5W - 7L (41.7%)
-   ██████████▍░░░░░░░░░░░░░░
+📊 2025-2026 Record: 10W - 8L (55.6%)<br>&nbsp;&nbsp;&nbsp;█████████████▉░░░░░░░░░░░
 
 
 

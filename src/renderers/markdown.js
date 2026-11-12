@@ -3,73 +3,11 @@
 const { LEAGUES: LEAGUE_REGISTRY } = require("../config/leagues");
 const { utcParts } = require("../clock");
 
-const SEASON_WINDOWS = {
-  nba: { start: [10, 1], end: [6, 30], nextLabel: "October" },
-  mlb: { start: [3, 20], end: [11, 10], nextLabel: "late March" },
-  nfl: { start: [9, 1], end: [2, 15], nextLabel: "September" },
-  nhl: { start: [10, 1], end: [6, 30], nextLabel: "October" },
-  mls: { start: [2, 20], end: [12, 10], nextLabel: "late February" },
-  epl: { start: [8, 10], end: [5, 25], nextLabel: "August" },
-  laliga: { start: [8, 15], end: [5, 25], nextLabel: "August" },
-  bundesliga: { start: [8, 28], end: [5, 20], nextLabel: "August" },
-  seriea: { start: [8, 22], end: [5, 25], nextLabel: "August" },
-  ligue1: { start: [8, 23], end: [5, 20], nextLabel: "August" },
-  primeiraliga: { start: [8, 9], end: [5, 20], nextLabel: "August" },
-  eredivisie: { start: [8, 7], end: [5, 20], nextLabel: "August" },
-  wnba: { start: [5, 1], end: [10, 20], nextLabel: "May" },
-  gleague: { start: [11, 1], end: [4, 15], nextLabel: "November" },
-  // Liga MX plays two tournaments a year — Apertura (Jul–Dec) and Clausura
-  // (Jan–May) — so the only real gap is the June break.
-  ligamx: { start: [7, 16], end: [5, 31], nextLabel: "July" },
-  brasileirao: { start: [1, 28], end: [12, 2], nextLabel: "January" },
-  nwsl: { start: [3, 13], end: [11, 1], nextLabel: "March" },
-  saudipro: { start: [8, 13], end: [5, 29], nextLabel: "August" },
-  j1: { start: [8, 7], end: [6, 6], nextLabel: "August" },
-  scottish: { start: [7, 31], end: [5, 16], nextLabel: "July" },
-  belgian: { start: [8, 7], end: [5, 23], nextLabel: "August" },
-  ucl: { start: [7, 1], end: [6, 30], nextLabel: "July" },
-  uel: { start: [7, 1], end: [6, 30], nextLabel: "July" },
-  ncaab: { start: [11, 1], end: [4, 15], nextLabel: "November" },
-  ncaaw: { start: [11, 1], end: [4, 15], nextLabel: "November" },
-  ncaaf: { start: [8, 24], end: [1, 20], nextLabel: "August" },
-  ncaa_hockey: { start: [10, 1], end: [4, 15], nextLabel: "October" },
-};
-
-// League logos on ESPN's free CDN. Several marks are single-colour on
-// transparent (the Premier League wordmark is dark purple, the MLS crest has a
-// white half), so each needs both variants to stay readable in either theme.
-const LEAGUE_LOGOS = {
-  nba: { light: "https://a.espncdn.com/i/teamlogos/leagues/500/nba.png", dark: "https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba.png", alt: "NBA" },
-  mlb: { light: "https://a.espncdn.com/i/teamlogos/leagues/500/mlb.png", dark: "https://a.espncdn.com/i/teamlogos/leagues/500-dark/mlb.png", alt: "MLB" },
-  nfl: { light: "https://a.espncdn.com/i/teamlogos/leagues/500/nfl.png", dark: "https://a.espncdn.com/i/teamlogos/leagues/500-dark/nfl.png", alt: "NFL" },
-  nhl: { light: "https://a.espncdn.com/i/teamlogos/leagues/500/nhl.png", dark: "https://a.espncdn.com/i/teamlogos/leagues/500-dark/nhl.png", alt: "NHL" },
-  mls: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/19.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/19.png", alt: "MLS" },
-  epl: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/23.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/23.png", alt: "Premier League" },
-  laliga: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/15.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/15.png", alt: "La Liga" },
-  bundesliga: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/10.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/10.png", alt: "Bundesliga" },
-  seriea: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/12.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/12.png", alt: "Serie A" },
-  ligue1: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/9.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/9.png", alt: "Ligue 1" },
-  primeiraliga: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/14.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/14.png", alt: "Primeira Liga" },
-  eredivisie: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/11.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/11.png", alt: "Eredivisie" },
-  wnba: { light: "https://a.espncdn.com/i/teamlogos/leagues/500/wnba.png", dark: "https://a.espncdn.com/i/teamlogos/leagues/500-dark/wnba.png", alt: "WNBA" },
-  gleague: { light: "https://a.espncdn.com/i/teamlogos/leagues/500/nba_gleague.png", dark: "https://a.espncdn.com/i/teamlogos/leagues/500-dark/nba_gleague.png", alt: "NBA G League" },
-  ligamx: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/22.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/22.png", alt: "Liga MX" },
-  brasileirao: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/85.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/85.png", alt: "Brasileirão" },
-  nwsl: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/2323.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2323.png", alt: "NWSL" },
-  saudipro: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/2488.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2488.png", alt: "Saudi Pro League" },
-  j1: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/2199.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2199.png", alt: "J1 League" },
-  scottish: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/45.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/45.png", alt: "Scottish Premiership" },
-  belgian: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/6.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/6.png", alt: "Belgian Pro League" },
-  ucl: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/2.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2.png", alt: "UEFA Champions League" },
-  uel: { light: "https://a.espncdn.com/i/leaguelogos/soccer/500/2310.png", dark: "https://a.espncdn.com/i/leaguelogos/soccer/500-dark/2310.png", alt: "UEFA Europa League" },
-  ncaab: { light: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png", dark: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png", alt: "NCAA Men's Basketball" },
-  ncaaw: { light: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png", dark: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-basketball.png", alt: "NCAA Women's Basketball" },
-  ncaaf: { light: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-football-college.png", dark: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-football-college.png", alt: "College Football" },
-  ncaa_hockey: { light: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png", dark: "https://a.espncdn.com/redesign/assets/img/icons/ESPN-icon-hockey.png", alt: "NCAA Men's Ice Hockey" },
-};
-
-// The registry is authoritative; these assignments preserve the renderer's
-// existing lookup shape while keeping all league metadata in one place.
+// The league registry is the single source of truth for season windows, logos
+// and renderer families. Both maps are derived from it here so no hand-written
+// second copy can drift out of sync with it.
+const SEASON_WINDOWS = {};
+const LEAGUE_LOGOS = {};
 LEAGUE_REGISTRY.forEach((entry) => {
   // The dated window (`fallback`) travels with the month/day window because the
   // status line prefers it — see seasonStatusLine.
@@ -77,18 +15,22 @@ LEAGUE_REGISTRY.forEach((entry) => {
   LEAGUE_LOGOS[entry.key] = { ...entry.logo, alt: entry.name };
 });
 
+
 /**
  * Section heading rendered inside the marker block, so the whole section is
  * generated rather than half-authored by hand. Placing it inside the markers
  * means it survives every run — a heading written above them would be outside
  * the tool's reach, and one written inside by hand would be overwritten.
  */
-function headingLines(sport, title) {
+function headingLines(sport, title, link) {
   const logo = LEAGUE_LOGOS[sport];
   if (!logo) return [];
   const mark = `<picture><source media="(prefers-color-scheme: dark)" srcset="${logo.dark}"><img src="${logo.light}" alt="${logo.alt}" height="28" align="top"></picture> `;
   const league = LEAGUE_REGISTRY.find((entry) => entry.key === sport);
-  const endpoint = league?.endpointOverride?.match(/\((https:\/\/[^)]+)\)/)?.[1]
+  // An explicit `link` wins over the league's default endpoint, so a user can
+  // point the heading at their own page instead of the raw ESPN API URL.
+  const endpoint = link
+    || league?.endpointOverride?.match(/\((https:\/\/[^)]+)\)/)?.[1]
     || (league?.endpoint ? `https://site.api.espn.com/apis/site/v2/sports/${league.endpoint}/teams` : null);
   // Individual sports (tennis, F1) track players rather than teams, so the
   // default heading reads "Player" instead of "Team". A league may name the
@@ -145,9 +87,14 @@ function seasonStatusLine(sport) {
   if (dated && window.nextStartYear) {
     nextStart = `${window.nextStartYear}-${dated.slice(5)}`;
   } else if (dated) {
-    // Already behind us this year? The next edition starts on the same day next
-    // year, which is the arithmetic the month-only version kept getting wrong.
-    nextStart = dated > today ? dated : `${Number(dated.slice(0, 4)) + 1}-${dated.slice(5)}`;
+    // Roll the fallback month/day forward from the current UTC year. The
+    // fallback is a fixed 2026 date, so adding one year to it only ever
+    // yielded 2027: from the 2027-28 off-season onward the line named a start
+    // date already past (an MLS board in Dec 2027 printed February 21, 2027).
+    const monthDay = dated.slice(5);
+    let candidate = `${utcYear}-${monthDay}`;
+    if (candidate < today) candidate = `${utcYear + 1}-${monthDay}`;
+    nextStart = candidate;
   } else if (sm && sd) {
     const { month: m, day: d } = utcParts();
     const startPassed = m > sm || (m === sm && d > sd);
@@ -198,11 +145,7 @@ function extraTeamLines(data) {
     // generated in UTC elsewhere in this file, so a soccer board stays
     // internally consistent.
     const when = nextGame.date
-      ? formatDate(nextGame.date, {
-          month: "short",
-          day: "numeric",
-          timeZone: nextGame.timeZone || "UTC",
-        })
+      ? formatNextGameDate(nextGame.date, nextGame.timeZone || "UTC")
       : "next";
     const place = nextGame.isHome !== false ? "vs" : "@";
     lines.push(`📅 Next: ${place} ${nextGame.opponent} (${when})`);
@@ -220,11 +163,17 @@ function extraTeamLines(data) {
  * back to the plain bold text so nothing changes for those leagues.
  */
 function pushSpotlightHeading(lines, emoji, spotlight) {
-  lines.push(`**${emoji} Player Spotlight: ${spotlight.name}**`);
+  // Emit the headshot FIRST, followed by a blank line, exactly like the team
+  // logo beside the team heading. Emitting it after the heading put the float
+  // on the heading's second wrapped line, so the photo sat beside the stats
+  // (or the next section) instead of beside the name it belongs to.
   pushSpotlightHeadshot(lines, spotlight);
+  if (spotlight.headshotUrl) lines.push("");
+  lines.push(`**${emoji} Player Spotlight: ${spotlight.name}**`);
 }
 
-// The image is emitted on its own line directly after the heading. It is
+// The image is emitted on its own line, separated from the heading it
+// accompanies by a blank line so the float anchors to the heading. It is
 // deliberately not emitted in compact mode (compactMarkdown strips every
 // `<img>` line anyway), so compact boards stay text-only.
 //
@@ -335,7 +284,7 @@ function formatGameResult(game, teamId, sport) {
 function renderNba(data, sport = "nba", title, compact = false) {
   const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
-  lines.push(...headingLines(sport, title));
+  lines.push(...headingLines(sport, title, data.link));
   lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
   lines.push("");
 
@@ -363,9 +312,8 @@ function renderNba(data, sport = "nba", title, compact = false) {
       ? `${record.season}`
       : `${record.season - 1}-${record.season}`;
     lines.push(
-      `📊 ${seasonLabel} Record: ${record.wins}W - ${record.losses}L (${winPct}%)`
+      `📊 ${seasonLabel} Record: ${record.wins}W - ${record.losses}L (${winPct}%)<br>&nbsp;&nbsp;&nbsp;${generateBarChart(parseFloat(winPct), 25)}`
     );
-    lines.push(`   ${generateBarChart(parseFloat(winPct), 25)}`);
     lines.push("");
   }
 
@@ -402,7 +350,11 @@ function renderNba(data, sport = "nba", title, compact = false) {
           detail += ` vs ${gopp}${when ? ` (${when})` : ""}`;
         }
         lines.push("");
-        lines.push("**📅 Last Game:**");
+        // ESPN indexes a player's gamelog some time after the game ends, so it
+        // can lag the team's schedule by a game. The newest known game is still
+        // worth showing — dropping it left a hole in the board — but the label
+        // must not claim it is the LAST game when it demonstrably is not.
+        lines.push(spotlight.lastGame.stale ? "**📅 Previous Game:**" : "**📅 Last Game:**");
         lines.push("```");
         lines.push(detail);
         lines.push("```");
@@ -428,8 +380,9 @@ function renderNflSpotlight(lines, spotlight, emoji, compact) {
     }
     return;
   }
-  lines.push(`**${emoji} Player Spotlight: ${spotlight.name}**`);
   pushSpotlightHeadshot(lines, spotlight);
+  if (spotlight.headshotUrl) lines.push("");
+  lines.push(`**${emoji} Player Spotlight: ${spotlight.name}**`);
   if (position === "QB") {
     lines.push(`${stat(season.passingYards)} PASS YDS · ${stat(season.passingTouchdowns)} PASS TD · ${stat(season.rushingYards)} RUSH YDS`);
   } else if (position === "RB") {
@@ -519,7 +472,7 @@ function renderMlb(data, title) {
   const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
-  lines.push(...headingLines("mlb", title));
+  lines.push(...headingLines("mlb", title, data.link));
   lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
   lines.push("");
 
@@ -536,9 +489,8 @@ function renderMlb(data, title) {
 
   if (totalGames > 0) {
     lines.push(
-      `📊 ${record.season} Record: ${record.wins}W - ${record.losses}L (${winPct}%)`
+      `📊 ${record.season} Record: ${record.wins}W - ${record.losses}L (${winPct}%)<br>&nbsp;&nbsp;&nbsp;${generateBarChart(parseFloat(winPct), 25)}`
     );
-    lines.push(`   ${generateBarChart(parseFloat(winPct), 25)}`);
     lines.push("");
   }
 
@@ -609,6 +561,27 @@ function formatDate(value, options) {
   return new Date(raw).toLocaleDateString("en-US", options);
 }
 
+// A next fixture prints as "Nov 7" — but a December board announcing
+// "vs POR (Jan 2)" reads as a past game, and every league whose season crosses
+// the new year hits that window. The year is therefore added only when the
+// fixture is not in the current year, which is what keeps every board outside
+// that window byte-identical.
+function formatNextGameDate(value, timeZone) {
+  const raw = String(value);
+  // A bare calendar date carries no zone, and formatDate renders it in UTC.
+  // Comparing years in the sport's zone instead would disagree on New Year's Day.
+  const zone = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? "UTC" : timeZone;
+  const date = new Date(/^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T00:00:00Z` : raw);
+  if (Number.isNaN(date.getTime())) {
+    return formatDate(value, { month: "short", day: "numeric", timeZone: zone });
+  }
+  const year = (moment) =>
+    new Intl.DateTimeFormat("en-US", { year: "numeric", timeZone: zone }).format(moment);
+  const options = { month: "short", day: "numeric", timeZone: zone };
+  if (year(date) !== year(new Date())) options.year = "numeric";
+  return formatDate(value, options);
+}
+
 function formatCalendarDate(value, sport) {
   const options = {
     month: "short",
@@ -638,7 +611,7 @@ function renderNfl(data, sport = "nfl", title, compact = false) {
   const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
-  lines.push(...headingLines(sport, title));
+  lines.push(...headingLines(sport, title, data.link));
   lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
   lines.push("");
 
@@ -663,10 +636,9 @@ function renderNfl(data, sport = "nfl", title, compact = false) {
   if (totalGames > 0) {
     lines.push(
       lossesKnown
-        ? `📊 ${record.season} Season: ${record.wins}W - ${record.losses}L (${winPct}%)`
+        ? `📊 ${record.season} Season: ${record.wins}W - ${record.losses}L (${winPct}%)<br>&nbsp;&nbsp;&nbsp;${generateBarChart(parseFloat(winPct), 25)}`
         : `📊 ${record.season} Season: ${record.wins}W`
     );
-    if (winPct !== null) lines.push(`   ${generateBarChart(parseFloat(winPct), 25)}`);
     lines.push("");
   }
 
@@ -693,7 +665,7 @@ function renderNhl(data, sport = "nhl", title, compact = false) {
   const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
-  lines.push(...headingLines(sport, title));
+  lines.push(...headingLines(sport, title, data.link));
   lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
   lines.push("");
 
@@ -712,9 +684,8 @@ function renderNhl(data, sport = "nhl", title, compact = false) {
 
   if (record.wins + record.losses > 0) {
     lines.push(
-      `📊 ${record.season}-${record.season + 1} Record: ${record.wins}W - ${record.losses}L (${winPct}%)`
+      `📊 ${record.season}-${record.season + 1} Record: ${record.wins}W - ${record.losses}L (${winPct}%)<br>&nbsp;&nbsp;&nbsp;${generateBarChart(parseFloat(winPct), 25)}`
     );
-    lines.push(`   ${generateBarChart(parseFloat(winPct), 25)}`);
     lines.push("");
   }
 
@@ -753,7 +724,7 @@ function renderSoccer(data, sport = "mls", fallbackLabel = "MLS", title, compact
   const { team, recentGames, record, emoji, logoUrl, spotlight } = data;
   const lines = [];
 
-  lines.push(...headingLines(sport, title));
+  lines.push(...headingLines(sport, title, data.link));
   lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
   lines.push("");
 
@@ -775,9 +746,8 @@ function renderSoccer(data, sport = "mls", fallbackLabel = "MLS", title, compact
   const totalGames = record.wins + record.losses + record.draws;
   const pts = record.wins * 3 + record.draws;
   if (totalGames > 0) {
-    lines.push(`📊 ${record.season} Record: ${record.wins}W - ${record.losses}L - ${record.draws}D  (${pts} pts)`);
     const winPct = ((record.wins + record.draws * 0.5) / totalGames) * 100;
-    lines.push(`   ${generateBarChart(winPct, 25)}`);
+    lines.push(`📊 ${record.season} Record: ${record.wins}W - ${record.losses}L - ${record.draws}D  (${pts} pts)<br>&nbsp;&nbsp;&nbsp;${generateBarChart(winPct, 25)}`);
     lines.push("");
   }
 
@@ -839,7 +809,7 @@ function renderF1(data, title) {
   const { team, record, emoji, logoUrl, standing } = data;
   const lines = [];
 
-  lines.push(...headingLines("f1", title));
+  lines.push(...headingLines("f1", title, data.link));
   if (logoUrl) {
     lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
     lines.push("");
@@ -870,7 +840,7 @@ function renderDriverStanding(sport, label, data, title) {
   const { team, record, emoji, standing } = data;
   const lines = [];
 
-  lines.push(...headingLines(sport, title));
+  lines.push(...headingLines(sport, title, data.link));
   lines.push(`### ${emoji} ${team.full_name} (${team.abbreviation})`);
   lines.push(`${label} · Driver Championship`);
   lines.push(seasonStatusLine(sport));
@@ -896,7 +866,7 @@ function renderUfc(data, title) {
   const { team, record, emoji, logoUrl, recentGames, nextGame } = data;
   const lines = [];
 
-  lines.push(...headingLines("ufc", title));
+  lines.push(...headingLines("ufc", title, data.link));
   if (logoUrl) {
     lines.push(`<img src="${logoUrl}" alt="UFC logo" width="72" align="right" />`);
     lines.push("");
@@ -910,8 +880,7 @@ function renderUfc(data, title) {
   const bouts = record.wins + record.losses + record.draws;
   if (bouts > 0) {
     const draws = record.draws ? ` - ${record.draws}D` : "";
-    lines.push(`🥊 Career record: ${record.wins}W - ${record.losses}L${draws}`);
-    lines.push(`   ${generateBarChart((record.wins / bouts) * 100, 25)}`);
+    lines.push(`🥊 Career record: ${record.wins}W - ${record.losses}L${draws}<br>&nbsp;&nbsp;&nbsp;${generateBarChart((record.wins / bouts) * 100, 25)}`);
     lines.push("");
   }
 
@@ -958,7 +927,7 @@ function renderTennisPlayer(sport, tourLabel, data, title) {
   const { team, emoji, logoUrl, standing, previousRank, trend, lastMatch } = data;
   const lines = [];
 
-  lines.push(...headingLines(sport, title));
+  lines.push(...headingLines(sport, title, data.link));
   if (logoUrl) {
     lines.push(`<img src="${logoUrl}" alt="${team.full_name} logo" width="72" align="right" />`);
     lines.push("");
@@ -1025,99 +994,34 @@ function renderWta(data, title) {
   return renderTennisPlayer("wta", "WTA", data, title);
 }
 
+// Map each registry renderer family to the function that renders it. The
+// `sport` argument is the registry key (e.g. "epl"), so one renderSoccer entry
+// covers every soccer league. Labels come from the registry's `name`, not from
+// a second hand-written list that can drift out of sync.
+const RENDERER_FNS = {
+  nba: (data, sport, title, compact) => renderNba(data, sport, title, compact),
+  mlb: (data, sport, title) => renderMlb(data, title),
+  nfl: (data, sport, title, compact) => renderNfl(data, sport, title, compact),
+  nhl: (data, sport, title, compact) => renderNhl(data, sport, title, compact),
+  soccer: (data, sport, title, compact, league) => renderSoccer(data, sport, league.name, title, compact),
+  f1: (data, sport, title) => renderF1(data, title),
+  atp: (data, sport, title) => renderAtp(data, title),
+  wta: (data, sport, title) => renderWta(data, title),
+  ufc: (data, sport, title) => renderUfc(data, title),
+  nascar: (data, sport, title, compact, league) => renderDriverStanding(sport, league.name, data, title),
+  indycar: (data, sport, title, compact, league) => renderDriverStanding(sport, league.name, data, title),
+};
+
 function render(sport, data, options = {}) {
   const title = options.title;
   const compact = options.compact || false;
-  switch (sport) {
-    case "nba":
-      return renderNba(data, "nba", title, compact);
-    case "wnba":
-      return renderNba(data, "wnba", title, compact);
-    case "gleague":
-      return renderNba(data, "gleague", title, compact);
-    case "ncaab":
-      return renderNba(data, "ncaab", title, compact);
-    case "ncaaw":
-      return renderNba(data, "ncaaw", title, compact);
-    case "mlb":
-      return renderMlb(data, title);
-    case "nfl":
-      return renderNfl(data, "nfl", title, compact);
-    case "ncaaf":
-      return renderNfl(data, "ncaaf", title, compact);
-    case "nhl":
-      return renderNhl(data, "nhl", title, compact);
-    case "ncaa_hockey":
-      return renderNhl(data, "ncaa_hockey", title, compact);
-    case "mls":
-      return renderSoccer(data, "mls", "MLS", title, compact);
-    case "epl":
-      return renderSoccer(data, "epl", "Premier League", title, compact);
-    case "laliga":
-      return renderSoccer(data, "laliga", "La Liga", title, compact);
-    case "bundesliga":
-      return renderSoccer(data, "bundesliga", "Bundesliga", title, compact);
-    case "seriea":
-      return renderSoccer(data, "seriea", "Serie A", title, compact);
-    case "ligue1":
-      return renderSoccer(data, "ligue1", "Ligue 1", title, compact);
-    case "primeiraliga":
-      return renderSoccer(data, "primeiraliga", "Primeira Liga", title, compact);
-    case "eredivisie":
-      return renderSoccer(data, "eredivisie", "Eredivisie", title, compact);
-    case "ligamx":
-      return renderSoccer(data, "ligamx", "Liga MX", title, compact);
-    case "brasileirao":
-      return renderSoccer(data, "brasileirao", "Série A", title, compact);
-    case "nwsl":
-      return renderSoccer(data, "nwsl", "NWSL", title, compact);
-    case "saudipro":
-      return renderSoccer(data, "saudipro", "Saudi Pro League", title, compact);
-    case "j1":
-      return renderSoccer(data, "j1", "J1 League", title, compact);
-    case "scottish":
-      return renderSoccer(data, "scottish", "Scottish Premiership", title, compact);
-    case "belgian":
-      return renderSoccer(data, "belgian", "Belgian Pro League", title, compact);
-    case "ucl":
-      return renderSoccer(data, "ucl", "UEFA Champions League", title, compact);
-    case "uel":
-      return renderSoccer(data, "uel", "UEFA Europa League", title, compact);
-    case "worldcup":
-      return renderSoccer(data, "worldcup", "FIFA World Cup", title, compact);
-    case "ufc":
-      return renderUfc(data, title);
-    case "argentina":
-      return renderSoccer(data, "argentina", "Argentine Primera", title, compact);
-    case "aleague":
-      return renderSoccer(data, "aleague", "A-League Men", title, compact);
-    case "isl":
-      return renderSoccer(data, "isl", "Indian Super League", title, compact);
-    case "csl":
-      return renderSoccer(data, "csl", "Chinese Super League", title, compact);
-    case "greek":
-      return renderSoccer(data, "greek", "Super League", title, compact);
-    case "austria":
-      return renderSoccer(data, "austria", "Bundesliga", title, compact);
-    case "denmark":
-      return renderSoccer(data, "denmark", "Superliga", title, compact);
-    case "norway":
-      return renderSoccer(data, "norway", "Eliteserien", title, compact);
-    case "sweden":
-      return renderSoccer(data, "sweden", "Allsvenskan", title, compact);
-    case "f1":
-      return renderF1(data, title);
-    case "atp":
-      return renderAtp(data, title);
-    case "wta":
-      return renderWta(data, title);
-    case "nascar":
-      return renderDriverStanding("nascar", "NASCAR Cup Series", data, title);
-    case "indycar":
-      return renderDriverStanding("indycar", "IndyCar Series", data, title);
-    default:
-      throw new Error(`Unsupported sport: ${sport}. Available: nba, mlb, nfl, nhl, mls, epl, laliga, bundesliga, seriea, ligue1, primeiraliga, eredivisie, wnba, ligamx, brasileirao, nwsl, saudipro, j1, scottish, belgian, ucl, uel, gleague, argentina, aleague, isl, csl, greek, austria, denmark, norway, sweden, f1, atp, wta, nascar, indycar`);
+  const league = LEAGUE_REGISTRY.find((entry) => entry.key === sport);
+  if (!league || !RENDERER_FNS[league.renderer]) {
+    throw new Error(
+      `Unsupported sport: "${sport}". Available: ${LEAGUE_REGISTRY.map((entry) => entry.key).sort().join(", ")}.`
+    );
   }
+  return RENDERER_FNS[league.renderer](data, sport, title, compact, league);
 }
 
 module.exports = { render };

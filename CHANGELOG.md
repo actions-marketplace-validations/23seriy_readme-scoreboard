@@ -12,6 +12,109 @@ that would alter what appears in your README or require editing your workflow.
 
 ### Fixed
 
+- **The team directory no longer publishes a team's abbreviation as its name.** When live data
+  missed a team, the generator fell back to the abbreviation itself and wrote rows like
+  `{ name: "CON", id: 18 }`; the merge then swallowed every live-roster error, and the validator
+  could not see the problem. Names now resolve from the live roster, the registry, demo data or the
+  ESPN detail endpoint, and generation **fails loudly** instead of writing a directory with
+  missing names. 54 rows were repaired: 48 rescued with real names (Connecticut Sun, Burnley,
+  Girona, …) and six allowlisted because the club's name genuinely is its initials (`PAOK`, `AGF`,
+  `AIK`, `GAIS`, `AVS`). Duplicate rows were resolved (`NFL` `TEN`, `NFL` `WAS`/`WSH`, `austria`
+  `VIE`, a stale `NCAAF` `RSVT` id) while genuinely different clubs that share an abbreviation
+  (`DUN`, `CEL`, `OSU`, `RIV`) stay.
+- **League showcase picker prefers a team with demo coverage**, so a league API outage no longer
+  fails gallery generation with `No data available for wnba/ATL`.
+- **Wrong team ids corrected.** NCAAW `ND` pointed at Wisconsin's ESPN id (275) — Notre Dame is 87,
+  so those boards fetched the wrong team. The NHL registry still listed the defunct Coyotes;
+  `ARI` is replaced by the Utah Mammoth (`UTA`, id 68) with an ESPN abbreviation map (`LAK` → `LA`,
+  `UTA` → `UTAH`). NFL gains `WSH` in the conference/division map.
+- **Directory ids are numbers.** ESPN sends string ids, which left whole leagues with mixed
+  number/string ids in the committed JSON; every row now carries a number.
+- **Off-season boards show the correct next season start date.** The "next season starts" line
+  only ever produced 2027, so from late 2027 an off-season board would have printed a date
+  already past. It now rolls forward from the current year.
+
+### Security
+
+- **Dependabot alert #7 (`deepmerge`, GHSA-gcqx-w48m-w2h4) is dismissed as accepted risk.**
+  `4.3.1` is the newest published version and the advisory lists no patched release, so no
+  upgrade can clear it. It is dev-only (`jest → jest-config`), only merges this repo's static
+  `jest.config.js`, and `npm audit --omit=dev` reports no vulnerabilities. The reasoning and the
+  revisit trigger are recorded in [`SECURITY.md`](SECURITY.md).
+
+## [1.18.0] - 2026-11-08
+
+### Changed
+
+- **Node.js 26 is now the supported runtime.** It became the active LTS ("Lithium") on
+  2026-10-28, so `.nvmrc`, `package.json`'s `engines`, `action.yml` and all nine workflows move
+  from 24 to 26 in one step, and `tests/node-version.test.js` keeps them from drifting apart again.
+  The full suite, lint, the demo smoke run across all 43 leagues and board regeneration were re-run
+  on 26.13.0 with no behaviour change: the committed example boards regenerate byte-identical, so
+  no board output moved.
+- **The renderer dispatch and its season/logo tables now derive from the league registry.**
+  `render()` repeated a hand-written switch over all 43 leagues, and `markdown.js` kept a second
+  copy of the season windows and league logos that was overwritten by the registry at load time.
+  Both are now built from `src/config/leagues.js`, the single source of truth. This fixes a real
+  drift: the fallback conference label showed the wrong name for five leagues (`Greek Super League`
+  rendered as `Super League`, `Austrian Bundesliga` as `Bundesliga`, `Danish Superliga` as
+  `Superliga`, `Norwegian Eliteserien` as `Eliteserien`, `Swedish Allsvenskan` as `Allsvenskan`),
+  and the unsupported-sport error omitted six leagues (`ufc`, `worldcup`, `ncaab`, `ncaaw`,
+  `ncaaf`, `ncaa_hockey`).
+- **`entity` is inferred from the sport again.** `action.yml` declared `entity: team` as its
+  default, so the action always passed `team` and the per-sport inference (`player` for tennis,
+  racing and MMA) never ran. The input now has no default, so individual sports are described as
+  players again in headings and error messages.
+
+### Added
+
+- **A `recent_games` input to control how many results a board lists.** Set it from `1` to `5`;
+  the default stays `5`, which is what every adapter fetches. Useful for a tighter profile.
+- **A `link` input to point the board heading at your own page.** The heading used to link to the
+  league's raw ESPN API endpoint (a JSON URL). `link:` overrides that with any URL; leaving it
+  unset keeps the existing behaviour.
+
+## [1.17.2] - 2026-11-08
+
+### Fixed
+
+- **A next fixture across the new year now shows its year.** A December board announcing
+  `📅 Next: vs POR (Jan 2)` read as a game that had already been played. The year is added only
+  when the fixture falls outside the current year, so boards in the ordinary case are unchanged.
+  The MLS showcase was the live example: its next match is `Feb 21, 2027`.
+- **Badge mode used the wrong abbreviation for longer team codes.** Badges scraped the code out of
+  the rendered markdown with `/([A-Z]{2,3})/`, so every abbreviation longer than three letters —
+  about a third of the directory, e.g. `PAOK`, `FC GOA`, `VALLEY`, `ASTM` — silently fell back to the
+  raw input. Badges are now built from the abbreviation the adapter resolved.
+- **The player headshot no longer floats beside the wrong section.** The spotlight emitted the
+  heading first and the right-floated headshot after it with no separating blank line, so GitHub put
+  the float on the heading's second wrapped line — the photo rendered next to the stats (or the next
+  section) rather than beside the player's name. The headshot is now emitted first, followed by a
+  blank line, mirroring the team logo so the float anchors to the spotlight heading.
+- **The win-rate bar no longer merges into the record line.** The bar was pushed as its own line
+  with a single newline before it, which Markdown reads as a soft break — GitHub folded
+  `📊 … (77.8%)` and `█████…` into one wrapped paragraph. The record and bar now share a line
+  with an explicit `<br>`, so the bar renders on the next line, indented, on every league's board.
+- **A boolean input with a typo now reports one line instead of a stack trace.**
+
+### Security
+
+- **`glob` and `minimatch` are pinned past their GitHub advisories**, alongside the existing
+  `deepmerge` pin. Both are development-only dependencies, so nothing changes for the action at
+  runtime — the alerts simply could not be closed by upgrading a parent package.
+
+## [1.17.1] - 2026-11-06
+
+### Fixed
+
+- **A conference standing was an alphabetical slot, not a rank.** ESPN returns each
+  division's standings ALPHABETICAL by team name, and NBA and college football read a
+  team's position in that flattened list as its conference rank. A 7-2 Lakers side was
+  therefore published as `🏅 Standing: Western · 10` when ESPN seeds it 2nd, and every
+  NBA board was off by however far its name happened to sort from its record. The
+  position now comes from ESPN's own `playoffSeed`, and a table with no games played
+  reports no position rather than a fabricated one.
+
 - **A season that has barely started shows last season's games, not "No recent
  games found".** In
   the first days of a season — or in the window after a fixture list rolls over
@@ -895,7 +998,10 @@ Initial release.
 - `marker` input, so multiple scoreboards can live in one README
 - Team abbreviation tables and demo mode (`--demo`)
 
-[Unreleased]: https://github.com/23seriy/readme-scoreboard/compare/v1.17.0...HEAD
+[Unreleased]: https://github.com/23seriy/readme-scoreboard/compare/v1.18.0...HEAD
+[1.18.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.17.2...v1.18.0
+[1.17.2]: https://github.com/23seriy/readme-scoreboard/compare/v1.17.1...v1.17.2
+[1.17.1]: https://github.com/23seriy/readme-scoreboard/compare/v1.17.0...v1.17.1
 [1.17.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.16.0...v1.17.0
 [1.16.0]: https://github.com/23seriy/readme-scoreboard/compare/v1.15.2...v1.16.0
 [1.15.2]: https://github.com/23seriy/readme-scoreboard/compare/v1.15.1...v1.15.2

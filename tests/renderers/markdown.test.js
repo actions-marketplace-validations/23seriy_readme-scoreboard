@@ -91,23 +91,32 @@ describe("renderMlb / formatMlbGameResult", () => {
   });
 
   it("renders standing and next game when the adapter provides them", () => {
-    const data = {
-      ...BASE_MLB_DATA,
-      recentGames: [],
-      standing: { position: 2, label: "American League" },
-      nextGame: { date: "2026-07-20T20:00:00Z", opponent: "NYY", isHome: false },
-      form: ["W", "L", "W", "W", "D"],
-    };
-    const output = render("mlb", data);
-    expect(output).toContain("🏅 Standing: American League · 2");
-    expect(output).toContain("📅 Next: @ NYY");
-    // The last-five form is intentionally not rendered: the Recent Games list
-    // already shows the W/L/D sequence, so a separate 🔥 Form line is redundant.
-    expect(output).not.toContain("🔥 Form:");
-    // Standing and next game sit on their own separated row (a blank line
-    // precedes them) so they read clearly instead of wrapping into the
-    // conference/season paragraph.
-    expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: American League · 2/);
+    // The season line is a function of today's date, so pin it inside the MLB
+    // window: the fixture date alone does not decide whether the season reads
+    // as in progress, and without a pin this test failed every off-season.
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2026-07-15T12:00:00Z"));
+    try {
+      const data = {
+        ...BASE_MLB_DATA,
+        recentGames: [],
+        standing: { position: 2, label: "American League" },
+        nextGame: { date: "2026-07-20T20:00:00Z", opponent: "NYY", isHome: false },
+        form: ["W", "L", "W", "W", "D"],
+      };
+      const output = render("mlb", data);
+      expect(output).toContain("🏅 Standing: American League · 2");
+      expect(output).toContain("📅 Next: @ NYY");
+      // The last-five form is intentionally not rendered: the Recent Games list
+      // already shows the W/L/D sequence, so a separate 🔥 Form line is redundant.
+      expect(output).not.toContain("🔥 Form:");
+      // Standing and next game sit on their own separated row (a blank line
+      // precedes them) so they read clearly instead of wrapping into the
+      // conference/season paragraph.
+      expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: American League · 2/);
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it("puts the next game on its own row, not joined to the standing", () => {
@@ -239,6 +248,32 @@ describe("renderMlb / formatMlbGameResult", () => {
     expect(output).not.toContain("🔥 Form:");
   });
 
+  it("leaves the year off a next fixture that falls in the current year", () => {
+    // Derived from today rather than hardcoded: a fixed date would start
+    // asserting the other branch once that year passed.
+    const year = new Date().getUTCFullYear();
+    const output = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      nextGame: { date: `${year}-06-15T16:00:00Z`, opponent: "NYY", isHome: true },
+    });
+    expect(output).toContain("📅 Next: vs NYY (Jun 15)");
+    expect(output).not.toContain(`Jun 15, ${year}`);
+  });
+
+  it("adds the year when the next fixture falls in another year", () => {
+    // A December board announcing "vs POR (Jan 2)" reads as a past game. Only
+    // the crossing case gets the year, so boards outside that window are
+    // unchanged (and the committed examples stay byte-identical).
+    const year = new Date().getUTCFullYear() + 1;
+    const output = render("mlb", {
+      ...BASE_MLB_DATA,
+      recentGames: [],
+      nextGame: { date: `${year}-01-05T16:00:00Z`, opponent: "POR", isHome: true },
+    });
+    expect(output).toContain(`📅 Next: vs POR (Jan 5, ${year})`);
+  });
+
   it("renders a Formula 1 constructor board with championship position and points", () => {
     const data = {
       team: { abbreviation: "LP", name: "Mercedes", full_name: "Mercedes", conference: "Formula 1", division: "" },
@@ -355,6 +390,17 @@ describe("renderNba / formatGameResult", () => {
     expect(output).toContain("✅");
   });
 
+  it("links the heading to a caller-supplied URL instead of the ESPN endpoint", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], link: "https://example.com/lakers" });
+    expect(output).toContain("](https://example.com/lakers)");
+    expect(output).not.toContain("site.api.espn.com");
+  });
+
+  it("links the heading to the league endpoint by default", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [] });
+    expect(output).toContain("](https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams)");
+  });
+
   it("shows season as start-end using ESPN end-year convention (season=2025 → 2024-2025)", () => {
     const output = render("nba", { ...BASE_NBA_DATA, recentGames: [] });
     expect(output).toContain("2024-2025");
@@ -365,6 +411,14 @@ describe("renderNba / formatGameResult", () => {
     const output = render("nba", { ...BASE_NBA_DATA, recentGames: [] });
     expect(output).toContain("57W - 25L");
     expect(output).toContain("69.5%");
+  });
+
+  it("keeps the win-rate bar on its own line with a hard break", () => {
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [] });
+    // A plain "\n" is a soft break, which GitHub folded into the record text
+    // ("... (69.5%) █████..."). A <br> keeps the bar on the next line.
+    expect(output).toContain("(69.5%)<br>&nbsp;&nbsp;&nbsp;");
+    expect(output).not.toMatch(/\n {3}/);
   });
 
   it("renders W when home team wins", () => {
@@ -409,6 +463,23 @@ describe("renderNba — player spotlight", () => {
     expect(output).toContain("26 PTS · 4 REB · 7 AST · 34 MIN vs Minnesota Timberwolves (Sep 4, 2026)");
   });
 
+  it("anchors the headshot to the heading, not the stats below it", () => {
+    // The headshot used to follow the heading with no blank line, which put
+    // the float on the heading's second wrapped line — the photo rendered
+    // beside the stats (or the next section) instead of beside the name.
+    // Emitting it first, separated by a blank line, mirrors the team logo.
+    const output = render("nba", {
+      ...BASE_NBA_DATA,
+      recentGames: [],
+      spotlight: { ...SPOTLIGHT, headshotUrl: "https://a.espncdn.com/headshot.png" },
+    });
+    const headshotIdx = output.indexOf("<img");
+    const headingIdx = output.indexOf("**👑 Player Spotlight: Luka Doncic**");
+    expect(headshotIdx).toBeGreaterThan(-1);
+    expect(headshotIdx).toBeLessThan(headingIdx);
+    expect(output).toContain('<img src="https://a.espncdn.com/headshot.png" alt="Luka Doncic headshot" height="72" align="right" />\n\n**👑 Player Spotlight: Luka Doncic**');
+  });
+
   it("renders a late-night game's date on the actual game day, not the UTC day", () => {
     // ESPN reports the game as a UTC instant. A game tipped at 9:30pm ET on
     // Apr 2 is timestamped 2026-04-03T01:30Z — rendering it in UTC would show
@@ -432,6 +503,25 @@ describe("renderNba — player spotlight", () => {
     const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: { ...SPOTLIGHT, lastGame: null } });
     expect(output).toContain("33.5 PPG · 7.7 RPG · 8.3 APG");
     expect(output).not.toContain("Last Game");
+  });
+
+  // ESPN indexes a player's gamelog after the game ends, so it lags the team's
+  // schedule. The newest known game is still shown — dropping it left a hole in
+  // the board — but it must not be labelled the LAST game when it is not.
+  it("labels a lagging game as Previous Game, keeping its stats and date", () => {
+    const stale = { ...SPOTLIGHT, lastGame: { ...SPOTLIGHT.lastGame, stale: true } };
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: stale });
+    expect(output).toContain("**📅 Previous Game:**");
+    expect(output).not.toContain("**📅 Last Game:**");
+    // The stats and the date still render, so the lag is visible rather than hidden.
+    expect(output).toContain("26 PTS · 4 REB · 7 AST · 34 MIN vs Minnesota Timberwolves (Sep 4, 2026)");
+  });
+
+  it("keeps the Last Game label when the game is current", () => {
+    const current = { ...SPOTLIGHT, lastGame: { ...SPOTLIGHT.lastGame, stale: false } };
+    const output = render("nba", { ...BASE_NBA_DATA, recentGames: [], spotlight: current });
+    expect(output).toContain("**📅 Last Game:**");
+    expect(output).not.toContain("Previous Game");
   });
 
   it("omits the spotlight section entirely when data.spotlight is absent", () => {
@@ -796,6 +886,19 @@ describe("Season status — next-season year", () => {
     // The bug: month >= startMonth ignored the day, so Aug 8 (start Aug 10)
     // reported August 2027 — a full year late.
     expect(line("epl", 2026, 7, 8)).not.toContain("2027");
+  });
+
+  it("rolls the fallback month/day forward past its fixed year", () => {
+    // The fallback is a fixed 2026 date, so adding one year to it only ever
+    // yielded 2027: an MLS board in Dec 2027 printed February 21, 2027, a
+    // date already past. The next start now rolls forward from the current year.
+    expect(line("mls", 2027, 11, 20)).toContain("Next season starts February 21, 2028");
+    expect(line("mls", 2028, 0, 15)).toContain("Next season starts February 21, 2028");
+  });
+
+  it("still names the next year in the first off-season after the fallback", () => {
+    // Jan 2027 is off-season with the Feb 21 start ahead: 2027, not 2028.
+    expect(line("mls", 2027, 0, 15)).toContain("Next season starts February 21, 2027");
   });
 });
 
@@ -1279,9 +1382,9 @@ describe("Soccer renderer — Brasileirão", () => {
     expect(out).toContain("leaguelogos/soccer/500-dark/85.png");
   });
 
-  it("falls back to 'Série A' rather than showing a bare year", () => {
+  it("falls back to the league name rather than showing a bare year", () => {
     const out = render("brasileirao", data());
-    expect(out).toContain("Série A");
+    expect(out).toContain("Brasileirão");
     expect(out).not.toMatch(/\n2026\n/);
   });
 
@@ -1524,11 +1627,21 @@ describe("renderNfl", () => {
   };
 
   it("renders the standing and next game on their own row", () => {
-    const output = render("nfl", BASE_NFL_DATA);
-    expect(output).toContain("🏅 Standing: AFC · 2");
-    expect(output).toContain("📅 Next: @ DEN");
-    // Separated from the conference/season paragraph by a blank line.
-    expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: AFC · 2/);
+    // The season line is a function of today's date, so pin it inside the NFL
+    // window (Sep–Feb): the fixture date alone does not decide whether the
+    // season reads as in progress, and without a pin this test failed every
+    // off-season — the same shape as the MLB failure fixed in PR #515.
+    jest.useFakeTimers();
+    jest.setSystemTime(new Date("2026-10-15T12:00:00Z"));
+    try {
+      const output = render("nfl", BASE_NFL_DATA);
+      expect(output).toContain("🏅 Standing: AFC · 2");
+      expect(output).toContain("📅 Next: @ DEN");
+      // Separated from the conference/season paragraph by a blank line.
+      expect(output).toMatch(/🟢 Season in progress\n\n🏅 Standing: AFC · 2/);
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it("renders a home next game with 'vs'", () => {
